@@ -113,6 +113,11 @@ namespace DAO
             throw new NotImplementedException();
         }
 
+        public override List<Groupe> findAll()
+        {
+            throw new NotImplementedException();
+        }
+
         public override Groupe update(Groupe obj)
         {
             /*

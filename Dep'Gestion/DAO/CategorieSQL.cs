@@ -69,7 +69,7 @@ namespace DAO
             double heuresATravailler = -1;
             string nom = "";
 
-            using (SqlCommand command_f = new SqlCommand("SELECT nom, id_eqtd, heures_a_travailler FROM categorie_enseignant WHERE id=" + id + ";", Connexion.getInstance()))
+            using (SqlCommand command_f = new SqlCommand("SELECT nom, heures_a_travailler FROM categorie_enseignant WHERE id=" + id + ";", Connexion.getInstance()))
             {
                 using (SqlDataReader reader_f = command_f.ExecuteReader())
                 {
@@ -78,13 +78,9 @@ namespace DAO
                         while (reader_f.Read())
                         {
                             nom = reader_f.GetString(0);
-                            heuresATravailler = reader_f.GetDouble(2);
+                            heuresATravailler = reader_f.GetDouble(1);
 
-                            //On récupère l'objet EquivalentTD associé à l'id_eqtd
-
-
-                            //Création de l'objet Categorie maintenant qu'on a tous ses attributs
-                            categorieEnseignant = new Categorie(nom, heuresATravailler);
+                            categorieEnseignant = new Categorie(id, nom, heuresATravailler);
 
                         }
                     }
@@ -108,6 +104,36 @@ namespace DAO
         {
             throw new NotImplementedException();
         }
+
+        public override List<Categorie> findAll()
+        {
+            List<Categorie> categories = new List<Categorie>();
+
+
+            using (SqlCommand command_f = new SqlCommand("SELECT * FROM categorie_enseignant;", Connexion.getInstance()))
+            {
+                using (SqlDataReader reader_f = command_f.ExecuteReader())
+                {
+                    if (reader_f.HasRows)
+                    {
+                        while (reader_f.Read())
+                        {
+                            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                            Debug.WriteLine(reader_f.GetInt32(0));
+                            Debug.WriteLine(reader_f.GetString(1));
+                            Debug.WriteLine(reader_f.GetDouble(2));
+                            Debug.WriteLine("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                            categories.Add(new Categorie(reader_f.GetInt32(0), reader_f.GetString(1), reader_f.GetDouble(2)));
+                        }
+                    }
+
+                }
+            }
+
+            return categories;
+
+        }
+
 
         public override Categorie update(Categorie obj)
         {

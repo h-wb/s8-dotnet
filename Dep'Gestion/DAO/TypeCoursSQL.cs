@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Metier;
-using System.Reflection;
-using System.Data.SqlClient;
-using System.Data;
+﻿using Metier;
 using Outils;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace DAO
 {
@@ -16,11 +11,14 @@ namespace DAO
         public override TypeCours create(TypeCours obj)
         {
 
+            AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
+            DAO<Categorie> categorie = factoSQL.getCategorieDAO();
+
+
             if (obj.id == -1)
             {
                 obj.id = OutilsSQL.getLastInsertedId("type_cours", Connexion.getInstance()) + 1;
             }
-
 
             /*
              * Pour éviter les doublons, on cherche s'il existe déjà un TypeCours avec le même type. 
@@ -49,26 +47,25 @@ namespace DAO
             else
             {
                 int hasGroups = ConversionFormats.convert(obj.hasGroups);
-                /*
-                using (SqlCommand command_c = new SqlCommand("INSERT INTO type_cours OUTPUT INSERTED.ID VALUES ('" + obj.nom + "', '" + hasGroups + "');", Connexion.getInstance()))
-                {
-                    command_c.ExecuteNonQuery();
-                    //Attribution de l'id SQL à l'objet métier
-                    obj.id = (Int32)command_c.ExecuteScalar();
-                    
-                    return obj;
-                   // Connexion.getInstance().Close();
-                }*/
                 using (SqlCommand command_c = new SqlCommand("INSERT INTO type_cours VALUES (" + obj.id + ", '" + obj.nom + "', '" + hasGroups + "');", Connexion.getInstance()))
                 {
                     command_c.ExecuteNonQuery();
-                    return obj;
-
                     // Connexion.getInstance().Close();
                 }
 
 
+
+                foreach (Categorie categ in categorie.findAll())
+                {
+                    int idT = OutilsSQL.getLastInsertedId("equivalent_td", Connexion.getInstance()) + 1;
+                    using (SqlCommand command_test = new SqlCommand("INSERT INTO equivalent_td VALUES (" + idT + ", '" + categ.id + "', '" + obj.id + "', 1 );", Connexion.getInstance()))
+                    {
+                        command_test.ExecuteNonQuery();
+                    }
+                }
             }
+
+            return obj;
 
 
         }
@@ -150,6 +147,11 @@ namespace DAO
 
 
             return typeCours;
+        }
+
+        public override List<TypeCours> findAll()
+        {
+            throw new NotImplementedException();
         }
 
         public override TypeCours update(TypeCours obj)

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Reflection;
-using System.Data.SqlClient;
-using Metier;
+﻿using Metier;
 using Outils;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace DAO
 {
@@ -182,6 +178,11 @@ namespace DAO
         }
 
         public override EquivalentTD find(string nom)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override List<EquivalentTD> findAll()
         {
             throw new NotImplementedException();
         }

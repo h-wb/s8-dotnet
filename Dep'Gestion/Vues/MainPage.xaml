@@ -12,15 +12,38 @@
     <Grid>
         <SplitView x:Name="ShellSplitView" IsPaneOpen="True" CompactPaneLength="48" OpenPaneLength="280" DisplayMode="Overlay" FontFamily="Segoe UI">
             <SplitView.Pane>
-                <Grid x:Name="SplitViewPane" Background="Gray" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid x:Name="SplitViewPane" Background="Gray" Margin="0,0,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
-                    <TreeView x:Name="NavigationTree" FontFamily="Segoe UI"/>
+                      <CommandBar DefaultLabelPosition="Right" Grid.Row="0" Background="Transparent" HorizontalAlignment="Left" FontFamily="Segoe UI">
+                        <AppBarButton Icon="Add" Label="Ajouter" Click="AppBarButton_Click"/>
+                        <AppBarButton Icon="Clear" Label="Supprimer"/>
+                    </CommandBar>
+                    <TreeView x:Name="NavigationTree" ItemInvoked="TreeView_ItemInvoked" FontFamily="Segoe UI" Margin="0,40,0,0"/>
                 </Grid>
             </SplitView.Pane>
-            <Grid/>
+            <SplitView.Content>
+                <Grid>
+                    <!-- Navigation Frame -->
+                    <Frame x:Name="SplitViewFrame"
+                           Navigated="SplitViewFrame_OnNavigated"
+                           Padding="0"
+                           FontFamily="Segoe UI">
+                        <Frame.ContentTransitions>
+                            <TransitionCollection>
+                                <NavigationThemeTransition>
+                                    <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                                        <DrillInNavigationTransitionInfo />
+                                    </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                                </NavigationThemeTransition>
+                            </TransitionCollection>
+                        </Frame.ContentTransitions>
+                    </Frame>
+
+                </Grid>
+            </SplitView.Content>
         </SplitView>
 
     </Grid>

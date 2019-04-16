@@ -1,23 +1,14 @@
 ﻿using AppGestion;
+using DAO;
+using Dep_Gestion.Model;
+using Metier;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Collections.ObjectModel;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using DAO;
-using System.Data.SqlClient;
-using Metier;
 
 namespace Dep_Gestion
 {
@@ -30,6 +21,10 @@ namespace Dep_Gestion
         /// Initialise l'objet d'application de singleton.  Il s'agit de la première ligne du code créé
         /// à être exécutée. Elle correspond donc à l'équivalent logique de main() ou WinMain().
         /// </summary>
+        /// 
+
+
+
         public App()
         {
             Connexion connexion = new Connexion();
@@ -37,42 +32,40 @@ namespace Dep_Gestion
 
 
             TypeCours tp = new TypeCours("TP", true);
-            AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
-            DAO<TypeCours> TPSQL = factoSQL.getTypeCoursDao();
-  
-
-
-
-
-
-
-
-           // DAO<EquivalentTD> equiTd = factoSQL.getEquivalentTDDao();
-
-
-           // EquivalentTD eqTD1 = new EquivalentTD(tp, 0.5F);
-            //equiTd.create(eqTD1);
             Categorie maitreDeConference = new Categorie("maitre de conférences", 240);
+
+            AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
+
+            DAO<TypeCours> TPSQL = factoSQL.getTypeCoursDao();
+           // TPSQL.create(tp);
+
+            DAO<Categorie> categSQL = factoSQL.getCategorieDAO();
+            // categSQL.create(maitreDeConference);
+
+
+
+
+
+
+
+            // DAO<EquivalentTD> equiTd = factoSQL.getEquivalentTDDao();
+
+
+            // EquivalentTD eqTD1 = new EquivalentTD(tp, 0.5F);
+            //equiTd.create(eqTD1);
+
             //Console.WriteLine(maitreDeConference);
             //Console.ReadLine();
 
-
-            DAO<Categorie> categSQL = factoSQL.getCategorieDAO(); 
-            categSQL.create(maitreDeConference);
-
-   
-
-
-
-
-
-
-
-
-
+            
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+
+
+
         }
+
 
         /// <summary>
         /// Invoqué lorsque l'application est lancée normalement par l'utilisateur final.  D'autres points d'entrée
