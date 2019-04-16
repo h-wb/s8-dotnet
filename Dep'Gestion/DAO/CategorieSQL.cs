@@ -47,7 +47,7 @@ namespace DAO
             //il faut aussi détruire aussi l'equivalentTD associé
             AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
             DAO<EquivalentTD> EQTDSQL = factoSQL.getEquivalentTDDao();
-            EQTDSQL.delete(obj.EQTD);
+            //EQTDSQL.delete(obj.EQTD);
 
             using (SqlCommand command = new SqlCommand("DELETE FROM categorie_enseignant WHERE id=" + obj.id + ";", Connexion.getInstance()))
             {
@@ -91,7 +91,7 @@ namespace DAO
                             EquivalentTD eqTD = EQTDSQL.find(idEQTD);
 
                             //Création de l'objet Categorie maintenant qu'on a tous ses attributs
-                            categorieEnseignant = new Categorie(nom, heuresATravailler, eqTD);
+                            //categorieEnseignant = new Categorie(nom, heuresATravailler, eqTD);
 
                         }
                     }
@@ -132,8 +132,8 @@ namespace DAO
                 AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
                 DAO<EquivalentTD> EQTDSQL = factoSQL.getEquivalentTDDao();
 
-                EquivalentTD eqTD = null;
-                try
+                //EquivalentTD eqTD = null;
+                /*try
                 {
                     eqTD = EQTDSQL.find(obj.EQTD.id);
                     //L'EquivalentTD existe dans la DB
@@ -148,19 +148,19 @@ namespace DAO
                 {
                     //L'EquivalentTD est nouveau donc on le crée dans la DB
                     eqTD = EQTDSQL.create(obj.EQTD);
-                }
+                }*/
 
 
 
                 //Maintenant que l'EquivalentTD a été pris en charge, on peut mettre à jour la table categorie_enseignant sans difficulté
-                using (SqlCommand command_u = new SqlCommand(@"UPDATE categorie_enseignant SET nom='" + obj.nom + "', " +
+               /* using (SqlCommand command_u = new SqlCommand(@"UPDATE categorie_enseignant SET nom='" + obj.nom + "', " +
                     "heures_a_travailler=" + obj.heuresATravailler + ", " +
                     "id_eqtd=" + obj.EQTD.id + " WHERE id=" + obj.id + ";", Connexion.getInstance()))
                 {
                     command_u.ExecuteNonQuery();
                 }
 
-                Connexion.getInstance().Close();
+                Connexion.getInstance().Close();*/
             }
 
             return obj;

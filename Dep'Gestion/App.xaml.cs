@@ -35,11 +35,14 @@ namespace Dep_Gestion
             Connexion connexion = new Connexion();
             connexion.creerConnexion();
 
+            
+       
 
-            TypeCours tp = new TypeCours("TP", true);
+
+            /*TypeCours tp = new TypeCours("TP", true);
             AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
             DAO<TypeCours> TPSQL = factoSQL.getTypeCoursDao();
-            TPSQL.create(tp);
+            TPSQL.create(tp);*/
 
 
 
@@ -47,20 +50,20 @@ namespace Dep_Gestion
 
 
 
-            DAO<EquivalentTD> equiTd = factoSQL.getEquivalentTDDao();
+            // DAO<EquivalentTD> equiTd = factoSQL.getEquivalentTDDao();
 
 
-            EquivalentTD eqTD1 = new EquivalentTD(tp, 0.5F);
-            equiTd.create(eqTD1);
-           /* Categorie maitreDeConference = new Categorie("maitre de conférences", 240, eqTD1);
-            //Console.WriteLine(maitreDeConference);
-            //Console.ReadLine();
+            // EquivalentTD eqTD1 = new EquivalentTD(tp, 0.5F);
+            //equiTd.create(eqTD1);
+            /* Categorie maitreDeConference = new Categorie("maitre de conférences", 240, eqTD1);
+             //Console.WriteLine(maitreDeConference);
+             //Console.ReadLine();
 
 
-            DAO<Categorie> categSQL = factoSQL.getCategorieDAO(); 
-            categSQL.create(maitreDeConference);*/
+             DAO<Categorie> categSQL = factoSQL.getCategorieDAO(); 
+             categSQL.create(maitreDeConference);*/
 
-   
+
 
 
 

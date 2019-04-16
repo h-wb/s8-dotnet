@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Machine>DESKTOP-EP8R3C5</Machine>
-    <WindowsUser>Chocobo</WindowsUser>
+    <Machine>DESKTOP-6EB7DT5</Machine>
+    <WindowsUser>anthony Genova</WindowsUser>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetOsVersion>10.0</TargetOsVersion>
     <TargetOsDescription>Windows 10.0</TargetOsDescription>
@@ -10,22 +10,22 @@
     <PackageArchitecture>x64</PackageArchitecture>
     <PackageIdentityName>ebc2b855-4178-4e6a-b004-c314080fbae0</PackageIdentityName>
     <PackageIdentityPublisher>CN=Chocobo</PackageIdentityPublisher>
-    <IntermediateOutputPath>C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\obj\x64\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\obj\x64\Debug\</IntermediateOutputPath>
     <RemoteDeploymentType></RemoteDeploymentType>
     <PackageRegistrationPath></PackageRegistrationPath>
     <RemoveNonLayoutFiles>true</RemoveNonLayoutFiles>
     <DeployOptionalPackages>false</DeployOptionalPackages>
     <WindowsSdkPath>C:\Program Files %28x86%29\Windows Kits\10\</WindowsSdkPath>
-    <LayoutDir>C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\bin\x64\Debug\AppX</LayoutDir>
+    <LayoutDir>C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\AppX</LayoutDir>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\bin\x64\Debug\Core\AppxManifest.xml">
+    <AppXManifest Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\bin\x64\Debug\Dep%27Gestion.exe">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Dep%27Gestion.exe">
       <PackagePath>entrypoint\Dep%27Gestion.exe</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.microsoft.netcore.universalwindowsplatform\6.2.7\runtimes\win10-x64\lib\uap10.0.15138\System.Runtime.dll">
@@ -34,70 +34,70 @@
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\bin\10.0.17763.0\XamlCompiler\Microsoft.UI.Xaml.Markup.winmd">
       <PackagePath>Microsoft.UI.Xaml.Markup.winmd</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Data\schemas\diagramme_classe.xml">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Data\schemas\diagramme_classe.xml">
       <PackagePath>Data\schemas\diagramme_classe.xml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Data\schemas\schema_bdd.xml">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Data\schemas\schema_bdd.xml">
       <PackagePath>Data\schemas\schema_bdd.xml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Properties\Default.rd.xml">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Data\SQL\dbo.categorie_enseignant.sql">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Data\SQL\dbo.categorie_enseignant.sql">
       <PackagePath>Data\SQL\dbo.categorie_enseignant.sql</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Data\SQL\dbo.equivalent_td.sql">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Data\SQL\dbo.equivalent_td.sql">
       <PackagePath>Data\SQL\dbo.equivalent_td.sql</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Data\SQL\script_create_tables.txt">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Data\SQL\script_create_tables.txt">
       <PackagePath>Data\SQL\script_create_tables.txt</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Data\SQL\SQLConnection.txt">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Data\SQL\SQLConnection.txt">
       <PackagePath>Data\SQL\SQLConnection.txt</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Assets\LockScreenLogo.scale-200.png">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Assets\SplashScreen.scale-200.png">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Assets\SplashScreen.scale-200.png">
       <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Assets\Square150x150Logo.scale-200.png">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Assets\Square150x150Logo.scale-200.png">
       <PackagePath>Assets\Square150x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Assets\Square44x44Logo.scale-200.png">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Assets\Square44x44Logo.scale-200.png">
       <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
       <PackagePath>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Assets\StoreLogo.png">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Assets\StoreLogo.png">
       <PackagePath>Assets\StoreLogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Assets\Wide310x150Logo.scale-200.png">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Assets\Wide310x150Logo.scale-200.png">
       <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\bin\x64\Debug\Dep%27Gestion.xr.xml">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Dep%27Gestion.xr.xml">
       <PackagePath>Dep%27Gestion.xr.xml</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\bin\x64\Debug\App.xbf">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\bin\x64\Debug\Vues\MainPage.xbf">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Vues\MainPage.xbf">
       <PackagePath>Vues\MainPage.xbf</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\10.0.17763.0\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\bin\x64\Debug\resources.pri">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\bin\x64\Debug\Core\Dep%27Gestion.exe">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Core\Dep%27Gestion.exe">
       <PackagePath>Dep%27Gestion.exe</PackagePath>
     </AppxPackagedFile>
   </ItemGroup>

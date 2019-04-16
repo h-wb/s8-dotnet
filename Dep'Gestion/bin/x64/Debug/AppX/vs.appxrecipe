@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Machine>DESKTOP-EP8R3C5</Machine>
-    <WindowsUser>Chocobo</WindowsUser>
+    <Machine>DESKTOP-6EB7DT5</Machine>
+    <WindowsUser>anthony Genova</WindowsUser>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetOsVersion>10.0</TargetOsVersion>
     <TargetOsDescription>Windows 10.0</TargetOsDescription>
@@ -10,7 +10,7 @@
     <PackageArchitecture>x64</PackageArchitecture>
     <PackageIdentityName>ebc2b855-4178-4e6a-b004-c314080fbae0</PackageIdentityName>
     <PackageIdentityPublisher>CN=Chocobo</PackageIdentityPublisher>
-    <IntermediateOutputPath>C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\obj\x64\Debug\</IntermediateOutputPath>
+    <IntermediateOutputPath>C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\obj\x64\Debug\</IntermediateOutputPath>
     <RemoteDeploymentType>
     </RemoteDeploymentType>
     <PackageRegistrationPath>
@@ -18,7 +18,7 @@
     <RemoveNonLayoutFiles>true</RemoveNonLayoutFiles>
     <DeployOptionalPackages>false</DeployOptionalPackages>
     <WindowsSdkPath>C:\Program Files %28x86%29\Windows Kits\10\</WindowsSdkPath>
-    <LayoutDir>C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\bin\x64\Debug\AppX</LayoutDir>
+    <LayoutDir>C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\AppX</LayoutDir>
     <RegisteredManifestChecksum>4B4FB660CF98FA16DC211615DDDCBD49C72E2FA56E1D0E3FCB05375461237922</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>ebc2b855-4178-4e6a-b004-c314080fbae0_1.0.0.0_x64__8z58w1fd3znwj</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>ebc2b855-4178-4e6a-b004-c314080fbae0_8z58w1fd3znwj!App</RegisteredUserModeAppID>
@@ -27,16 +27,16 @@
     <RegisteredVersion>1.0.0.0</RegisteredVersion>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\bin\x64\Debug\Core\AppxManifest.xml">
+    <AppXManifest Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2019-04-15T20:12:04.257</Modified>
+      <Modified>2019-04-15T23:13:14.669</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\bin\x64\Debug\Dep%27Gestion.exe">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Dep%27Gestion.exe">
       <PackagePath>entrypoint\Dep%27Gestion.exe</PackagePath>
-      <Modified>2019-04-15T20:12:03.852</Modified>
+      <Modified>2019-04-15T23:13:14.051</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.microsoft.netcore.universalwindowsplatform\6.2.7\runtimes\win10-x64\lib\uap10.0.15138\System.Runtime.dll">
       <PackagePath>System.Runtime.dll</PackagePath>
@@ -46,91 +46,91 @@
       <PackagePath>Microsoft.UI.Xaml.Markup.winmd</PackagePath>
       <Modified>2018-10-22T23:33:40.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Data\schemas\diagramme_classe.xml">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Data\schemas\diagramme_classe.xml">
       <PackagePath>Data\schemas\diagramme_classe.xml</PackagePath>
-      <Modified>2019-04-15T18:04:09.020</Modified>
+      <Modified>2019-04-15T21:45:16.792</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Data\schemas\schema_bdd.xml">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Data\schemas\schema_bdd.xml">
       <PackagePath>Data\schemas\schema_bdd.xml</PackagePath>
-      <Modified>2019-04-15T18:04:09.022</Modified>
+      <Modified>2019-04-15T21:45:16.794</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Properties\Default.rd.xml">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Properties\Default.rd.xml">
       <PackagePath>Properties\Default.rd.xml</PackagePath>
-      <Modified>2019-04-15T18:03:05.592</Modified>
+      <Modified>2019-04-15T21:45:16.805</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Data\SQL\dbo.categorie_enseignant.sql">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Data\SQL\dbo.categorie_enseignant.sql">
       <PackagePath>Data\SQL\dbo.categorie_enseignant.sql</PackagePath>
-      <Modified>2019-04-15T18:04:09.025</Modified>
+      <Modified>2019-04-15T21:45:16.789</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Data\SQL\dbo.equivalent_td.sql">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Data\SQL\dbo.equivalent_td.sql">
       <PackagePath>Data\SQL\dbo.equivalent_td.sql</PackagePath>
-      <Modified>2019-04-15T18:04:09.027</Modified>
+      <Modified>2019-04-15T21:45:16.792</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Data\SQL\script_create_tables.txt">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Data\SQL\script_create_tables.txt">
       <PackagePath>Data\SQL\script_create_tables.txt</PackagePath>
-      <Modified>2019-04-15T18:04:09.030</Modified>
+      <Modified>2019-04-15T21:45:16.792</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Data\SQL\SQLConnection.txt">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Data\SQL\SQLConnection.txt">
       <PackagePath>Data\SQL\SQLConnection.txt</PackagePath>
-      <Modified>2019-04-15T18:04:09.031</Modified>
+      <Modified>2019-04-15T21:45:16.789</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Assets\LockScreenLogo.scale-200.png">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
-      <Modified>2019-04-12T19:40:55.296</Modified>
+      <Modified>2019-04-15T21:45:16.778</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Assets\SplashScreen.scale-200.png">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Assets\SplashScreen.scale-200.png">
       <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2019-04-12T19:40:55.296</Modified>
+      <Modified>2019-04-15T21:45:16.778</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Assets\Square150x150Logo.scale-200.png">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Assets\Square150x150Logo.scale-200.png">
       <PackagePath>Assets\Square150x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2019-04-12T19:40:55.296</Modified>
+      <Modified>2019-04-15T21:45:16.780</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Assets\Square44x44Logo.scale-200.png">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Assets\Square44x44Logo.scale-200.png">
       <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2019-04-12T19:40:55.296</Modified>
+      <Modified>2019-04-15T21:45:16.780</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
       <PackagePath>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2019-04-12T19:40:55.296</Modified>
+      <Modified>2019-04-15T21:45:16.781</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Assets\StoreLogo.png">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Assets\StoreLogo.png">
       <PackagePath>Assets\StoreLogo.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2019-04-12T19:40:55.296</Modified>
+      <Modified>2019-04-15T21:45:16.781</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\Assets\Wide310x150Logo.scale-200.png">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Assets\Wide310x150Logo.scale-200.png">
       <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2019-04-12T19:40:55.296</Modified>
+      <Modified>2019-04-15T21:45:16.782</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\bin\x64\Debug\Dep%27Gestion.xr.xml">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Dep%27Gestion.xr.xml">
       <PackagePath>Dep%27Gestion.xr.xml</PackagePath>
-      <Modified>2019-04-15T18:05:09.280</Modified>
+      <Modified>2019-04-15T23:01:34.401</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\bin\x64\Debug\App.xbf">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
-      <Modified>2019-04-15T20:12:03.676</Modified>
+      <Modified>2019-04-15T23:13:13.800</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\bin\x64\Debug\Vues\MainPage.xbf">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Vues\MainPage.xbf">
       <PackagePath>Vues\MainPage.xbf</PackagePath>
-      <Modified>2019-04-15T20:12:03.676</Modified>
+      <Modified>2019-04-15T23:13:13.800</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\10.0.17763.0\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
       <Modified>2018-10-22T22:44:28.000</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\bin\x64\Debug\resources.pri">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2019-04-15T19:32:53.045</Modified>
+      <Modified>2019-04-15T23:01:35.865</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\Chocobo\source\repos\Dep%27Gestion\Dep%27Gestion\bin\x64\Debug\Core\Dep%27Gestion.exe">
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Core\Dep%27Gestion.exe">
       <PackagePath>Dep%27Gestion.exe</PackagePath>
-      <Modified>2019-04-15T20:12:04.245</Modified>
+      <Modified>2019-04-15T23:13:14.657</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

@@ -8150,24 +8150,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Chocobo\\.nuget\\packages\\": {},
+    "C:\\Users\\anthony Genova\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Chocobo\\source\\repos\\Dep'Gestion\\Dep'Gestion\\Dep'Gestion.csproj",
+      "projectUniqueName": "C:\\Developpement\\DotNet\\Dep-Gestion\\Dep'Gestion\\Dep'Gestion.csproj",
       "projectName": "Dep'Gestion",
-      "projectPath": "C:\\Users\\Chocobo\\source\\repos\\Dep'Gestion\\Dep'Gestion\\Dep'Gestion.csproj",
-      "packagesPath": "C:\\Users\\Chocobo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Chocobo\\source\\repos\\Dep'Gestion\\Dep'Gestion\\obj\\",
+      "projectPath": "C:\\Developpement\\DotNet\\Dep-Gestion\\Dep'Gestion\\Dep'Gestion.csproj",
+      "packagesPath": "C:\\Users\\anthony Genova\\.nuget\\packages\\",
+      "outputPath": "C:\\Developpement\\DotNet\\Dep-Gestion\\Dep'Gestion\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\Chocobo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\anthony Genova\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
