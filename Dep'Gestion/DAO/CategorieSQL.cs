@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Data.SqlClient;
 using System.Data;
 using Outils;
+using System.Diagnostics;
 
 namespace DAO
 {
@@ -21,19 +22,19 @@ namespace DAO
             obj.id = OutilsSQL.getLastInsertedId("categorie_enseignant", Connexion.getInstance()) + 1;
 
             //Factory EquivalentTD
-            AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
 
+            Debug.WriteLine(obj.heuresATravailler);
 
 
             //On teste si l'equivalentTD existe dans la DB et on le crée sinon
-   
+
 
             //obj.EQTD.idCategorieEnseignant = obj.id;
 
             //id, id_eqtd, heures_a_travailler
+     
 
-            using (SqlCommand command_c = new SqlCommand(@"INSERT INTO categorie_enseignant VALUES 
-                            (" + obj.id + ", '" + obj.nom + ", " + obj.heuresATravailler + ");", Connexion.getInstance()))
+            using (SqlCommand command_c = new SqlCommand("INSERT INTO categorie_enseignant VALUES (" + obj.id + ", '" + obj.nom + "', '" + obj.heuresATravailler + "');", Connexion.getInstance()))
             {
                 //obj.EQTD.idCategorieEnseignant = currentID;
                 command_c.ExecuteNonQuery();
@@ -45,9 +46,8 @@ namespace DAO
         public override void delete(Categorie obj)
         {
             //il faut aussi détruire aussi l'equivalentTD associé
-            AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
-            DAO<EquivalentTD> EQTDSQL = factoSQL.getEquivalentTDDao();
-            EQTDSQL.delete(obj.EQTD);
+
+
 
             using (SqlCommand command = new SqlCommand("DELETE FROM categorie_enseignant WHERE id=" + obj.id + ";", Connexion.getInstance()))
             {
@@ -55,11 +55,7 @@ namespace DAO
                 Console.WriteLine("Categorie enseignant supprimée");
             }
 
-            using (SqlCommand command = new SqlCommand("DELETE FROM categorie_enseignant WHERE id=" + obj.id + ";", Connexion.getInstance()))
-            {
-                command.ExecuteNonQuery();
-                Console.WriteLine("Categorie enseignant supprimée");
-            }
+  
             Connexion.getInstance().Close();
             Console.ReadLine();
         }
@@ -69,7 +65,7 @@ namespace DAO
         {
             Categorie categorieEnseignant = null;
 
-            int idEQTD = -1;
+            //int idEQTD = -1;
             double heuresATravailler = -1;
             string nom = "";
 
@@ -82,16 +78,13 @@ namespace DAO
                         while (reader_f.Read())
                         {
                             nom = reader_f.GetString(0);
-                            idEQTD = reader_f.GetInt32(1);
                             heuresATravailler = reader_f.GetDouble(2);
 
                             //On récupère l'objet EquivalentTD associé à l'id_eqtd
-                            AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
-                            DAO<EquivalentTD> EQTDSQL = factoSQL.getEquivalentTDDao();
-                            EquivalentTD eqTD = EQTDSQL.find(idEQTD);
+
 
                             //Création de l'objet Categorie maintenant qu'on a tous ses attributs
-                            categorieEnseignant = new Categorie(nom, heuresATravailler, eqTD);
+                            categorieEnseignant = new Categorie(nom, heuresATravailler);
 
                         }
                     }
@@ -129,33 +122,11 @@ namespace DAO
 
 
                 //On met à jour l'EquivalentTD si des changements ont été effectués dessus ou s'il n'a pas été crée dans la DB
-                AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
-                DAO<EquivalentTD> EQTDSQL = factoSQL.getEquivalentTDDao();
-
-                EquivalentTD eqTD = null;
-                try
-                {
-                    eqTD = EQTDSQL.find(obj.EQTD.id);
-                    //L'EquivalentTD existe dans la DB
-                    //Mise à jour de celui-ci, si l'objet dans la DB est différent de l'attribut de obj
-                    if (!eqTD.Equals(obj.EQTD))
-                    {
-                        EQTDSQL.update(obj.EQTD);
-                    }
-
-                }
-                catch (Exception)
-                {
-                    //L'EquivalentTD est nouveau donc on le crée dans la DB
-                    eqTD = EQTDSQL.create(obj.EQTD);
-                }
-
-
+     
 
                 //Maintenant que l'EquivalentTD a été pris en charge, on peut mettre à jour la table categorie_enseignant sans difficulté
                 using (SqlCommand command_u = new SqlCommand(@"UPDATE categorie_enseignant SET nom='" + obj.nom + "', " +
-                    "heures_a_travailler=" + obj.heuresATravailler + ", " +
-                    "id_eqtd=" + obj.EQTD.id + " WHERE id=" + obj.id + ";", Connexion.getInstance()))
+                    "heures_a_travailler=" + obj.heuresATravailler + ", " + " WHERE id=" + obj.id + ";", Connexion.getInstance()))
                 {
                     command_u.ExecuteNonQuery();
                 }
