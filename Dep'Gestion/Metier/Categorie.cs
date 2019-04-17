@@ -24,6 +24,15 @@ namespace Metier
             this.heuresATravailler = heuresATravailler;
         }
 
+        public Categorie(int id, string nom, double heuresATravailler)
+        {
+            base.init();
+            this.id = id;
+            this.nom = nom;
+            this.heuresATravailler = heuresATravailler;
+        }
+        
+
         public override string ToString()
         {
             return base.ToString() + ", heures à travailler = " + this.heuresATravailler;

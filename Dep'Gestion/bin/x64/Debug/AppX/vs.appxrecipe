@@ -19,7 +19,7 @@
     <DeployOptionalPackages>false</DeployOptionalPackages>
     <WindowsSdkPath>C:\Program Files %28x86%29\Windows Kits\10\</WindowsSdkPath>
     <LayoutDir>C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\AppX</LayoutDir>
-    <RegisteredManifestChecksum>4B4FB660CF98FA16DC211615DDDCBD49C72E2FA56E1D0E3FCB05375461237922</RegisteredManifestChecksum>
+    <RegisteredManifestChecksum>D89C30A5ABEA442734CF8CC295EC8DB50A24451E1D07EC5BB162B856A0052346</RegisteredManifestChecksum>
     <RegisteredPackageMoniker>ebc2b855-4178-4e6a-b004-c314080fbae0_1.0.0.0_x64__8z58w1fd3znwj</RegisteredPackageMoniker>
     <RegisteredUserModeAppID>ebc2b855-4178-4e6a-b004-c314080fbae0_8z58w1fd3znwj!App</RegisteredUserModeAppID>
     <RegisteredPackageID>ebc2b855-4178-4e6a-b004-c314080fbae0</RegisteredPackageID>
@@ -30,13 +30,13 @@
     <AppXManifest Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2019-04-15T23:13:14.669</Modified>
+      <Modified>2019-04-17T20:59:38.336</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Dep%27Gestion.exe">
       <PackagePath>entrypoint\Dep%27Gestion.exe</PackagePath>
-      <Modified>2019-04-15T23:13:14.051</Modified>
+      <Modified>2019-04-17T20:59:37.991</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.microsoft.netcore.universalwindowsplatform\6.2.7\runtimes\win10-x64\lib\uap10.0.15138\System.Runtime.dll">
       <PackagePath>System.Runtime.dll</PackagePath>
@@ -68,11 +68,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Data\SQL\script_create_tables.txt">
       <PackagePath>Data\SQL\script_create_tables.txt</PackagePath>
-      <Modified>2019-04-15T21:45:16.792</Modified>
+      <Modified>2019-04-16T19:36:55.689</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Data\SQL\SQLConnection.txt">
       <PackagePath>Data\SQL\SQLConnection.txt</PackagePath>
-      <Modified>2019-04-15T21:45:16.789</Modified>
+      <Modified>2019-04-16T19:36:55.689</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
@@ -110,15 +110,15 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Dep%27Gestion.xr.xml">
       <PackagePath>Dep%27Gestion.xr.xml</PackagePath>
-      <Modified>2019-04-15T23:01:34.401</Modified>
+      <Modified>2019-04-16T19:36:55.764</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
-      <Modified>2019-04-15T23:13:13.800</Modified>
+      <Modified>2019-04-17T20:59:37.866</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Vues\MainPage.xbf">
       <PackagePath>Vues\MainPage.xbf</PackagePath>
-      <Modified>2019-04-15T23:13:13.800</Modified>
+      <Modified>2019-04-17T20:59:37.866</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\10.0.17763.0\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -126,11 +126,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2019-04-15T23:01:35.865</Modified>
+      <Modified>2019-04-17T20:00:30.383</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Core\Dep%27Gestion.exe">
       <PackagePath>Dep%27Gestion.exe</PackagePath>
-      <Modified>2019-04-15T23:13:14.657</Modified>
+      <Modified>2019-04-17T20:59:38.329</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

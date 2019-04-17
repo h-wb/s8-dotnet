@@ -113,19 +113,14 @@ namespace DAO
             throw new NotImplementedException();
         }
 
-        public override Groupe update(Groupe obj)
+        public override List<Groupe> findAll()
         {
-            /*
-            * nom
-            * id_enseignant
-            * id_cours
-            */
-            SqlCommand command = new SqlCommand(@"UPDATE groupe SET 
-            nom='" + obj.nom + "', id_enseignant=" + obj.enseignant.id + ", id_cours = " + obj.idCours
-            + " WHERE id=" + obj.id + ";", Connexion.getInstance());
-            command.ExecuteNonQuery();
+            throw new NotImplementedException();
+        }
 
-            return obj;
+        public override Groupe update(Groupe objAupdate, Groupe update)
+        {
+            throw new NotImplementedException();
         }
     }
 }

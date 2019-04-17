@@ -34,44 +34,13 @@ namespace Dep_Gestion
         {
             Connexion connexion = new Connexion();
             connexion.creerConnexion();
-
             
-       
-
-
-            /*TypeCours tp = new TypeCours("TP", true);
+            TypeCours tp = new TypeCours("CM", true);
             AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
-            DAO<TypeCours> TPSQL = factoSQL.getTypeCoursDao();
-            TPSQL.create(tp);*/
-
-
-
-
-
-
-
-            // DAO<EquivalentTD> equiTd = factoSQL.getEquivalentTDDao();
-
-
-            // EquivalentTD eqTD1 = new EquivalentTD(tp, 0.5F);
-            //equiTd.create(eqTD1);
-            /* Categorie maitreDeConference = new Categorie("maitre de conférences", 240, eqTD1);
-             //Console.WriteLine(maitreDeConference);
-             //Console.ReadLine();
-
-
-             DAO<Categorie> categSQL = factoSQL.getCategorieDAO(); 
-             categSQL.create(maitreDeConference);*/
-
-
-
-
-
-
-
-
-
-
+            DAO<Annee> TPSQL = factoSQL.getAnneeDAO();
+            //TPSQL.update(TPSQL.find(1), new Annee("M2"));
+            TPSQL.delete(TPSQL.find(1));
+            //TPSQL.create(new Annee("M1"));
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;

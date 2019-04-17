@@ -11,6 +11,10 @@ namespace Metier
 
         public Dictionary<TypeCours, float> ratiosCoursTD { get; set; }
         public int idCategorieEnseignant { get; set; }
+        public int idTypeCours { get; set; }
+        public Categorie categ { get; set; }
+        public TypeCours tc { get; set; }
+        public float ratio;
 
         public EquivalentTD()
         {
@@ -38,6 +42,14 @@ namespace Metier
             ratiosCoursTD.Add(TD, 1);
         }
 
+        public EquivalentTD(int id, Categorie categ, TypeCours tc, float ratio)
+        {
+            this.init();
+            this.id = id;
+            this.categ = categ;
+            this.tc = tc;
+            this.ratio = ratio;
+        }
         public void ajouterRatiosCoursTD(TypeCours tc, float ratio)
         {
             //Vérification des doublons

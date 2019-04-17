@@ -120,6 +120,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="DAO\AbstractDAOFactory.cs" />
+    <Compile Include="DAO\AnneeSQL.cs" />
     <Compile Include="DAO\CategorieSQL.cs" />
     <Compile Include="DAO\ConnectionSQL.cs" />
     <Compile Include="DAO\Connexion.cs" />
@@ -140,7 +141,6 @@
     <Compile Include="Metier\Groupe.cs" />
     <Compile Include="Metier\ObjetAvecId.cs" />
     <Compile Include="Metier\ObjetAvecIdEtNom.cs" />
-    <Compile Include="Metier\PartieAnnee.cs" />
     <Compile Include="Metier\TypeCours.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\ConversionFormats.cs" />

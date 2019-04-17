@@ -16,59 +16,41 @@ namespace DAO
         public override TypeCours create(TypeCours obj)
         {
 
+            AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
+            DAO<Categorie> categorie = factoSQL.getCategorieDAO();
+
+
             if (obj.id == -1)
             {
                 obj.id = OutilsSQL.getLastInsertedId("type_cours", Connexion.getInstance()) + 1;
             }
 
-
-            /*
-             * Pour éviter les doublons, on cherche s'il existe déjà un TypeCours avec le même type. 
-             * S'il en existe un, on le retourne, sinon, on le crée dans la DB
-             */
             Console.WriteLine("création type cours");
-            TypeCours tc;
-            try
-            {
-                //Console.WriteLine("try");
-                tc = this.find(obj.nom);
-            }
-            catch (Exception)
-            {
-                //Console.WriteLine("catch");
-                tc = null;
-            }
+            TypeCours tc =null;
+            tc = this.find(obj.nom);
 
-            Console.WriteLine(tc);
-            // Console.ReadLine();
-
-            if (tc != null)
-            {
-                return tc;
-            }
-            else
+            if(tc ==null)
             {
                 int hasGroups = ConversionFormats.convert(obj.hasGroups);
-                /*
-                using (SqlCommand command_c = new SqlCommand("INSERT INTO type_cours OUTPUT INSERTED.ID VALUES ('" + obj.nom + "', '" + hasGroups + "');", Connexion.getInstance()))
-                {
-                    command_c.ExecuteNonQuery();
-                    //Attribution de l'id SQL à l'objet métier
-                    obj.id = (Int32)command_c.ExecuteScalar();
-                    
-                    return obj;
-                   // Connexion.getInstance().Close();
-                }*/
                 using (SqlCommand command_c = new SqlCommand("INSERT INTO type_cours VALUES (" + obj.id + ", '" + obj.nom + "', '" + hasGroups + "');", Connexion.getInstance()))
                 {
                     command_c.ExecuteNonQuery();
-                    return obj;
-
                     // Connexion.getInstance().Close();
                 }
 
 
+
+                foreach (Categorie categ in categorie.findAll())
+                {
+                    int idT = OutilsSQL.getLastInsertedId("equivalent_td", Connexion.getInstance()) + 1;
+                    using (SqlCommand command_test = new SqlCommand("INSERT INTO equivalent_td VALUES (" + idT + ", '" + categ.id + "', '" + obj.id + "', 1 );", Connexion.getInstance()))
+                    {
+                        command_test.ExecuteNonQuery();
+                    }
+                }
             }
+
+            return obj;
 
 
         }
@@ -95,21 +77,14 @@ namespace DAO
                     {
                         while (reader_f.Read())
                         {
-                            /*Console.WriteLine("{0}\t{1}", reader_tc.GetInt32(0),
-                            reader_tc.GetString(1));*/
                             typeCours = new TypeCours(reader_f.GetInt32(0), reader_f.GetString(1),
                                 ConversionFormats.convert(reader_f.GetInt32(2)));
                         }
-                    }
-                    else
-                    {
-                        throw new Exception("Aucun objet avec cet id n'a été trouvé.");
                     }
 
                     reader_f.Close();
                 }
                 Connexion.getInstance().Close();
-                Console.WriteLine("type cours trouvé:" + typeCours);
                 return typeCours;
 
             }
@@ -127,8 +102,6 @@ namespace DAO
                     {
                         while (reader_f.Read())
                         {
-                            /*Console.WriteLine("{0}\t{1}", reader_tc.GetInt32(0),
-                            reader_tc.GetString(1));*/
                             typeCours = new TypeCours(reader_f.GetInt32(0), reader_f.GetString(1),
                                 ConversionFormats.convert(reader_f.GetInt32(2)));
 
@@ -152,17 +125,39 @@ namespace DAO
             return typeCours;
         }
 
-        public override TypeCours update(TypeCours obj)
+        public override List<TypeCours> findAll()
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE type_cours SET nom='" + obj.nom + "', " +
-                "has_groups=" + ConversionFormats.convert(obj.hasGroups) + " WHERE id=" + obj.id + ";", Connexion.getInstance()))
+            List<TypeCours> tps = new List<TypeCours>();
+
+
+            using (SqlCommand command_f = new SqlCommand("SELECT * FROM type_cours;", Connexion.getInstance()))
+            {
+                using (SqlDataReader reader_f = command_f.ExecuteReader())
+                {
+                    if (reader_f.HasRows)
+                    {
+                        while (reader_f.Read())
+                        {
+                            tps.Add(new TypeCours(reader_f.GetInt32(0), reader_f.GetString(1), reader_f.GetBoolean(2)));
+                        }
+                    }
+
+                }
+            }
+
+            return tps;
+        }
+
+        public override TypeCours update(TypeCours objAupdate, TypeCours update)
+        {
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE type_cours SET nom='" + update.nom + "', " +
+                "has_groups=" + ConversionFormats.convert(update.hasGroups) + " WHERE id=" + objAupdate.id + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }
 
             Connexion.getInstance().Close();
-            return obj;
+            return objAupdate;
         }
-
     }
 }

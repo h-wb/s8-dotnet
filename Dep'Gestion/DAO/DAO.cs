@@ -15,7 +15,9 @@ namespace DAO
 
         public abstract T create(T obj);
 
-        public abstract T update(T obj);
+        public abstract List<T> findAll();
+
+        public abstract T update(T objAupdate, T update);
 
         public abstract void delete(T obj);
     }
