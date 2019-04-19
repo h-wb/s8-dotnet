@@ -37,7 +37,7 @@ namespace DAO
             using (SqlCommand command = new SqlCommand(query, Connexion.getInstance()))
             {
                 command.ExecuteNonQuery();
-                Connexion.getInstance().Close();
+                //Connexion.getInstance().Close();
             }
             return obj;
         }
@@ -48,7 +48,7 @@ namespace DAO
             {
                 command.ExecuteNonQuery();
             }
-            Connexion.getInstance().Close();
+            //Connexion.getInstance().Close();
         }
 
         public override Groupe find(int id)
@@ -67,7 +67,7 @@ namespace DAO
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
 
-                    Dictionary<TypeCours, float> ratios = new Dictionary<TypeCours, float>();
+                    Dictionary<TypeCours, double> ratios = new Dictionary<TypeCours, double>();
 
                     //Factory pour chercher les objets TypeCours dans la DB
                     AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);

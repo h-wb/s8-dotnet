@@ -46,7 +46,7 @@ namespace DAO
             {
                 command_d.ExecuteNonQuery();
             }
-            Connexion.getInstance().Close();
+            //Connexion.getInstance().Close();
         }
 
 
@@ -77,7 +77,7 @@ namespace DAO
 
             }
 
-            Connexion.getInstance().Close();
+           // Connexion.getInstance().Close();
 
 
             return categorieEnseignant;
@@ -102,7 +102,7 @@ namespace DAO
 
                     reader_f.Close();
                 }
-                Connexion.getInstance().Close();
+                //Connexion.getInstance().Close();
                 return categ;
 
             }
@@ -139,7 +139,7 @@ namespace DAO
                 command_u.ExecuteNonQuery();
             }
 
-            Connexion.getInstance().Close();
+           // Connexion.getInstance().Close();
             return objAupdate;
         }
         

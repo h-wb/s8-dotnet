@@ -15,6 +15,7 @@ namespace DAO
         public abstract DAO<TypeCours> getTypeCoursDao();
         public abstract DAO<Categorie> getCategorieDAO();
         public abstract DAO<Annee> getAnneeDAO();
+        public abstract DAO<PartieAnnee> getPartieAnneeDAO();
 
         public static AbstractDAOFactory getFactory(types type)
         {

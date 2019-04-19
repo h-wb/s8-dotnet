@@ -23,7 +23,7 @@ namespace DAO
             }
 
             //On insère une ligne par couple clé/valeur de la table de hachage
-            foreach (KeyValuePair<TypeCours, float> entry in obj.ratiosCoursTD)
+            foreach (KeyValuePair<TypeCours, double> entry in obj.ratiosCoursTD)
             {
                 AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
                 DAO<TypeCours> TPSQL = factoSQL.getTypeCoursDao();
@@ -47,7 +47,7 @@ namespace DAO
              * id_type_cours
              * ratio_cours_TD
              */
-            /*float ratio = entry.Value;
+            /*double ratio = entry.Value;
             string query = @"INSERT INTO equivalent_td(id, id_categorie_enseignant, id_type_cours, ratio_cours_TD)
                 VALUES (" + obj.id
                + ", " + obj.idCategorieEnseignant
@@ -74,7 +74,7 @@ namespace DAO
             {
                 command.ExecuteNonQuery();
             }
-            Connexion.getInstance().Close();
+           // Connexion.getInstance().Close();
         }
 
         public override EquivalentTD find(int id)
@@ -96,7 +96,7 @@ namespace DAO
                             Categorie categ = TPSQL.find(reader_f.GetInt32(0));
                             TypeCours tp = TPSQL2.find(reader_f.GetInt32(1));
 
-                            eqtd = new EquivalentTD(id, categ, tp, reader_f.GetFloat(2));
+                            eqtd = new EquivalentTD(id, categ, tp, reader_f.GetDouble(2));
 
                             reader_f.NextResult();
                         }
@@ -111,7 +111,7 @@ namespace DAO
 
             }
 
-            Connexion.getInstance().Close();
+            //Connexion.getInstance().Close();
 
 
             return eqtd;
@@ -143,7 +143,7 @@ namespace DAO
                             Categorie categ = TPSQL.find(reader_f.GetInt32(0));
                             TypeCours tp = TPSQL2.find(reader_f.GetInt32(1));
 
-                            eqtds.Add(new EquivalentTD(reader_f.GetInt32(0), categ, tp, reader_f.GetFloat(3)));
+                            eqtds.Add(new EquivalentTD(reader_f.GetInt32(0), categ, tp, reader_f.GetDouble(3)));
                         }
                     }
 
@@ -161,7 +161,7 @@ namespace DAO
                 command_u.ExecuteNonQuery();
             }
 
-            Connexion.getInstance().Close();
+            //Connexion.getInstance().Close();
             return objAupdate;
         }
     }

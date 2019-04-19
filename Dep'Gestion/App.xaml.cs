@@ -1,23 +1,14 @@
 ﻿using AppGestion;
+using DAO;
+using Dep_Gestion.Model;
+using Metier;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Collections.ObjectModel;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using DAO;
-using System.Data.SqlClient;
-using Metier;
 
 namespace Dep_Gestion
 {
@@ -30,21 +21,39 @@ namespace Dep_Gestion
         /// Initialise l'objet d'application de singleton.  Il s'agit de la première ligne du code créé
         /// à être exécutée. Elle correspond donc à l'équivalent logique de main() ou WinMain().
         /// </summary>
+        /// 
+
+
+
         public App()
         {
             Connexion connexion = new Connexion();
             connexion.creerConnexion();
-            
-            TypeCours tp = new TypeCours("CM", true);
+
+
+            TypeCours tp = new TypeCours("TP", true);
+            Categorie maitreDeConference = new Categorie("maitre de conférences", 240);
+
             AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
-            DAO<Annee> TPSQL = factoSQL.getAnneeDAO();
-            //TPSQL.update(TPSQL.find(1), new Annee("M2"));
-            TPSQL.delete(TPSQL.find(1));
-            //TPSQL.create(new Annee("M1"));
+
+            DAO<Annee> an = factoSQL.getAnneeDAO();
+            an.create(new Annee("M1"));
+            an.create(new Annee("M2"));
+
+            DAO<PartieAnnee> pan = factoSQL.getPartieAnneeDAO();
+            pan.create(new PartieAnnee("Semestre 1", an.find(1)));
+            pan.create(new PartieAnnee("Semestre 2", an.find(1)));
+            pan.create(new PartieAnnee("Semestre 3", an.find(2)));
+
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+
+
+
         }
+
 
         /// <summary>
         /// Invoqué lorsque l'application est lancée normalement par l'utilisateur final.  D'autres points d'entrée

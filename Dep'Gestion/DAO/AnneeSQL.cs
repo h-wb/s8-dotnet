@@ -13,7 +13,7 @@ namespace Dep_Gestion.DAO
     class AnneeSQL : DAO<Annee>
     {
         public override Annee create(Annee obj)
-        {;
+        {
 
 
             if (obj.id == -1)
@@ -42,7 +42,7 @@ namespace Dep_Gestion.DAO
             {
                 command_d.ExecuteNonQuery();
             }
-            Connexion.getInstance().Close();
+            //Connexion.getInstance().Close();
         }
 
         public override Annee find(int id)
@@ -92,7 +92,7 @@ namespace Dep_Gestion.DAO
 
                     reader_f.Close();
                 }
-                Connexion.getInstance().Close();
+               // Connexion.getInstance().Close();
                 return annee;
 
             }
@@ -128,7 +128,7 @@ namespace Dep_Gestion.DAO
                 command_u.ExecuteNonQuery();
             }
 
-            Connexion.getInstance().Close();
+            //Connexion.getInstance().Close();
             return objAupdate;
         }
     }

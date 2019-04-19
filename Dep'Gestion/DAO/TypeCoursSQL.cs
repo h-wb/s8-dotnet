@@ -61,7 +61,7 @@ namespace DAO
             {
                 command_d.ExecuteNonQuery();
             }
-            Connexion.getInstance().Close();
+            //Connexion.getInstance().Close();
         }
 
         public override TypeCours find(string type)
@@ -84,7 +84,7 @@ namespace DAO
 
                     reader_f.Close();
                 }
-                Connexion.getInstance().Close();
+                //Connexion.getInstance().Close();
                 return typeCours;
 
             }
@@ -156,7 +156,7 @@ namespace DAO
                 command_u.ExecuteNonQuery();
             }
 
-            Connexion.getInstance().Close();
+           // Connexion.getInstance().Close();
             return objAupdate;
         }
     }

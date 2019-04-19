@@ -9,25 +9,25 @@ namespace Metier
     public class EquivalentTD : ObjetAvecId
     {
 
-        public Dictionary<TypeCours, float> ratiosCoursTD { get; set; }
+        public Dictionary<TypeCours, double> ratiosCoursTD { get; set; }
         public int idCategorieEnseignant { get; set; }
         public int idTypeCours { get; set; }
         public Categorie categ { get; set; }
         public TypeCours tc { get; set; }
-        public float ratio;
+        public double ratio;
 
         public EquivalentTD()
         {
             this.init();
         }
 
-        public EquivalentTD(Dictionary<TypeCours, float> ratios)
+        public EquivalentTD(Dictionary<TypeCours, double> ratios)
         {
             this.init();
             this.ajouterRatiosCoursTD(ratios);
         }
 
-        public EquivalentTD(TypeCours tc, float ratio)
+        public EquivalentTD(TypeCours tc, double ratio)
         {
             this.init();
             this.ajouterRatiosCoursTD(tc, ratio);
@@ -37,12 +37,12 @@ namespace Metier
         {
             this.idCategorieEnseignant = -1;
             base.init();
-            ratiosCoursTD = new Dictionary<TypeCours, float>();
+            ratiosCoursTD = new Dictionary<TypeCours, double>();
             TypeCours TD = new TypeCours("TD");
             ratiosCoursTD.Add(TD, 1);
         }
 
-        public EquivalentTD(int id, Categorie categ, TypeCours tc, float ratio)
+        public EquivalentTD(int id, Categorie categ, TypeCours tc, double ratio)
         {
             this.init();
             this.id = id;
@@ -50,11 +50,11 @@ namespace Metier
             this.tc = tc;
             this.ratio = ratio;
         }
-        public void ajouterRatiosCoursTD(TypeCours tc, float ratio)
+        public void ajouterRatiosCoursTD(TypeCours tc, double ratio)
         {
             //Vérification des doublons
             bool alreadyExists = false;
-            foreach (KeyValuePair<TypeCours, float> typeCours in ratiosCoursTD)
+            foreach (KeyValuePair<TypeCours, double> typeCours in ratiosCoursTD)
             {
                 if (tc.nom == typeCours.Key.nom)
                 {
@@ -72,7 +72,7 @@ namespace Metier
 
         //Ajoute des ratiosCoursTD à ceux existants
 
-        public void ajouterRatiosCoursTD(Dictionary<TypeCours, float> ratios)
+        public void ajouterRatiosCoursTD(Dictionary<TypeCours, double> ratios)
         {
             ratios.ToList().ForEach(x => ratiosCoursTD[x.Key] = x.Value);
         }
@@ -83,7 +83,7 @@ namespace Metier
         override public string ToString()
         {
             string res = "";
-            foreach (KeyValuePair<TypeCours, float> val in ratiosCoursTD)
+            foreach (KeyValuePair<TypeCours, double> val in ratiosCoursTD)
             {
                 res = String.Concat(res, "\n (typeCours:" + val.Key.ToString() + ", ratio:" + val.Value + ")");
             }

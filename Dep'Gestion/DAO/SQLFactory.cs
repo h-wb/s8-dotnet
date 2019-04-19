@@ -33,5 +33,10 @@ namespace DAO
         {
             return new AnneeSQL();
         }
+
+        public override DAO<PartieAnnee> getPartieAnneeDAO()
+        {
+            return new PartieAnneeSQL();
+        }
     }
 }

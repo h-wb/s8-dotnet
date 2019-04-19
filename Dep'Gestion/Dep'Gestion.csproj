@@ -128,6 +128,7 @@
     <Compile Include="DAO\EquivalentTDSQL.cs" />
     <Compile Include="DAO\FactoryType.cs" />
     <Compile Include="DAO\GroupeSQL.cs" />
+    <Compile Include="DAO\PartieAnneeSQL.cs" />
     <Compile Include="DAO\SQLFactory.cs" />
     <Compile Include="DAO\TypeCoursSQL.cs" />
     <Compile Include="Metier\Annee.cs" />
@@ -141,12 +142,17 @@
     <Compile Include="Metier\Groupe.cs" />
     <Compile Include="Metier\ObjetAvecId.cs" />
     <Compile Include="Metier\ObjetAvecIdEtNom.cs" />
+    <Compile Include="Metier\PartieAnnee.cs" />
     <Compile Include="Metier\TypeCours.cs" />
+    <Compile Include="Model\MenuItem.cs" />
+    <Compile Include="Model\NavigationMenuItem.cs" />
+    <Compile Include="Model\NavigationMenuItemExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\ConversionFormats.cs" />
     <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="Utils\Outils.cs" />
     <Compile Include="Utils\OutilsSQL.cs" />
+    <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="Vues\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
