@@ -34,16 +34,23 @@ namespace Dep_Gestion
             TypeCours tp = new TypeCours("TP", true);
             Categorie maitreDeConference = new Categorie("maitre de conférences", 240);
 
+
             AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
+
 
             DAO<Annee> an = factoSQL.getAnneeDAO();
             an.create(new Annee("M1"));
             an.create(new Annee("M2"));
 
+
             DAO<PartieAnnee> pan = factoSQL.getPartieAnneeDAO();
             pan.create(new PartieAnnee("Semestre 1", an.find(1)));
             pan.create(new PartieAnnee("Semestre 2", an.find(1)));
             pan.create(new PartieAnnee("Semestre 3", an.find(2)));
+
+
+            //Console.WriteLine(maitreDeConference);
+            //Console.ReadLine();
 
 
             this.InitializeComponent();

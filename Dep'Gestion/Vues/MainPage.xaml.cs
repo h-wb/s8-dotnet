@@ -1,8 +1,10 @@
+
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using Dep_Gestion.Model;
 using Metier;
+
 using DAO;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Controls;
@@ -23,15 +25,21 @@ namespace AppGestion
         private static AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
         private static DAO<Categorie> categSQL = factoSQL.getCategorieDAO();
         private static DAO<EquivalentTD> equivalentTD = factoSQL.getEquivalentTDDao();
+
         private static DAO<Annee> an = factoSQL.getAnneeDAO();
         private static DAO<PartieAnnee> pan = factoSQL.getPartieAnneeDAO();
+
 
         private ObservableCollection<NavigationMenuItem> MainMenu = new ObservableCollection<NavigationMenuItem>();
 
 
         public MainPage()
         {
+
+
+
             this.InitializeComponent();
+
 
             foreach (Categorie categ in categSQL.findAll())
                 MainMenu.Add(new NavigationMenuItem { Text = categ.nom, Id = categ.id });
@@ -64,10 +72,38 @@ namespace AppGestion
             }
 
             
+
+
+          /*  foreach (Categorie categ in categSQL.findAll())
+                MainMenu.Add(new NavigationMenuItem {Text = categ.nom, Id = categ.id });
+
+  
+
+
+            foreach (var item in MainMenu)
+            {
+                NavigationTree.RootNodes.Add(item.AsTreeViewNode());
+
+              /*  foreach(EquivalentTD eq in equivalentTD.findAll())
+                {
+                    if(eq.idCategorieEnseignant == item.Id)
+                    {
+                        item.Add(new NavigationMenuItem { Text = "dd" });
+                    }
+
+                }*/
+
+      
+                
+            
+
+            
+
         }
 
         private void TreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
         {
+
             Debug.WriteLine(((TreeViewNode)args.InvokedItem).Content);
 
             switch(((TreeViewNode)args.InvokedItem).Depth)
@@ -88,6 +124,20 @@ namespace AppGestion
                         }
                     }
                 }*/
+
+
+          /*  if (args.InvokedItem is TreeViewNode node)
+            {
+                if (node.Content is NavigationMenuItem menuItem)
+                {
+                    var target = menuItem.NavigationDestination;
+                    if (target != null)
+                    {
+                        Navigate(menuItem.NavigationDestination, menuItem.NavigationParameter);
+                    }
+                }
+            }
+   */
 
         }
 

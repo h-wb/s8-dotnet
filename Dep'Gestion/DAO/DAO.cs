@@ -13,6 +13,8 @@ namespace DAO
 
         public abstract T find(string nom);
 
+        public abstract List<T> findAll();
+
         public abstract T create(T obj);
 
         public abstract List<T> findAll();
