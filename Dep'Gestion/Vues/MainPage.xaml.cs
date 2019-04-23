@@ -1,15 +1,13 @@
 
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+using DAO;
 using Dep_Gestion.Model;
 using Metier;
-
-using DAO;
+using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using System.Diagnostics;
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -23,81 +21,41 @@ namespace AppGestion
     public sealed partial class MainPage : Page
     {
         private static AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
-        private static DAO<Categorie> categSQL = factoSQL.getCategorieDAO();
-        private static DAO<EquivalentTD> equivalentTD = factoSQL.getEquivalentTDDao();
-
-        private static DAO<Annee> an = factoSQL.getAnneeDAO();
-        private static DAO<PartieAnnee> pan = factoSQL.getPartieAnneeDAO();
 
 
-        private ObservableCollection<NavigationMenuItem> MainMenu = new ObservableCollection<NavigationMenuItem>();
+        private static DAO<Annee> annee = factoSQL.getAnneeDAO();
+        private static DAO<PartieAnnee> partieAnnee = factoSQL.getPartieAnneeDAO();
+
+
+        private ObservableCollection<NavigationMenuItem> annees = new ObservableCollection<NavigationMenuItem>();
+        private ObservableCollection<MenuItem> test = new ObservableCollection<MenuItem>();
 
 
         public MainPage()
         {
-
-
-
             this.InitializeComponent();
-
-
-            foreach (Categorie categ in categSQL.findAll())
-                MainMenu.Add(new NavigationMenuItem { Text = categ.nom, Id = categ.id });
-
-            /*foreach (var item in MainMenu)
+            foreach (Annee annee in annee.findAll())
             {
-                NavigationTree.RootNodes.Add(item.AsTreeViewNode());
-                item.Children.Add("oui".Astre);
-                
-                
-            }*/
-
-            //-----------------//
-
-        
-
-            foreach(Annee anne in an.findAll())
-            {
-                TreeViewNode root = new TreeViewNode() { Content = anne.nom };
-                foreach(PartieAnnee panne in pan.findAll())
+                NavigationMenuItem nodeAnnee = new NavigationMenuItem { Text = annee.nom, Id = annee.id, Children = new ObservableCollection<MenuItem>() };
+                annees.Add(nodeAnnee);
+                foreach (PartieAnnee partieAnnee in partieAnnee.findAll())
                 {
-                    if(panne.annee.id == anne.id)
+                    if (annee.id == partieAnnee.annee.id)
                     {
-                        root.Children.Add(new TreeViewNode() { Content = panne.nom });
+                        NavigationMenuItem nodePartieAnnee = new NavigationMenuItem { Text = partieAnnee.nom, Id = partieAnnee.id, Children = new ObservableCollection<MenuItem>() };
+                        nodeAnnee.Children.Add(nodePartieAnnee);
                     }
                 }
-
-
-                NavigationTree.RootNodes.Add(root);
             }
 
-            
 
-
-          /*  foreach (Categorie categ in categSQL.findAll())
-                MainMenu.Add(new NavigationMenuItem {Text = categ.nom, Id = categ.id });
-
-  
-
-
-            foreach (var item in MainMenu)
+            foreach (var item in annees)
             {
                 NavigationTree.RootNodes.Add(item.AsTreeViewNode());
 
-              /*  foreach(EquivalentTD eq in equivalentTD.findAll())
-                {
-                    if(eq.idCategorieEnseignant == item.Id)
-                    {
-                        item.Add(new NavigationMenuItem { Text = "dd" });
-                    }
+            }
 
-                }*/
 
-      
-                
-            
-
-            
 
         }
 
@@ -106,27 +64,16 @@ namespace AppGestion
 
             Debug.WriteLine(((TreeViewNode)args.InvokedItem).Content);
 
-            switch(((TreeViewNode)args.InvokedItem).Depth)
+            switch (((TreeViewNode)args.InvokedItem).Depth)
             {
-                case 0: Debug.WriteLine("Annee " + ((TreeViewNode)args.InvokedItem).Content);
+                case 0:
+                    Debug.WriteLine("Annee " + ((TreeViewNode)args.InvokedItem).Content);
                     break;
-                case 1: Debug.WriteLine("Partie Annee " + ((TreeViewNode)args.InvokedItem).Content);
+                case 1:
+                    Debug.WriteLine("Partie Annee " + ((TreeViewNode)args.InvokedItem).Content);
                     break;
             }
-                /*if (args.InvokedItem is TreeViewNode node)
-                {
-                    if (node.Content is NavigationMenuItem menuItem)
-                    {
-                        var target = menuItem.NavigationDestination;
-                        if (target != null)
-                        {
-                            Navigate(menuItem.NavigationDestination, menuItem.NavigationParameter);
-                        }
-                    }
-                }*/
-
-
-          /*  if (args.InvokedItem is TreeViewNode node)
+            /*if (args.InvokedItem is TreeViewNode node)
             {
                 if (node.Content is NavigationMenuItem menuItem)
                 {
@@ -136,8 +83,21 @@ namespace AppGestion
                         Navigate(menuItem.NavigationDestination, menuItem.NavigationParameter);
                     }
                 }
-            }
-   */
+            }*/
+
+
+            /*  if (args.InvokedItem is TreeViewNode node)
+              {
+                  if (node.Content is NavigationMenuItem menuItem)
+                  {
+                      var target = menuItem.NavigationDestination;
+                      if (target != null)
+                      {
+                          Navigate(menuItem.NavigationDestination, menuItem.NavigationParameter);
+                      }
+                  }
+              }
+     */
 
         }
 
@@ -155,7 +115,7 @@ namespace AppGestion
         private void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             Categorie nouveauType = new Categorie("Nouveau type de prof", 240);
-            categSQL.create(nouveauType);
+           // categSQL.create(nouveauType);
             NavigationMenuItem test = new NavigationMenuItem { Text = nouveauType.nom };
             NavigationTree.RootNodes.Add(test.AsTreeViewNode());
         }
