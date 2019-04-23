@@ -1,4 +1,5 @@
 ﻿using System;
+using Dep_Gestion.DAO;
 using Metier;
 
 
@@ -26,6 +27,16 @@ namespace DAO
         public override DAO<Groupe> getGroupeDAO()
         {
             return new GroupeSQL();
+        }
+
+        public override DAO<Annee> getAnneeDAO()
+        {
+            return new AnneeSQL();
+        }
+
+        public override DAO<PartieAnnee> getPartieAnneeDAO()
+        {
+            return new PartieAnneeSQL();
         }
     }
 }

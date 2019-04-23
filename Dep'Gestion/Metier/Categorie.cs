@@ -32,6 +32,7 @@ namespace Metier
             this.heuresATravailler = heuresATravailler;
         }
 
+
         public override string ToString()
         {
             return base.ToString() + ", heures à travailler = " + this.heuresATravailler;

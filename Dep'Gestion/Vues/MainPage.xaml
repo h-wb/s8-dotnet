@@ -17,7 +17,9 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
-                      <CommandBar DefaultLabelPosition="Right" Grid.Row="0" Background="Transparent" HorizontalAlignment="Left" FontFamily="Segoe UI">
+
+                    <CommandBar DefaultLabelPosition="Right" Grid.Row="0" Background="Transparent" HorizontalAlignment="Left" FontFamily="Segoe UI">
+
                         <AppBarButton Icon="Add" Label="Ajouter" Click="AppBarButton_Click"/>
                         <AppBarButton Icon="Clear" Label="Supprimer"/>
                     </CommandBar>

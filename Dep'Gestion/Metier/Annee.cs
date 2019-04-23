@@ -8,11 +8,6 @@ namespace Metier
 {
     public class Annee : ObjetAvecIdEtNom
     {
-
-        //semestres ou autre type de répartition
-        public List<PartieAnnee> partiesAnnees;
-
-
         public Annee()
         {
             this.init();
@@ -24,20 +19,16 @@ namespace Metier
             this.nom = nom;
         }
 
-        public Annee(string nom, List<PartieAnnee> partiesAnnees)
+        public Annee(int id, string nom)
         {
             this.init();
+            this.id = id;
             this.nom = nom;
-            this.partiesAnnees = partiesAnnees;
         }
-
+        
         new public void init()
         {
             base.init();
-            this.partiesAnnees = new List<PartieAnnee>();
         }
-
-
-
     }
 }

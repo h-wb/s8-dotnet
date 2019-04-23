@@ -20,31 +20,12 @@ namespace DAO
                 obj.id = OutilsSQL.getLastInsertedId("type_cours", Connexion.getInstance()) + 1;
             }
 
-            /*
-             * Pour éviter les doublons, on cherche s'il existe déjà un TypeCours avec le même type. 
-             * S'il en existe un, on le retourne, sinon, on le crée dans la DB
-             */
+
             Console.WriteLine("création type cours");
-            TypeCours tc;
-            try
-            {
-                //Console.WriteLine("try");
-                tc = this.find(obj.nom);
-            }
-            catch (Exception)
-            {
-                //Console.WriteLine("catch");
-                tc = null;
-            }
+            TypeCours tc =null;
+            tc = this.find(obj.nom);
 
-            Console.WriteLine(tc);
-            // Console.ReadLine();
-
-            if (tc != null)
-            {
-                return tc;
-            }
-            else
+            if(tc ==null)
             {
                 int hasGroups = ConversionFormats.convert(obj.hasGroups);
                 using (SqlCommand command_c = new SqlCommand("INSERT INTO type_cours VALUES (" + obj.id + ", '" + obj.nom + "', '" + hasGroups + "');", Connexion.getInstance()))
@@ -76,7 +57,7 @@ namespace DAO
             {
                 command_d.ExecuteNonQuery();
             }
-            Connexion.getInstance().Close();
+            //Connexion.getInstance().Close();
         }
 
         public override TypeCours find(string type)
@@ -92,21 +73,14 @@ namespace DAO
                     {
                         while (reader_f.Read())
                         {
-                            /*Console.WriteLine("{0}\t{1}", reader_tc.GetInt32(0),
-                            reader_tc.GetString(1));*/
                             typeCours = new TypeCours(reader_f.GetInt32(0), reader_f.GetString(1),
                                 ConversionFormats.convert(reader_f.GetInt32(2)));
                         }
                     }
-                    else
-                    {
-                        throw new Exception("Aucun objet avec cet id n'a été trouvé.");
-                    }
 
                     reader_f.Close();
                 }
-                Connexion.getInstance().Close();
-                Console.WriteLine("type cours trouvé:" + typeCours);
+                //Connexion.getInstance().Close();
                 return typeCours;
 
             }
@@ -124,8 +98,6 @@ namespace DAO
                     {
                         while (reader_f.Read())
                         {
-                            /*Console.WriteLine("{0}\t{1}", reader_tc.GetInt32(0),
-                            reader_tc.GetString(1));*/
                             typeCours = new TypeCours(reader_f.GetInt32(0), reader_f.GetString(1),
                                 ConversionFormats.convert(reader_f.GetInt32(2)));
 
@@ -150,21 +122,39 @@ namespace DAO
         }
 
         public override List<TypeCours> findAll()
+
         {
-            throw new NotImplementedException();
+            List<TypeCours> tps = new List<TypeCours>();
+
+
+            using (SqlCommand command_f = new SqlCommand("SELECT * FROM type_cours;", Connexion.getInstance()))
+            {
+                using (SqlDataReader reader_f = command_f.ExecuteReader())
+                {
+                    if (reader_f.HasRows)
+                    {
+                        while (reader_f.Read())
+                        {
+                            tps.Add(new TypeCours(reader_f.GetInt32(0), reader_f.GetString(1), reader_f.GetBoolean(2)));
+                        }
+                    }
+
+                }
+            }
+
+            return tps;
         }
 
-        public override TypeCours update(TypeCours obj)
+        public override TypeCours update(TypeCours objAupdate, TypeCours update)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE type_cours SET nom='" + obj.nom + "', " +
-                "has_groups=" + ConversionFormats.convert(obj.hasGroups) + " WHERE id=" + obj.id + ";", Connexion.getInstance()))
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE type_cours SET nom='" + update.nom + "', " +
+                "has_groups=" + ConversionFormats.convert(update.hasGroups) + " WHERE id=" + objAupdate.id + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }
 
-            Connexion.getInstance().Close();
-            return obj;
+           // Connexion.getInstance().Close();
+            return objAupdate;
         }
-
     }
 }

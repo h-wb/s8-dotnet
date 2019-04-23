@@ -37,7 +37,7 @@ namespace DAO
             using (SqlCommand command = new SqlCommand(query, Connexion.getInstance()))
             {
                 command.ExecuteNonQuery();
-                Connexion.getInstance().Close();
+                //Connexion.getInstance().Close();
             }
             return obj;
         }
@@ -48,7 +48,7 @@ namespace DAO
             {
                 command.ExecuteNonQuery();
             }
-            Connexion.getInstance().Close();
+            //Connexion.getInstance().Close();
         }
 
         public override Groupe find(int id)
@@ -67,7 +67,7 @@ namespace DAO
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
 
-                    Dictionary<TypeCours, float> ratios = new Dictionary<TypeCours, float>();
+                    Dictionary<TypeCours, double> ratios = new Dictionary<TypeCours, double>();
 
                     //Factory pour chercher les objets TypeCours dans la DB
                     AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
@@ -114,23 +114,14 @@ namespace DAO
         }
 
         public override List<Groupe> findAll()
+
         {
             throw new NotImplementedException();
         }
 
-        public override Groupe update(Groupe obj)
+        public override Groupe update(Groupe objAupdate, Groupe update)
         {
-            /*
-            * nom
-            * id_enseignant
-            * id_cours
-            */
-            SqlCommand command = new SqlCommand(@"UPDATE groupe SET 
-            nom='" + obj.nom + "', id_enseignant=" + obj.enseignant.id + ", id_cours = " + obj.idCours
-            + " WHERE id=" + obj.id + ";", Connexion.getInstance());
-            command.ExecuteNonQuery();
-
-            return obj;
+            throw new NotImplementedException();
         }
     }
 }

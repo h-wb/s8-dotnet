@@ -50,4 +50,4 @@ namespace Dep_Gestion.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-}
+
