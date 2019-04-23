@@ -1,1 +1,0 @@
-C:\Users\Chocobo\source\repos\Dep'Gestion\Dep'Gestion\Dep'Gestion.csproj;x64

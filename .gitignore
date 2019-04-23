@@ -1,1 +1,3 @@
 *.vs
+Dep\'Gestion/obj/*
+Dep\'Gestion/bin/x64/Debug/
