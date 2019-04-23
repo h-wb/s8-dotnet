@@ -1,6 +1,7 @@
 
 using DAO;
 using Dep_Gestion.Model;
+using Dep_Gestion.Vues;
 using Metier;
 using System;
 using System.Collections.ObjectModel;
@@ -20,6 +21,8 @@ namespace AppGestion
 
     public sealed partial class MainPage : Page
     {
+
+
         private static AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
 
 
@@ -28,77 +31,49 @@ namespace AppGestion
 
 
         private ObservableCollection<NavigationMenuItem> annees = new ObservableCollection<NavigationMenuItem>();
-        private ObservableCollection<MenuItem> test = new ObservableCollection<MenuItem>();
-
+       
+     
+        private TreeViewNode nodeSelectionne;
+        private NavigationMenuItem nodeSelectionneItem;
 
         public MainPage()
         {
             this.InitializeComponent();
             foreach (Annee annee in annee.findAll())
             {
-                NavigationMenuItem nodeAnnee = new NavigationMenuItem { Text = annee.nom, Id = annee.id, Children = new ObservableCollection<MenuItem>() };
+                NavigationMenuItem nodeAnnee = new NavigationMenuItem { Text = annee.nom, Objet = annee, Children = new ObservableCollection<MenuItem>(), NavigationDestination = typeof(AnneeVue) };
                 annees.Add(nodeAnnee);
                 foreach (PartieAnnee partieAnnee in partieAnnee.findAll())
                 {
                     if (annee.id == partieAnnee.annee.id)
                     {
-                        NavigationMenuItem nodePartieAnnee = new NavigationMenuItem { Text = partieAnnee.nom, Id = partieAnnee.id, Children = new ObservableCollection<MenuItem>() };
+                        NavigationMenuItem nodePartieAnnee = new NavigationMenuItem { Text = partieAnnee.nom, Objet = partieAnnee, Children = new ObservableCollection<MenuItem>() };
                         nodeAnnee.Children.Add(nodePartieAnnee);
                     }
                 }
             }
-
 
             foreach (var item in annees)
             {
                 NavigationTree.RootNodes.Add(item.AsTreeViewNode());
 
             }
-
-
-
         }
 
         private void TreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
         {
-
-            Debug.WriteLine(((TreeViewNode)args.InvokedItem).Content);
-
-            switch (((TreeViewNode)args.InvokedItem).Depth)
-            {
-                case 0:
-                    Debug.WriteLine("Annee " + ((TreeViewNode)args.InvokedItem).Content);
-                    break;
-                case 1:
-                    Debug.WriteLine("Partie Annee " + ((TreeViewNode)args.InvokedItem).Content);
-                    break;
-            }
-            /*if (args.InvokedItem is TreeViewNode node)
+            nodeSelectionne = (TreeViewNode)args.InvokedItem;
+            if (args.InvokedItem is TreeViewNode node)
             {
                 if (node.Content is NavigationMenuItem menuItem)
                 {
-                    var target = menuItem.NavigationDestination;
-                    if (target != null)
+                    nodeSelectionneItem = menuItem;
+                    if (nodeSelectionneItem.NavigationDestination != null)
                     {
                         Navigate(menuItem.NavigationDestination, menuItem.NavigationParameter);
                     }
                 }
-            }*/
-
-
-            /*  if (args.InvokedItem is TreeViewNode node)
-              {
-                  if (node.Content is NavigationMenuItem menuItem)
-                  {
-                      var target = menuItem.NavigationDestination;
-                      if (target != null)
-                      {
-                          Navigate(menuItem.NavigationDestination, menuItem.NavigationParameter);
-                      }
-                  }
-              }
-     */
-
+            }
         }
 
         public bool Navigate(Type sourcePageType, object parameter = null)
@@ -114,10 +89,21 @@ namespace AppGestion
 
         private void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            Categorie nouveauType = new Categorie("Nouveau type de prof", 240);
-           // categSQL.create(nouveauType);
-            NavigationMenuItem test = new NavigationMenuItem { Text = nouveauType.nom };
-            NavigationTree.RootNodes.Add(test.AsTreeViewNode());
+           
+            if(nodeSelectionne == null)
+            {
+                Annee nouvelleAnnee = new Annee("Nouvelle annee");
+                NavigationMenuItem nouveauNode = new NavigationMenuItem { Text = nouvelleAnnee.nom, Objet = nouvelleAnnee };
+                NavigationTree.RootNodes.Add(nouveauNode.AsTreeViewNode());
+            } else if(nodeSelectionneItem.Objet.GetType() == typeof(Annee))
+            {
+                PartieAnnee partieAnnee = new PartieAnnee("Nouveau semestre", (Annee)nodeSelectionneItem.Objet);
+                NavigationMenuItem nouveauNode = new NavigationMenuItem { Text = partieAnnee.nom, Objet = partieAnnee };
+                nodeSelectionne.Children.Add(nouveauNode.AsTreeViewNode());
+            }
+       
         }
+
+   
     }
 }
