@@ -9,6 +9,7 @@ App.xbf
 Dep'Gestion.xr.xml
 Vues\AnneeVue.xbf
 Vues\MainPage.xbf
+Vues\PartieAnneeVue.xbf
 Data\schemas\diagramme_classe.xml
 Data\schemas\schema_bdd.xml
 Data\SQL\dbo.categorie_enseignant.sql

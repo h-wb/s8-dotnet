@@ -48,3 +48,8 @@ C:\Developpement\DotNet\Dep-Gestion\Dep'Gestion\obj\x64\Debug\Vues\AnneeVue.g.i.
 C:\Developpement\DotNet\Dep-Gestion\Dep'Gestion\obj\x64\Debug\Vues\AnneeVue.g.cs
 C:\Developpement\DotNet\Dep-Gestion\Dep'Gestion\obj\x64\Debug\Vues\AnneeVue.xaml
 C:\Developpement\DotNet\Dep-Gestion\Dep'Gestion\obj\x64\Debug\Vues\AnneeVue.xbf
+C:\Developpement\DotNet\Dep-Gestion\Dep'Gestion\bin\x64\Debug\Vues\PartieAnneeVue.xbf
+C:\Developpement\DotNet\Dep-Gestion\Dep'Gestion\obj\x64\Debug\Vues\PartieAnneeVue.g.i.cs
+C:\Developpement\DotNet\Dep-Gestion\Dep'Gestion\obj\x64\Debug\Vues\PartieAnneeVue.g.cs
+C:\Developpement\DotNet\Dep-Gestion\Dep'Gestion\obj\x64\Debug\Vues\PartieAnneeVue.xaml
+C:\Developpement\DotNet\Dep-Gestion\Dep'Gestion\obj\x64\Debug\Vues\PartieAnneeVue.xbf

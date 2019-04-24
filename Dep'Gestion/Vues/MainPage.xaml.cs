@@ -46,7 +46,7 @@ namespace AppGestion
                 {
                     if (annee.id == partieAnnee.annee.id)
                     {
-                        NavigationMenuItem nodePartieAnnee = new NavigationMenuItem { Text = partieAnnee.nom, Objet = partieAnnee, Children = new ObservableCollection<MenuItem>() };
+                        NavigationMenuItem nodePartieAnnee = new NavigationMenuItem { Text = partieAnnee.nom, Objet = partieAnnee, Children = new ObservableCollection<MenuItem>(), NavigationDestination = typeof(PartieAnneeVue) };
                         nodeAnnee.Children.Add(nodePartieAnnee);
                     }
                 }
@@ -70,13 +70,13 @@ namespace AppGestion
                     if (nodeSelectionneItem.NavigationDestination != null)
                     {
                         Debug.WriteLine(menuItem.NavigationDestination);
-                        Navigate(menuItem.NavigationDestination, menuItem.Text);
+                        Navigate(menuItem.NavigationDestination);
                     }
                 }
             }
         }
 
-        public bool Navigate(Type sourcePageType, object parameter)
+        public bool Navigate(Type sourcePageType, object parameter = null)
         {
             return SplitViewFrame.Navigate(sourcePageType, parameter);
         }

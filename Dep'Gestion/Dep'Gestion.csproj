@@ -146,7 +146,9 @@
     <Compile Include="Metier\ObjetAvecIdEtNom.cs" />
     <Compile Include="Metier\PartieAnnee.cs" />
     <Compile Include="Metier\TypeCours.cs" />
+    <Compile Include="Model\ControlDataContext.cs" />
     <Compile Include="Model\MenuItem.cs" />
+    <Compile Include="Model\TextBlockModel.cs" />
     <Compile Include="Model\NavigationMenuItem.cs" />
     <Compile Include="Model\NavigationMenuItemExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -160,6 +162,9 @@
     </Compile>
     <Compile Include="Vues\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vues\PartieAnneeVue.xaml.cs">
+      <DependentUpon>PartieAnneeVue.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -203,6 +208,10 @@
     <Page Include="Vues\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vues\PartieAnneeVue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

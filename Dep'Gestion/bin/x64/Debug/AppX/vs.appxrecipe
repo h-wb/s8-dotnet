@@ -30,13 +30,13 @@
     <AppXManifest Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2019-04-24T14:25:00.743</Modified>
+      <Modified>2019-04-24T16:45:30.538</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Dep%27Gestion.exe">
       <PackagePath>entrypoint\Dep%27Gestion.exe</PackagePath>
-      <Modified>2019-04-24T14:25:00.369</Modified>
+      <Modified>2019-04-24T16:45:30.169</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x64.microsoft.netcore.universalwindowsplatform\6.2.7\runtimes\win10-x64\lib\uap10.0.15138\System.Runtime.dll">
       <PackagePath>System.Runtime.dll</PackagePath>
@@ -110,19 +110,23 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Dep%27Gestion.xr.xml">
       <PackagePath>Dep%27Gestion.xr.xml</PackagePath>
-      <Modified>2019-04-24T08:31:43.991</Modified>
+      <Modified>2019-04-24T16:45:29.994</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
-      <Modified>2019-04-24T14:25:00.231</Modified>
+      <Modified>2019-04-24T16:45:30.003</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Vues\AnneeVue.xbf">
       <PackagePath>Vues\AnneeVue.xbf</PackagePath>
-      <Modified>2019-04-24T14:25:00.232</Modified>
+      <Modified>2019-04-24T16:45:30.003</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Vues\MainPage.xbf">
       <PackagePath>Vues\MainPage.xbf</PackagePath>
-      <Modified>2019-04-24T14:25:00.232</Modified>
+      <Modified>2019-04-24T16:45:30.003</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Vues\PartieAnneeVue.xbf">
+      <PackagePath>Vues\PartieAnneeVue.xbf</PackagePath>
+      <Modified>2019-04-24T16:45:30.004</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\10.0.17763.0\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -130,11 +134,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2019-04-24T14:22:07.551</Modified>
+      <Modified>2019-04-24T16:44:26.082</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Core\Dep%27Gestion.exe">
       <PackagePath>Dep%27Gestion.exe</PackagePath>
-      <Modified>2019-04-24T14:25:00.736</Modified>
+      <Modified>2019-04-24T16:45:30.531</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

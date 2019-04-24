@@ -12,8 +12,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using System.Diagnostics;
-using Dep_Gestion.Model;
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -22,26 +20,11 @@ namespace Dep_Gestion.Vues
     /// <summary>
     /// Une page vide peut être utilisée seule ou constituer une page de destination au sein d'un frame.
     /// </summary>
-    public sealed partial class AnneeVue : Page
+    public sealed partial class PartieAnneeVue : Page
     {
-        private TextBlockModel tbmodel;
-
-        public AnneeVue()
+        public PartieAnneeVue()
         {
             this.InitializeComponent();
-
-            tbmodel = new TextBlockModel { Text = "Hello" };
-            DataContext = tbmodel;
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            if (e.Parameter != null)
-            {
-                txtTest.Text = e.Parameter.ToString();
-            }
-
-            base.OnNavigatedTo(e);
         }
     }
 }
