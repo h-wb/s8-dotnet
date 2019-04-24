@@ -10,7 +10,6 @@ namespace Dep_Gestion.Model
     {
         private Type _navigationDestination;
         private object _navigationParameter;
-        private string nom;
 
 
         public Type NavigationDestination

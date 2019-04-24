@@ -1,4 +1,6 @@
-﻿using Dep_Gestion.ViewModel;
+﻿using DAO;
+using Dep_Gestion.ViewModel;
+using Metier;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,6 +16,7 @@ namespace Dep_Gestion.Model
         private string _glyph;
         private string _text;
         private int _id;
+        private ObjetAvecId _objet;
         private ObservableCollection<MenuItem> _children = new ObservableCollection<MenuItem>();
 
         public string Glyph
@@ -32,6 +35,12 @@ namespace Dep_Gestion.Model
         {
             get { return _id; }
             set { SetProperty(ref _id, value); }
+        }
+
+        public ObjetAvecId Objet
+        {
+            get { return _objet; }
+            set { SetProperty(ref _objet, value); }
         }
 
         public ObservableCollection<MenuItem> Children

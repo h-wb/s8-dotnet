@@ -37,13 +37,17 @@ namespace Dep_Gestion
             AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
 
             DAO<Annee> an = factoSQL.getAnneeDAO();
-            an.create(new Annee("M1"));
-            an.create(new Annee("M2"));
+            /*an.create(new Annee("M1"));
+            an.create(new Annee("M2"));*/
 
             DAO<PartieAnnee> pan = factoSQL.getPartieAnneeDAO();
-            pan.create(new PartieAnnee("Semestre 1", an.find(1)));
+            /*pan.create(new PartieAnnee("Semestre 1", an.find(1)));
             pan.create(new PartieAnnee("Semestre 2", an.find(1)));
-            pan.create(new PartieAnnee("Semestre 3", an.find(2)));
+            pan.create(new PartieAnnee("Semestre 3", an.find(2)));*/
+            DAO<Enseignement> enses = factoSQL.getEnseignementDAO();
+            DAO<EC> ecs = factoSQL.getECDAO();
+
+            an.delete(an.find(1));
 
 
             this.InitializeComponent();

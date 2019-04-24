@@ -43,3 +43,8 @@ C:\Developpement\DotNet\Dep-Gestion\Dep'Gestion\obj\x64\Debug\qualifiers.txt.int
 C:\Developpement\DotNet\Dep-Gestion\Dep'Gestion\obj\x64\Debug\MultipleQualifiersPerDimensionFound.txt
 C:\Developpement\DotNet\Dep-Gestion\Dep'Gestion\obj\x64\Debug\ProjectArchitectures.txt
 C:\Developpement\DotNet\Dep-Gestion\Dep'Gestion\obj\x64\Debug\.winmd_cache\$Microsoft.UI.Xaml.Markup.winmd_636758480200000000.json
+C:\Developpement\DotNet\Dep-Gestion\Dep'Gestion\bin\x64\Debug\Vues\AnneeVue.xbf
+C:\Developpement\DotNet\Dep-Gestion\Dep'Gestion\obj\x64\Debug\Vues\AnneeVue.g.i.cs
+C:\Developpement\DotNet\Dep-Gestion\Dep'Gestion\obj\x64\Debug\Vues\AnneeVue.g.cs
+C:\Developpement\DotNet\Dep-Gestion\Dep'Gestion\obj\x64\Debug\Vues\AnneeVue.xaml
+C:\Developpement\DotNet\Dep-Gestion\Dep'Gestion\obj\x64\Debug\Vues\AnneeVue.xbf

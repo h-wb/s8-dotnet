@@ -22,6 +22,16 @@ CREATE TABLE partie_annee
     ON DELETE CASCADE ON UPDATE CASCADE
 )
 
+CREATE TABLE ec
+(
+	id INT PRIMARY KEY NOT NULL,
+	nom CHAR(250) NOT NULL,
+	id_enseignement  INT  NOT NULL,
+    FOREIGN KEY (id_enseignement)
+    REFERENCES enseignement(id)
+    ON DELETE CASCADE ON UPDATE CASCADE
+)
+
 CREATE TABLE enseignement
 (
 	id INT PRIMARY KEY NOT NULL IDENTITY(1,1),

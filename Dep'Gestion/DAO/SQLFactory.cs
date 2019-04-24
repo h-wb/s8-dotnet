@@ -38,5 +38,15 @@ namespace DAO
         {
             return new PartieAnneeSQL();
         }
+
+        public override DAO<Enseignement> getEnseignementDAO()
+        {
+            return new EnseignementSQL();
+        }
+
+        public override DAO<EC> getECDAO()
+        {
+            return new ECSQL();
+        }
     }
 }

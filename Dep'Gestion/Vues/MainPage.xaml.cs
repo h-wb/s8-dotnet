@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using DAO;
 using Dep_Gestion.Model;
+using Dep_Gestion.Vues;
 using Metier;
-using DAO;
+using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using System.Diagnostics;
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -20,78 +20,63 @@ namespace AppGestion
 
     public sealed partial class MainPage : Page
     {
+
+
         private static AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
-        private static DAO<Categorie> categSQL = factoSQL.getCategorieDAO();
-        private static DAO<EquivalentTD> equivalentTD = factoSQL.getEquivalentTDDao();
-        private static DAO<Annee> an = factoSQL.getAnneeDAO();
-        private static DAO<PartieAnnee> pan = factoSQL.getPartieAnneeDAO();
 
-        private ObservableCollection<NavigationMenuItem> MainMenu = new ObservableCollection<NavigationMenuItem>();
 
+        private static DAO<Annee> annee = factoSQL.getAnneeDAO();
+        private static DAO<PartieAnnee> partieAnnee = factoSQL.getPartieAnneeDAO();
+
+
+        private ObservableCollection<NavigationMenuItem> annees = new ObservableCollection<NavigationMenuItem>();
+
+
+        private TreeViewNode nodeSelectionne;
+        private NavigationMenuItem nodeSelectionneItem;
 
         public MainPage()
         {
             this.InitializeComponent();
-
-            foreach (Categorie categ in categSQL.findAll())
-                MainMenu.Add(new NavigationMenuItem { Text = categ.nom, Id = categ.id });
-
-            /*foreach (var item in MainMenu)
+            foreach (Annee annee in annee.findAll())
             {
-                NavigationTree.RootNodes.Add(item.AsTreeViewNode());
-                item.Children.Add("oui".Astre);
-                
-                
-            }*/
-
-            //-----------------//
-
-        
-
-            foreach(Annee anne in an.findAll())
-            {
-                TreeViewNode root = new TreeViewNode() { Content = anne.nom };
-                foreach(PartieAnnee panne in pan.findAll())
+                NavigationMenuItem nodeAnnee = new NavigationMenuItem { Text = annee.nom, Objet = annee, Children = new ObservableCollection<MenuItem>(), NavigationDestination = typeof(AnneeVue) };
+                annees.Add(nodeAnnee);
+                foreach (PartieAnnee partieAnnee in partieAnnee.findAll())
                 {
-                    if(panne.annee.id == anne.id)
+                    if (annee.id == partieAnnee.annee.id)
                     {
-                        root.Children.Add(new TreeViewNode() { Content = panne.nom });
+                        NavigationMenuItem nodePartieAnnee = new NavigationMenuItem { Text = partieAnnee.nom, Objet = partieAnnee, Children = new ObservableCollection<MenuItem>() };
+                        nodeAnnee.Children.Add(nodePartieAnnee);
                     }
                 }
-
-
-                NavigationTree.RootNodes.Add(root);
             }
 
-            
+            foreach (var item in annees)
+            {
+                NavigationTree.RootNodes.Add(item.AsTreeViewNode());
+
+            }
         }
 
         private void TreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
         {
-            Debug.WriteLine(((TreeViewNode)args.InvokedItem).Content);
-
-            switch(((TreeViewNode)args.InvokedItem).Depth)
+            nodeSelectionne = (TreeViewNode)args.InvokedItem;
+            if (args.InvokedItem is TreeViewNode node)
             {
-                case 0: Debug.WriteLine("Annee " + ((TreeViewNode)args.InvokedItem).Content);
-                    break;
-                case 1: Debug.WriteLine("Partie Annee " + ((TreeViewNode)args.InvokedItem).Content);
-                    break;
-            }
-                /*if (args.InvokedItem is TreeViewNode node)
+                if (node.Content is NavigationMenuItem menuItem)
                 {
-                    if (node.Content is NavigationMenuItem menuItem)
+                    nodeSelectionneItem = menuItem;
+                    if (nodeSelectionneItem.NavigationDestination != null)
                     {
-                        var target = menuItem.NavigationDestination;
-                        if (target != null)
-                        {
-                            Navigate(menuItem.NavigationDestination, menuItem.NavigationParameter);
-                        }
+                        Debug.WriteLine(menuItem.NavigationDestination);
+                        Navigate(menuItem.NavigationDestination, menuItem.Text);
                     }
-                }*/
-
+                }
+            }
         }
 
-        public bool Navigate(Type sourcePageType, object parameter = null)
+        public bool Navigate(Type sourcePageType, object parameter)
         {
             return SplitViewFrame.Navigate(sourcePageType, parameter);
         }
@@ -104,10 +89,22 @@ namespace AppGestion
 
         private void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            Categorie nouveauType = new Categorie("Nouveau type de prof", 240);
-            categSQL.create(nouveauType);
-            NavigationMenuItem test = new NavigationMenuItem { Text = nouveauType.nom };
-            NavigationTree.RootNodes.Add(test.AsTreeViewNode());
+
+            if (nodeSelectionne == null)
+            {
+                Annee nouvelleAnnee = new Annee("Nouvelle annee");
+                NavigationMenuItem nouveauNode = new NavigationMenuItem { Text = nouvelleAnnee.nom, Objet = nouvelleAnnee };
+                NavigationTree.RootNodes.Add(nouveauNode.AsTreeViewNode());
+            }
+            else if (nodeSelectionneItem.Objet.GetType() == typeof(Annee))
+            {
+                PartieAnnee partieAnnee = new PartieAnnee("Nouveau semestre", (Annee)nodeSelectionneItem.Objet);
+                NavigationMenuItem nouveauNode = new NavigationMenuItem { Text = partieAnnee.nom, Objet = partieAnnee };
+                nodeSelectionne.Children.Add(nouveauNode.AsTreeViewNode());
+            }
+
         }
+
+
     }
 }

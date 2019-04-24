@@ -88,6 +88,9 @@
     <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Vues\AnneeVue.xbf">
+      <PackagePath>Vues\AnneeVue.xbf</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Developpement\DotNet\Dep-Gestion\Dep%27Gestion\bin\x64\Debug\Vues\MainPage.xbf">
       <PackagePath>Vues\MainPage.xbf</PackagePath>
     </AppxPackagedFile>

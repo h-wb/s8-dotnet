@@ -37,28 +37,7 @@ namespace Metier
             this.prenom = prenom;
             this.categorie = categorie;
         }
-
-
-        public void assignationEnseignant(Enseignement enseignement)
-        {
-            enseignement.assignerEnseignant(this);
-        }
-
-        public void assignationEnseignant(EC ec)
-        {
-            ec.assignerEnseignant(this);
-        }
-
-        public void assignationEnseignant(Cours cours)
-        {
-            cours.assignerEnseignant(this);
-        }
-
-        public void assignationEnseignant(Groupe groupe)
-        {
-            groupe.enseignant = this;
-        }
-
+        
         new public void init()
         {
             base.init();
