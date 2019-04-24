@@ -125,6 +125,7 @@
     <Compile Include="DAO\ConnectionSQL.cs" />
     <Compile Include="DAO\Connexion.cs" />
     <Compile Include="DAO\DAO.cs" />
+    <Compile Include="DAO\EnseignementSQL.cs" />
     <Compile Include="DAO\EquivalentTDSQL.cs" />
     <Compile Include="DAO\FactoryType.cs" />
     <Compile Include="DAO\GroupeSQL.cs" />

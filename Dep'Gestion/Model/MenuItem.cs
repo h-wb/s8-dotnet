@@ -16,8 +16,9 @@ namespace Dep_Gestion.Model
         private string _glyph;
         private string _text;
         private int _id;
-        private ObjetAvecId _objet;
+        private ObjetAvecIdEtNom _objet;
         private ObservableCollection<MenuItem> _children = new ObservableCollection<MenuItem>();
+        private MenuItem _parent;
 
         public string Glyph
         {
@@ -37,7 +38,7 @@ namespace Dep_Gestion.Model
             set { SetProperty(ref _id, value); }
         }
 
-        public ObjetAvecId Objet
+        public ObjetAvecIdEtNom Objet
         {
             get { return _objet; }
             set { SetProperty(ref _objet, value); }
@@ -47,6 +48,12 @@ namespace Dep_Gestion.Model
         {
             get { return _children; }
             set { SetProperty(ref _children, value); }
+        }
+
+        public MenuItem Parent
+        {
+            get { return _parent; }
+            set { SetProperty(ref _parent, value); }
         }
 
         public override string ToString()

@@ -44,10 +44,13 @@ namespace Dep_Gestion
 
 
             DAO<PartieAnnee> pan = factoSQL.getPartieAnneeDAO();
-            pan.create(new PartieAnnee("Semestre 1", an.find(1)));
+            PartieAnnee test = new PartieAnnee("Semestre 1", an.find(1));
+            pan.create(test);
             pan.create(new PartieAnnee("Semestre 2", an.find(1)));
             pan.create(new PartieAnnee("Semestre 3", an.find(2)));
 
+            DAO<Enseignement> en = factoSQL.getEnseignementDAO();
+          //  en.create(new Enseignement("EC1", test));
 
             //Console.WriteLine(maitreDeConference);
             //Console.ReadLine();

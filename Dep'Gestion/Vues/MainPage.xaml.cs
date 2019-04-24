@@ -6,7 +6,6 @@ using Metier;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -28,13 +27,13 @@ namespace AppGestion
 
         private static DAO<Annee> annee = factoSQL.getAnneeDAO();
         private static DAO<PartieAnnee> partieAnnee = factoSQL.getPartieAnneeDAO();
-        //private static DAO<Enseignement> enseignement = factoSQL.getE
+        private static DAO<Enseignement> enseignement = factoSQL.getEnseignementDAO();
+
 
 
         private ObservableCollection<NavigationMenuItem> annees = new ObservableCollection<NavigationMenuItem>();
-       
-     
-        private TreeViewNode nodeSelectionne;
+
+
         private NavigationMenuItem nodeSelectionneItem;
 
         public MainPage()
@@ -48,33 +47,30 @@ namespace AppGestion
                 {
                     if (annee.id == partieAnnee.annee.id)
                     {
-                        NavigationMenuItem nodePartieAnnee = new NavigationMenuItem { Text = partieAnnee.nom, Objet = partieAnnee, Children = new ObservableCollection<MenuItem>() };
+                        NavigationMenuItem nodePartieAnnee = new NavigationMenuItem { Text = partieAnnee.nom, Objet = partieAnnee, Children = new ObservableCollection<MenuItem>(), Parent = nodeAnnee };
                         nodeAnnee.Children.Add(nodePartieAnnee);
+                        foreach (Enseignement enseignement in enseignement.findAll())
+                        {
+                            if (partieAnnee.id == enseignement.partAnnee.id)
+                            {
+                                NavigationMenuItem nodeEnseignement = new NavigationMenuItem { Text = enseignement.nom, Objet = enseignement, Children = new ObservableCollection<MenuItem>(), Parent = nodePartieAnnee };
+                                nodePartieAnnee.Children.Add(nodeEnseignement);
+                            }
+                        }
+
                     }
                 }
-            }
-
-            foreach (var item in annees)
-            {
-                TreeView.RootNodes.Add(item.AsTreeViewNode());
-
             }
         }
 
         private void TreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
         {
-            nodeSelectionne = (TreeViewNode)args.InvokedItem;
-            if (args.InvokedItem is TreeViewNode node)
+            nodeSelectionneItem = (NavigationMenuItem)args.InvokedItem;
+            if (nodeSelectionneItem.NavigationDestination != null)
             {
-                if (node.Content is NavigationMenuItem menuItem)
-                {
-                    nodeSelectionneItem = menuItem;
-                    if (nodeSelectionneItem.NavigationDestination != null)
-                    {
-                        Navigate(menuItem.NavigationDestination, menuItem.NavigationParameter);
-                    }
-                }
+                Navigate(nodeSelectionneItem.NavigationDestination, nodeSelectionneItem.NavigationParameter);
             }
+
         }
 
         public bool Navigate(Type sourcePageType, object parameter = null)
@@ -90,21 +86,25 @@ namespace AppGestion
 
         private void Add_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-           
-            if(nodeSelectionne == null)
+            if (nodeSelectionneItem == null)
             {
                 Annee nouvelleAnnee = new Annee("Nouvelle annee");
                 annee.create(nouvelleAnnee);
-                NavigationMenuItem nouveauNode = new NavigationMenuItem { Text = nouvelleAnnee.nom, Objet = nouvelleAnnee };
-                TreeView.RootNodes.Add(nouveauNode.AsTreeViewNode());
-            } else if(nodeSelectionneItem.Objet.GetType() == typeof(Annee))
+                annees.Add(new NavigationMenuItem { Text = nouvelleAnnee.nom, Objet = nouvelleAnnee });
+            }
+            else if (nodeSelectionneItem.Objet.GetType() == typeof(Annee))
             {
                 PartieAnnee nouvellePartieAnnee = new PartieAnnee("Nouveau semestre", (Annee)nodeSelectionneItem.Objet);
                 partieAnnee.create(nouvellePartieAnnee);
-                NavigationMenuItem nouveauNode = new NavigationMenuItem { Text = nouvellePartieAnnee.nom, Objet = nouvellePartieAnnee };
-                nodeSelectionne.Children.Add(nouveauNode.AsTreeViewNode());
+                nodeSelectionneItem.Children.Add(new NavigationMenuItem { Text = nouvellePartieAnnee.nom, Objet = nouvellePartieAnnee, Parent = nodeSelectionneItem });
             }
-       
+            else if (nodeSelectionneItem.Objet.GetType() == typeof(PartieAnnee))
+            {
+                Enseignement nouvelEnseignement = new Enseignement("Nouveau enseignement", (PartieAnnee)nodeSelectionneItem.Objet);
+                enseignement.create(nouvelEnseignement);
+                nodeSelectionneItem.Children.Add(new NavigationMenuItem { Text = nouvelEnseignement.nom, Objet = nouvelEnseignement, Parent = nodeSelectionneItem });
+            }
+
         }
 
         private void Clear_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -112,16 +112,21 @@ namespace AppGestion
             if (nodeSelectionneItem.Objet.GetType() == typeof(Annee))
             {
                 annee.delete((Annee)nodeSelectionneItem.Objet);
-                TreeView.RootNodes.Remove(nodeSelectionne);
+                annees.Remove(nodeSelectionneItem);
             }
             else if (nodeSelectionneItem.Objet.GetType() == typeof(PartieAnnee))
             {
                 partieAnnee.delete((PartieAnnee)nodeSelectionneItem.Objet);
-                //Etrange façon de supprimer mais remove n'est pas directement accessible via le node
-                nodeSelectionne.Parent.Children.Remove(nodeSelectionne);
+                nodeSelectionneItem.Parent.Children.Remove(nodeSelectionneItem);
+            }
+            else if (nodeSelectionneItem.Objet.GetType() == typeof(Enseignement))
+            {
+                enseignement.delete((Enseignement)nodeSelectionneItem.Objet);
+                nodeSelectionneItem.Parent.Children.Remove(nodeSelectionneItem);
+
             }
 
-            
+
 
         }
 

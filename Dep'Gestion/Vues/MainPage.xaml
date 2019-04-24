@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:local1="using:Dep_Gestion.Model"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -23,7 +24,15 @@
                         <AppBarButton x:Name="Add" Icon="Add" Label="Ajouter" Click="Add_Click"/>
                         <AppBarButton x:Name="Clear" Icon="Clear" Label="Supprimer" Click="Clear_Click"/>
                     </CommandBar>
-                    <TreeView x:Name="TreeView" ItemInvoked="TreeView_ItemInvoked" FontFamily="Segoe UI" Margin="0,40,0,0"/>
+                    <TreeView x:Name="TreeView" ItemsSource="{x:Bind annees}" ItemInvoked="TreeView_ItemInvoked" FontFamily="Segoe UI" Margin="0,40,0,0">
+                        <TreeView.ItemTemplate>
+                            <DataTemplate x:DataType="local1:NavigationMenuItem">
+                                <TreeViewItem ItemsSource="{x:Bind Children}"
+                                      Content="{x:Bind Text}"/>
+                            </DataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                          
                 </Grid>
             </SplitView.Pane>
             <SplitView.Content>
