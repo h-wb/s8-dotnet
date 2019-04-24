@@ -28,6 +28,7 @@ namespace AppGestion
 
         private static DAO<Annee> annee = factoSQL.getAnneeDAO();
         private static DAO<PartieAnnee> partieAnnee = factoSQL.getPartieAnneeDAO();
+        //private static DAO<Enseignement> enseignement = factoSQL.getE
 
 
         private ObservableCollection<NavigationMenuItem> annees = new ObservableCollection<NavigationMenuItem>();
@@ -55,7 +56,7 @@ namespace AppGestion
 
             foreach (var item in annees)
             {
-                NavigationTree.RootNodes.Add(item.AsTreeViewNode());
+                TreeView.RootNodes.Add(item.AsTreeViewNode());
 
             }
         }
@@ -78,16 +79,16 @@ namespace AppGestion
 
         public bool Navigate(Type sourcePageType, object parameter = null)
         {
-            return SplitViewFrame.Navigate(sourcePageType, parameter);
+            return Frame.Navigate(sourcePageType, parameter);
         }
 
-        private void SplitViewFrame_OnNavigated(object sender, NavigationEventArgs e)
+        private void Frame_OnNavigated(object sender, NavigationEventArgs e)
         {
-            NavigationTree.SelectionMode = TreeViewSelectionMode.None;
-            NavigationTree.SelectionMode = TreeViewSelectionMode.Single;
+            TreeView.SelectionMode = TreeViewSelectionMode.None;
+            TreeView.SelectionMode = TreeViewSelectionMode.Single;
         }
 
-        private void AppBarButton_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void Add_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
            
             if(nodeSelectionne == null)
@@ -95,7 +96,7 @@ namespace AppGestion
                 Annee nouvelleAnnee = new Annee("Nouvelle annee");
                 annee.create(nouvelleAnnee);
                 NavigationMenuItem nouveauNode = new NavigationMenuItem { Text = nouvelleAnnee.nom, Objet = nouvelleAnnee };
-                NavigationTree.RootNodes.Add(nouveauNode.AsTreeViewNode());
+                TreeView.RootNodes.Add(nouveauNode.AsTreeViewNode());
             } else if(nodeSelectionneItem.Objet.GetType() == typeof(Annee))
             {
                 PartieAnnee nouvellePartieAnnee = new PartieAnnee("Nouveau semestre", (Annee)nodeSelectionneItem.Objet);
@@ -106,12 +107,12 @@ namespace AppGestion
        
         }
 
-        private void AppBarButton_Click_1(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void Clear_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             if (nodeSelectionneItem.Objet.GetType() == typeof(Annee))
             {
                 annee.delete((Annee)nodeSelectionneItem.Objet);
-                NavigationTree.RootNodes.Remove(nodeSelectionne);
+                TreeView.RootNodes.Remove(nodeSelectionne);
             }
             else if (nodeSelectionneItem.Objet.GetType() == typeof(PartieAnnee))
             {
