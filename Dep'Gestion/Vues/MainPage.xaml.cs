@@ -93,17 +93,36 @@ namespace AppGestion
             if(nodeSelectionne == null)
             {
                 Annee nouvelleAnnee = new Annee("Nouvelle annee");
+                annee.create(nouvelleAnnee);
                 NavigationMenuItem nouveauNode = new NavigationMenuItem { Text = nouvelleAnnee.nom, Objet = nouvelleAnnee };
                 NavigationTree.RootNodes.Add(nouveauNode.AsTreeViewNode());
             } else if(nodeSelectionneItem.Objet.GetType() == typeof(Annee))
             {
-                PartieAnnee partieAnnee = new PartieAnnee("Nouveau semestre", (Annee)nodeSelectionneItem.Objet);
-                NavigationMenuItem nouveauNode = new NavigationMenuItem { Text = partieAnnee.nom, Objet = partieAnnee };
+                PartieAnnee nouvellePartieAnnee = new PartieAnnee("Nouveau semestre", (Annee)nodeSelectionneItem.Objet);
+                partieAnnee.create(nouvellePartieAnnee);
+                NavigationMenuItem nouveauNode = new NavigationMenuItem { Text = nouvellePartieAnnee.nom, Objet = nouvellePartieAnnee };
                 nodeSelectionne.Children.Add(nouveauNode.AsTreeViewNode());
             }
        
         }
 
-   
+        private void AppBarButton_Click_1(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (nodeSelectionneItem.Objet.GetType() == typeof(Annee))
+            {
+                annee.delete((Annee)nodeSelectionneItem.Objet);
+                NavigationTree.RootNodes.Remove(nodeSelectionne);
+            }
+            else if (nodeSelectionneItem.Objet.GetType() == typeof(PartieAnnee))
+            {
+                partieAnnee.delete((PartieAnnee)nodeSelectionneItem.Objet);
+                //Etrange façon de supprimer mais remove n'est pas directement accessible via le node
+                nodeSelectionne.Parent.Children.Remove(nodeSelectionne);
+            }
+
+            
+
+        }
+
     }
 }
