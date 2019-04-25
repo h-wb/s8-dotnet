@@ -24,11 +24,11 @@
                         <AppBarButton x:Name="Add" Icon="Add" Label="Ajouter" Click="Add_Click"/>
                         <AppBarButton x:Name="Clear" Icon="Clear" Label="Supprimer" Click="Clear_Click"/>
                     </CommandBar>
-                    <TreeView x:Name="TreeView" ItemsSource="{x:Bind annees}" ItemInvoked="TreeView_ItemInvoked" FontFamily="Segoe UI" Margin="0,40,0,0">
+                    <TreeView x:Name="TreeView" ItemsSource="{x:Bind dpt, Mode=OneWay}" ItemInvoked="TreeView_ItemInvoked" FontFamily="Segoe UI" Margin="0,40,0,0">
                         <TreeView.ItemTemplate>
-                            <DataTemplate x:DataType="local1:NavigationMenuItem">
-                                <TreeViewItem ItemsSource="{x:Bind Children}"
-                                      Content="{x:Bind Text}"/>
+                            <DataTemplate x:DataType="local1:ItemDepartement">
+                                <TreeViewItem ItemsSource="{x:Bind Children,  Mode=OneWay}"
+                                      Content="{x:Bind Text,  Mode=OneWay}"/>
                             </DataTemplate>
                         </TreeView.ItemTemplate>
                     </TreeView>

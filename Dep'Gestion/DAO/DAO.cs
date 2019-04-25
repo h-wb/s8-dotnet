@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using Metier;
 
 namespace DAO
 {
@@ -20,6 +21,7 @@ namespace DAO
         public abstract T update(T objAupdate, T update);
 
         public abstract void delete(T obj);
+
     }
 
 }

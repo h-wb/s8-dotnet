@@ -31,29 +31,29 @@ namespace AppGestion
 
 
 
-        private ObservableCollection<NavigationMenuItem> annees = new ObservableCollection<NavigationMenuItem>();
+        private Departement<ItemDepartement> dpt = new Departement<ItemDepartement>();
 
 
-        private NavigationMenuItem nodeSelectionneItem;
+        private ItemDepartement nodeSelectionneItem;
 
         public MainPage()
         {
             this.InitializeComponent();
             foreach (Annee annee in annee.findAll())
             {
-                NavigationMenuItem nodeAnnee = new NavigationMenuItem { Text = annee.nom, Objet = annee, Children = new ObservableCollection<MenuItem>(), NavigationDestination = typeof(AnneeVue) };
-                annees.Add(nodeAnnee);
+                ItemDepartement nodeAnnee = new ItemDepartement { Text = annee.nom, Objet = annee, Children = new ObservableCollection<ItemDepartement>(), NavigationDestination = typeof(AnneeVue) };
+                dpt.Add(nodeAnnee);
                 foreach (PartieAnnee partieAnnee in partieAnnee.findAll())
                 {
                     if (annee.id == partieAnnee.annee.id)
                     {
-                        NavigationMenuItem nodePartieAnnee = new NavigationMenuItem { Text = partieAnnee.nom, Objet = partieAnnee, Children = new ObservableCollection<MenuItem>(), Parent = nodeAnnee };
+                        ItemDepartement nodePartieAnnee = new ItemDepartement { Text = partieAnnee.nom, Objet = partieAnnee, Children = new ObservableCollection<ItemDepartement>(), Parent = nodeAnnee };
                         nodeAnnee.Children.Add(nodePartieAnnee);
                         foreach (Enseignement enseignement in enseignement.findAll())
                         {
                             if (partieAnnee.id == enseignement.partAnnee.id)
                             {
-                                NavigationMenuItem nodeEnseignement = new NavigationMenuItem { Text = enseignement.nom, Objet = enseignement, Children = new ObservableCollection<MenuItem>(), Parent = nodePartieAnnee };
+                                ItemDepartement nodeEnseignement = new ItemDepartement { Text = enseignement.nom, Objet = enseignement, Children = new ObservableCollection<ItemDepartement>(), Parent = nodePartieAnnee };
                                 nodePartieAnnee.Children.Add(nodeEnseignement);
                             }
                         }
@@ -65,7 +65,7 @@ namespace AppGestion
 
         private void TreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
         {
-            nodeSelectionneItem = (NavigationMenuItem)args.InvokedItem;
+            nodeSelectionneItem = (ItemDepartement)args.InvokedItem;
             if (nodeSelectionneItem.NavigationDestination != null)
             {
                 Navigate(nodeSelectionneItem.NavigationDestination, nodeSelectionneItem.NavigationParameter);
@@ -90,19 +90,19 @@ namespace AppGestion
             {
                 Annee nouvelleAnnee = new Annee("Nouvelle annee");
                 annee.create(nouvelleAnnee);
-                annees.Add(new NavigationMenuItem { Text = nouvelleAnnee.nom, Objet = nouvelleAnnee });
+                dpt.Add(new ItemDepartement { Text = nouvelleAnnee.nom, Objet = nouvelleAnnee });
             }
             else if (nodeSelectionneItem.Objet.GetType() == typeof(Annee))
             {
                 PartieAnnee nouvellePartieAnnee = new PartieAnnee("Nouveau semestre", (Annee)nodeSelectionneItem.Objet);
                 partieAnnee.create(nouvellePartieAnnee);
-                nodeSelectionneItem.Children.Add(new NavigationMenuItem { Text = nouvellePartieAnnee.nom, Objet = nouvellePartieAnnee, Parent = nodeSelectionneItem });
+                nodeSelectionneItem.Children.Add(new ItemDepartement { Text = nouvellePartieAnnee.nom, Objet = nouvellePartieAnnee, Parent = nodeSelectionneItem });
             }
             else if (nodeSelectionneItem.Objet.GetType() == typeof(PartieAnnee))
             {
                 Enseignement nouvelEnseignement = new Enseignement("Nouveau enseignement", (PartieAnnee)nodeSelectionneItem.Objet);
                 enseignement.create(nouvelEnseignement);
-                nodeSelectionneItem.Children.Add(new NavigationMenuItem { Text = nouvelEnseignement.nom, Objet = nouvelEnseignement, Parent = nodeSelectionneItem });
+                nodeSelectionneItem.Children.Add(new ItemDepartement { Text = nouvelEnseignement.nom, Objet = nouvelEnseignement, Parent = nodeSelectionneItem });
             }
 
         }
@@ -112,10 +112,11 @@ namespace AppGestion
             if (nodeSelectionneItem.Objet.GetType() == typeof(Annee))
             {
                 annee.delete((Annee)nodeSelectionneItem.Objet);
-                annees.Remove(nodeSelectionneItem);
+                dpt.Remove(nodeSelectionneItem);
             }
             else if (nodeSelectionneItem.Objet.GetType() == typeof(PartieAnnee))
             {
+            
                 partieAnnee.delete((PartieAnnee)nodeSelectionneItem.Objet);
                 nodeSelectionneItem.Parent.Children.Remove(nodeSelectionneItem);
             }

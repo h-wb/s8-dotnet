@@ -10,15 +10,17 @@ using System.Threading.Tasks;
 
 namespace Dep_Gestion.Model
 {
-    public class MenuItem : ViewModelBase
+    public class ItemDepartement : ViewModelBase
     {
 
         private string _glyph;
         private string _text;
         private int _id;
         private ObjetAvecIdEtNom _objet;
-        private ObservableCollection<MenuItem> _children = new ObservableCollection<MenuItem>();
-        private MenuItem _parent;
+        private ObservableCollection<ItemDepartement> _children = new ObservableCollection<ItemDepartement>();
+        private ItemDepartement _parent;
+        private Type _navigationDestination;
+        private object _navigationParameter;
 
         public string Glyph
         {
@@ -44,23 +46,34 @@ namespace Dep_Gestion.Model
             set { SetProperty(ref _objet, value); }
         }
 
-        public ObservableCollection<MenuItem> Children
+        public ObservableCollection<ItemDepartement> Children
         {
             get { return _children; }
             set { SetProperty(ref _children, value); }
         }
 
-        public MenuItem Parent
+        public ItemDepartement Parent
         {
             get { return _parent; }
             set { SetProperty(ref _parent, value); }
+        }
+
+        public Type NavigationDestination
+        {
+            get { return _navigationDestination; }
+            set { SetProperty(ref _navigationDestination, value); }
+        }
+
+        public object NavigationParameter
+        {
+            get { return _navigationParameter; }
+            set { SetProperty(ref _navigationParameter, value); }
         }
 
         public override string ToString()
         {
             return _text;
         }
-
     }
 }
 
