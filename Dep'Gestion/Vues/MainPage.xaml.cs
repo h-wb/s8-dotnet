@@ -20,7 +20,7 @@ namespace AppGestion
 
     public sealed partial class MainPage : Page
     {
-
+         
 
         private static AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
 
