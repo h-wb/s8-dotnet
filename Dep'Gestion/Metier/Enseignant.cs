@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DAO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,10 @@ namespace Metier
         public Categorie categorie { get; set; }
         public double nbHeuresTravaillees { get; set; }
 
-        public Enseignant(int id, string prenom, string nom, Categorie categorie, double nbHeuresTravaillees)
+        private static AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
+        private static DAO<Categorie> categ = factoSQL.getCategorieDAO();
+
+        public Enseignant(int id, string nom, string prenom, double nbHeuresTravaillees, Categorie categorie)
         {
             this.init();
             this.id = id;
@@ -23,14 +27,14 @@ namespace Metier
         }
 
 
-        public Enseignant(string prenom, string nom)
+        public Enseignant(string nom, string prenom)
         {
             this.init();
             this.nom = nom;
             this.prenom = prenom;
         }
 
-        public Enseignant(string prenom, string nom, Categorie categorie)
+        public Enseignant(string nom, string prenom, Categorie categorie)
         {
             this.init();
             this.nom = nom;
@@ -42,17 +46,7 @@ namespace Metier
         {
             base.init();
             this.nbHeuresTravaillees = 0;
-        }
-
-        public override string ToString()
-        {
-            string categString = "";
-
-            if (this.categorie != null)
-            {
-                categString = this.categorie.ToString();
-            }
-            return base.ToString() + ", prenom = " + this.prenom + ", categorie = " + categString + ", nb d'heures travaillée=" + this.nbHeuresTravaillees;
+            this.categorie = categ.find(1);
         }
     }
 }

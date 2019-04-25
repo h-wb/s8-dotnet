@@ -127,6 +127,7 @@
     <Compile Include="DAO\DAO.cs" />
     <Compile Include="DAO\DepartementSQL.cs" />
     <Compile Include="DAO\ECSQL.cs" />
+    <Compile Include="DAO\EnseignantSQL.cs" />
     <Compile Include="DAO\EnseignementSQL.cs" />
     <Compile Include="DAO\EquivalentTDSQL.cs" />
     <Compile Include="DAO\FactoryType.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="Metier\TypeCours.cs" />
     <Compile Include="Model\ButtonModel.cs" />
     <Compile Include="Model\Departement.cs" />
+    <Compile Include="Model\EnseignantModel.cs" />
     <Compile Include="Model\ItemDepartement.cs" />
     <Compile Include="Model\NavigationMenuItemExtensions.cs" />
     <Compile Include="Model\TextBlockModel.cs" />
@@ -200,6 +202,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.8</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.UI.Xaml">
+      <Version>2.1.190405004.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

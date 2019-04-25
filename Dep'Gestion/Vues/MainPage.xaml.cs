@@ -22,28 +22,33 @@ namespace AppGestion
 
         private static AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
 
-
         private static DAO<Annee> annee = factoSQL.getAnneeDAO();
         private static DAO<PartieAnnee> partieAnnee = factoSQL.getPartieAnneeDAO();
         private static DAO<Departement> depart = factoSQL.getDepartementDAO();
-        private static Departement departement = new Departement("Informatique");
-
-
         private static DAO<Enseignement> enseignement = factoSQL.getEnseignementDAO();
 
 
-        private Departement<ItemDepartement> dpt = new Departement<ItemDepartement>();
 
+        private Departement<ItemDepartement> departementDataSource = new Departement<ItemDepartement>();
+        private Departement<EnseignantModel> enseignants = new Departement<EnseignantModel>();
+
+        private static Departement departement = new Departement("Informatique");
 
         private ItemDepartement nodeSelectionneItem;
 
         public MainPage()
         {
             this.InitializeComponent();
+            departementDataSource = GetItemDepartements();
+        }
+
+        private Departement<ItemDepartement> GetItemDepartements()
+        {
+            Departement<ItemDepartement>  departement = new Departement<ItemDepartement>();
             foreach (Annee annee in annee.findAll())
             {
                 ItemDepartement nodeAnnee = new ItemDepartement { Text = annee.nom, Objet = annee, Children = new ObservableCollection<ItemDepartement>(), NavigationDestination = typeof(AnneeVue) };
-                dpt.Add(nodeAnnee);
+                departement.Add(nodeAnnee);
                 foreach (PartieAnnee partieAnnee in partieAnnee.findAll())
                 {
                     if (annee.id == partieAnnee.annee.id)
@@ -62,6 +67,8 @@ namespace AppGestion
                     }
                 }
             }
+
+            return departement;
         }
 
         private void TreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
@@ -89,9 +96,9 @@ namespace AppGestion
             if (nodeSelectionneItem == null)
             {
 
-                Annee nouvelleAnnee = new Annee("Nouvelle annee", departement);
+                Annee nouvelleAnnee = new Annee("Nouvelle annee", depart.find(1));
                 annee.create(nouvelleAnnee);
-                dpt.Add(new ItemDepartement { Text = nouvelleAnnee.nom, Objet = nouvelleAnnee });
+                departementDataSource.Add(new ItemDepartement { Text = nouvelleAnnee.nom, Objet = nouvelleAnnee });
             }
             else if (nodeSelectionneItem.Objet.GetType() == typeof(Annee))
             {
@@ -113,7 +120,7 @@ namespace AppGestion
             if (nodeSelectionneItem.Objet.GetType() == typeof(Annee))
             {
                 annee.delete((Annee)nodeSelectionneItem.Objet);
-                dpt.Remove(nodeSelectionneItem);
+                departementDataSource.Remove(nodeSelectionneItem);
             }
             else if (nodeSelectionneItem.Objet.GetType() == typeof(PartieAnnee))
             {

@@ -33,16 +33,16 @@ namespace Dep_Gestion
             TypeCours tp = new TypeCours("TP", true);
             Categorie maitreDeConference = new Categorie("maitre de conférences", 240);
             Departement dpt = new Departement("Informatique");
-
+            Departement dpt2 = new Departement("Informatique2");
             AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
 
             DAO<Departement> depart = factoSQL.getDepartementDAO();
-            depart.create(dpt);
+            //depart.create(dpt2);
 
             DAO<Annee> an = factoSQL.getAnneeDAO();  
-            an.create(new Annee("M1", dpt));
-            an.create(new Annee("M2", dpt));
-
+            an.create(new Annee("M1", depart.find(1)));
+            an.create(new Annee("M2", depart.find(1)));
+            an.create(new Annee("M3", depart.find(2)));
 
             DAO<PartieAnnee> pan = factoSQL.getPartieAnneeDAO();
             PartieAnnee test = new PartieAnnee("Semestre 1", an.find(1));
