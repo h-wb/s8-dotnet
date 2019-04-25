@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dep_Gestion.Model
+namespace Model
 {
     class ButtonModel : ViewModelBase
     {

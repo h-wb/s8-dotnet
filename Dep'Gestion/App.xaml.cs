@@ -1,9 +1,7 @@
 ﻿using AppGestion;
 using DAO;
-using Dep_Gestion.Model;
 using Metier;
 using System;
-using System.Collections.ObjectModel;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -51,10 +49,19 @@ namespace Dep_Gestion
             pan.create(new PartieAnnee("Semestre 3", an.find(2)));
 
             DAO<Enseignement> en = factoSQL.getEnseignementDAO();
-          //  en.create(new Enseignement("EC1", test));
+            //  en.create(new Enseignement("EC1", test));
 
             //Console.WriteLine(maitreDeConference);
             //Console.ReadLine();
+            DAO<Categorie> categorie = factoSQL.getCategorieDAO();
+            categorie.create(new Categorie("maitre de conference", 130));
+
+
+            DAO<Enseignant> ens = factoSQL.getEnseignantDAO();
+            ens.create(new Enseignant("John", "Bob", categorie.find(1)));
+            ens.create(new Enseignant("Bobby", "Malik", categorie.find(1)));
+            ens.create(new Enseignant("Benoit", "Martin", categorie.find(1)));
+            ens.create(new Enseignant("Make", "Crelo", categorie.find(1)));
 
             this.InitializeComponent();
             this.Suspending += OnSuspending;

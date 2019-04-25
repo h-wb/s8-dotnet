@@ -149,9 +149,8 @@
     <Compile Include="Metier\PartieAnnee.cs" />
     <Compile Include="Metier\TypeCours.cs" />
     <Compile Include="Model\ButtonModel.cs" />
-    <Compile Include="Model\Departement.cs" />
-    <Compile Include="Model\EnseignantModel.cs" />
-    <Compile Include="Model\ItemDepartement.cs" />
+    <Compile Include="Model\ObservableCollectionExt.cs" />
+    <Compile Include="Model\Item.cs" />
     <Compile Include="Model\NavigationMenuItemExtensions.cs" />
     <Compile Include="Model\TextBlockModel.cs" />
     <Compile Include="Model\TextBoxModel.cs" />
@@ -202,6 +201,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.8</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI">
+      <Version>5.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.1.190405004.1</Version>

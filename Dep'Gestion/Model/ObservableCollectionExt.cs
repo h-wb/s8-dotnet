@@ -7,22 +7,21 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Collections;
 
-namespace Dep_Gestion.Model
+namespace Model
 {
-    public class Departement<T> : ObservableCollection<T> where T : INotifyPropertyChanged
+    public class ObservableCollectionExt<T> : ObservableCollection<T> where T : INotifyPropertyChanged
     {
-        public Departement() : base()
+        public ObservableCollectionExt() : base()
         {
-            this.CollectionChanged += new NotifyCollectionChangedEventHandler(Departement_CollectionChanged);
+            this.CollectionChanged += new NotifyCollectionChangedEventHandler(ObservableCollectionExt_CollectionChanged);
         }
 
-        void Departement_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        void ObservableCollectionExt_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Remove)
             {
                 foreach (T item in e.OldItems)
                 {
-                    //Removed items
                     item.PropertyChanged -= EntityViewModelPropertyChanged;
                 }
             }
@@ -30,10 +29,26 @@ namespace Dep_Gestion.Model
             {
                 foreach (T item in e.NewItems)
                 {
-                    //Added items
                     item.PropertyChanged += EntityViewModelPropertyChanged;
                 }
             }
+        }
+
+        public void Replace(T item)
+        {
+            Replace(new T[] { item });
+        }
+
+        /// <summary> 
+        /// Replaces all elements in existing collection with specified collection of the ObservableCollection(Of T). 
+        /// </summary> 
+        public void Replace(IEnumerable<T> collection)
+        {
+            if (collection == null) throw new ArgumentNullException(nameof(collection));
+
+            Items.Clear();
+            foreach (var i in collection) Items.Add(i);
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 
         public void EntityViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)

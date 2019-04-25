@@ -1,4 +1,5 @@
-﻿using Dep_Gestion.ViewModel;
+﻿using DAO;
+using Dep_Gestion.ViewModel;
 using Metier;
 using System;
 using System.Collections.Generic;
@@ -7,16 +8,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dep_Gestion.Model
+namespace Model
 {
-    class EnseignantModel : ViewModelBase
+    public class Item : ViewModelBase
     {
+
         private string _glyph;
         private string _text;
         private int _id;
         private ObjetAvecIdEtNom _objet;
-        private ObservableCollection<EnseignantModel> _children = new ObservableCollection<EnseignantModel>();
-        private ItemDepartement _parent;
+        private ObservableCollection<Item> _children = new ObservableCollection<Item>();
+        private Item _parent;
         private Type _navigationDestination;
         private object _navigationParameter;
 
@@ -44,13 +46,13 @@ namespace Dep_Gestion.Model
             set { SetProperty(ref _objet, value); }
         }
 
-        public ObservableCollection<EnseignantModel> Children
+        public ObservableCollection<Item> Children
         {
             get { return _children; }
             set { SetProperty(ref _children, value); }
         }
 
-        public ItemDepartement Parent
+        public Item Parent
         {
             get { return _parent; }
             set { SetProperty(ref _parent, value); }
@@ -74,3 +76,4 @@ namespace Dep_Gestion.Model
         }
     }
 }
+

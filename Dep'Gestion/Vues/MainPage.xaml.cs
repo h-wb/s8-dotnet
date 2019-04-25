@@ -1,11 +1,12 @@
 using DAO;
-using Dep_Gestion.Model;
+using Model;
 using Dep_Gestion.Vues;
 using Metier;
 using System;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -26,46 +27,78 @@ namespace AppGestion
         private static DAO<PartieAnnee> partieAnnee = factoSQL.getPartieAnneeDAO();
         private static DAO<Departement> depart = factoSQL.getDepartementDAO();
         private static DAO<Enseignement> enseignement = factoSQL.getEnseignementDAO();
+        private static DAO<Enseignant> enseignant = factoSQL.getEnseignantDAO();
 
 
+        private ObservableCollectionExt<Item> departements = new ObservableCollectionExt<Item>();
+        private ObservableCollectionExt<Item> annees = new ObservableCollectionExt<Item>();
+        private ObservableCollectionExt<Item> enseignants = new ObservableCollectionExt<Item>();
 
-        private Departement<ItemDepartement> departementDataSource = new Departement<ItemDepartement>();
-        private Departement<EnseignantModel> enseignants = new Departement<EnseignantModel>();
+
 
         private static Departement departement = new Departement("Informatique");
 
-        private ItemDepartement nodeSelectionneItem;
+        private Item nodeSelectionne;
+        private Item departementSelectionne;
 
         public MainPage()
         {
             this.InitializeComponent();
-            departementDataSource = GetItemDepartements();
+            departements = GetDepartements();
+            enseignants = GetEnseignants();
         }
 
-        private Departement<ItemDepartement> GetItemDepartements()
+
+
+        private ObservableCollectionExt<Item> GetDepartements()
         {
-            Departement<ItemDepartement>  departement = new Departement<ItemDepartement>();
+            ObservableCollectionExt<Item> departements = new ObservableCollectionExt<Item>();
+            foreach (Departement dpt in depart.findAll())
+            {
+                departements.Add(new Item { Id = dpt.id, Text = dpt.nom, Objet = dpt });
+            }
+            return departements;
+        }
+
+        private ObservableCollectionExt<Item> GetEnseignants()
+        {
+            ObservableCollectionExt<Item> enseignants = new ObservableCollectionExt<Item>();
+            foreach (Enseignant ens in enseignant.findAll())
+            {
+                enseignants.Add(new Item { Id = ens.id, Text = ens.nom, Objet = ens });
+            }
+            return enseignants;
+        }
+
+        private ObservableCollectionExt<Item> GetAnnees(int idDepartement)
+        {
+            ObservableCollectionExt<Item> departement = new ObservableCollectionExt<Item>();
+
             foreach (Annee annee in annee.findAll())
             {
-                ItemDepartement nodeAnnee = new ItemDepartement { Text = annee.nom, Objet = annee, Children = new ObservableCollection<ItemDepartement>(), NavigationDestination = typeof(AnneeVue) };
-                departement.Add(nodeAnnee);
-                foreach (PartieAnnee partieAnnee in partieAnnee.findAll())
+                if (idDepartement == annee.dep.id)
                 {
-                    if (annee.id == partieAnnee.annee.id)
+                    Item nodeAnnee = new Item { Id = annee.dep.id, Text = annee.nom, Objet = annee, Children = new ObservableCollection<Item>(), NavigationDestination = typeof(AnneeVue) };
+                    departement.Add(nodeAnnee);
+                    foreach (PartieAnnee partieAnnee in partieAnnee.findAll())
                     {
-                        ItemDepartement nodePartieAnnee = new ItemDepartement { Text = partieAnnee.nom, Objet = partieAnnee, Children = new ObservableCollection<ItemDepartement>(), Parent = nodeAnnee };
-                        nodeAnnee.Children.Add(nodePartieAnnee);
-                        foreach (Enseignement enseignement in enseignement.findAll())
+                        if (annee.id == partieAnnee.annee.id)
                         {
-                            if (partieAnnee.id == enseignement.partAnnee.id)
+                            Item nodePartieAnnee = new Item { Text = partieAnnee.nom, Objet = partieAnnee, Children = new ObservableCollection<Item>(), Parent = nodeAnnee };
+                            nodeAnnee.Children.Add(nodePartieAnnee);
+                            foreach (Enseignement enseignement in enseignement.findAll())
                             {
-                                ItemDepartement nodeEnseignement = new ItemDepartement { Text = enseignement.nom, Objet = enseignement, Children = new ObservableCollection<ItemDepartement>(), Parent = nodePartieAnnee };
-                                nodePartieAnnee.Children.Add(nodeEnseignement);
+                                if (partieAnnee.id == enseignement.partAnnee.id)
+                                {
+                                    Item nodeEnseignement = new Item { Text = enseignement.nom, Objet = enseignement, Children = new ObservableCollection<Item>(), Parent = nodePartieAnnee };
+                                    nodePartieAnnee.Children.Add(nodeEnseignement);
+                                }
                             }
-                        }
 
+                        }
                     }
                 }
+               
             }
 
             return departement;
@@ -73,11 +106,19 @@ namespace AppGestion
 
         private void TreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
         {
-            nodeSelectionneItem = (ItemDepartement)args.InvokedItem;
-            if (nodeSelectionneItem.NavigationDestination != null)
+            nodeSelectionne = (Item)args.InvokedItem;
+            if (nodeSelectionne.NavigationDestination != null)
             {
-                Navigate(nodeSelectionneItem.NavigationDestination, nodeSelectionneItem.NavigationParameter);
+                Navigate(nodeSelectionne.NavigationDestination, nodeSelectionne.NavigationParameter);
             }
+
+        }
+
+        private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        {
+            departementSelectionne = (Item)args.InvokedItem;
+            annees.Replace(GetAnnees(departementSelectionne.Id));
+
         }
 
         public bool Navigate(Type sourcePageType, object parameter = null)
@@ -93,45 +134,45 @@ namespace AppGestion
 
         private void Add_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (nodeSelectionneItem == null)
-            {
 
-                Annee nouvelleAnnee = new Annee("Nouvelle annee", depart.find(1));
+            if (nodeSelectionne == null)
+            {
+                Annee nouvelleAnnee = new Annee("Nouvelle annee", depart.find(departementSelectionne.Id));
                 annee.create(nouvelleAnnee);
-                departementDataSource.Add(new ItemDepartement { Text = nouvelleAnnee.nom, Objet = nouvelleAnnee });
+                annees.Add(new Item { Text = nouvelleAnnee.nom, Objet = nouvelleAnnee });
             }
-            else if (nodeSelectionneItem.Objet.GetType() == typeof(Annee))
+            else if (nodeSelectionne.Objet.GetType() == typeof(Annee))
             {
-                PartieAnnee nouvellePartieAnnee = new PartieAnnee("Nouveau semestre", (Annee)nodeSelectionneItem.Objet);
+                PartieAnnee nouvellePartieAnnee = new PartieAnnee("Nouveau semestre", (Annee)nodeSelectionne.Objet);
                 partieAnnee.create(nouvellePartieAnnee);
-                nodeSelectionneItem.Children.Add(new ItemDepartement { Text = nouvellePartieAnnee.nom, Objet = nouvellePartieAnnee, Parent = nodeSelectionneItem });
+                nodeSelectionne.Children.Add(new Item { Text = nouvellePartieAnnee.nom, Objet = nouvellePartieAnnee, Parent = nodeSelectionne });
             }
-            else if (nodeSelectionneItem.Objet.GetType() == typeof(PartieAnnee))
+            else if (nodeSelectionne.Objet.GetType() == typeof(PartieAnnee))
             {
-                Enseignement nouvelEnseignement = new Enseignement("Nouveau enseignement", (PartieAnnee)nodeSelectionneItem.Objet);
+                Enseignement nouvelEnseignement = new Enseignement("Nouveau enseignement", (PartieAnnee)nodeSelectionne.Objet);
                 enseignement.create(nouvelEnseignement);
-                nodeSelectionneItem.Children.Add(new ItemDepartement { Text = nouvelEnseignement.nom, Objet = nouvelEnseignement, Parent = nodeSelectionneItem });
+                nodeSelectionne.Children.Add(new Item { Text = nouvelEnseignement.nom, Objet = nouvelEnseignement, Parent = nodeSelectionne });
             }
 
         }
 
         private void Clear_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (nodeSelectionneItem.Objet.GetType() == typeof(Annee))
+            if (nodeSelectionne.Objet.GetType() == typeof(Annee))
             {
-                annee.delete((Annee)nodeSelectionneItem.Objet);
-                departementDataSource.Remove(nodeSelectionneItem);
+                annee.delete((Annee)nodeSelectionne.Objet);
+                annees.Remove(nodeSelectionne);
             }
-            else if (nodeSelectionneItem.Objet.GetType() == typeof(PartieAnnee))
+            else if (nodeSelectionne.Objet.GetType() == typeof(PartieAnnee))
             {
 
-                partieAnnee.delete((PartieAnnee)nodeSelectionneItem.Objet);
-                nodeSelectionneItem.Parent.Children.Remove(nodeSelectionneItem);
+                partieAnnee.delete((PartieAnnee)nodeSelectionne.Objet);
+                nodeSelectionne.Parent.Children.Remove(nodeSelectionne);
             }
-            else if (nodeSelectionneItem.Objet.GetType() == typeof(Enseignement))
+            else if (nodeSelectionne.Objet.GetType() == typeof(Enseignement))
             {
-                enseignement.delete((Enseignement)nodeSelectionneItem.Objet);
-                nodeSelectionneItem.Parent.Children.Remove(nodeSelectionneItem);
+                enseignement.delete((Enseignement)nodeSelectionne.Objet);
+                nodeSelectionne.Parent.Children.Remove(nodeSelectionne);
 
             }
 

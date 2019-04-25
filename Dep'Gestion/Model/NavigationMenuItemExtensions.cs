@@ -5,18 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
-namespace Dep_Gestion.Model
+namespace Model
 {
     internal static class NavigationMenuItemExtensions
     {
-        internal static TreeViewNode AsTreeViewNode(this ItemDepartement menuItem)
+        internal static TreeViewNode AsTreeViewNode(this Item menuItem)
         {
             var result = new TreeViewNode
             {
                 Content = menuItem
             };
 
-            foreach (ItemDepartement subItem in menuItem.Children)
+            foreach (Item subItem in menuItem.Children)
             {
                 result.Children.Add(subItem.AsTreeViewNode());
             }
