@@ -1,0 +1,65 @@
+CREATE TABLE partie_annee
+(
+	id INT PRIMARY KEY NOT NULL,
+	nom CHAR(250) NOT NULL,
+	id_annee  INT  NOT NULL,
+   	FOREIGN KEY (id_annee)
+   	REFERENCES annee(id)
+   	ON DELETE CASCADE ON UPDATE CASCADE
+)
+
+CREATE TABLE annee
+(
+	id INT PRIMARY KEY NOT NULL,
+	nom CHAR(250) NOT NULL
+)
+
+CREATE TABLE categorie_enseignant
+(
+	id INT PRIMARY KEY NOT NULL,
+	nom CHAR(250) NOT NULL,
+	heures_a_travailler FLOAT NOT NULL
+)
+
+CREATE TABLE enseignant
+(
+	id INT PRIMARY KEY NOT NULL,
+	nom CHAR(250) NOT NULL,
+	prenom CHAR(250) NOT NULL,
+	nb_heures_assignees FLOAT NOT NULL,
+	id_categorie_enseignant INT NOT NULL
+)
+
+CREATE TABLE enseignement
+(
+	id INT PRIMARY KEY NOT NULL,
+	nom CHAR(250) NOT NULL,
+	id_partie_annee INT NOT NULL,
+	FOREIGN KEY (id_partie_annee)
+	REFERENCES partie_annee(id)
+	ON DELETE CASCADE ON UPDATE CASCADE
+)
+
+CREATE TABLE equivalent_td
+(
+	id INT PRIMARY KEY NOT NULL,
+	id_categorie_enseignant INT NOT NULL,
+	FOREIGN KEY (id_categorie_enseignant)
+	REFERENCES categorie_enseignant(id)
+	ON DELETE CASCADE,
+	id_type_cours INT NOT NULL,
+	FOREIGN KEY (id_type_cours)
+	REFERENCES type_cours(id)
+	ON DELETE CASCADE,
+	ratio_cours_td FLOAT NOT NULL
+	
+)
+
+CREATE TABLE type_cours
+(
+	id INT PRIMARY KEY NOT NULL,
+	nom CHAR(250) NOT NULL,
+	has_groups INT NOT NULL
+	
+)
+

@@ -9,7 +9,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
         <TextBlock 
             FontSize="40"
                    Margin="300"
@@ -18,5 +17,8 @@
                    HorizontalAlignment="Right"
                    FontSize="36"
                    Margin="20" />
+
+        <TextBlock x:Name="txtTest" HorizontalAlignment="Left" Margin="299,385,0,0" Text="{x:Bind Path=tbmodel.Text, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="361" Height="114"/>
     </Grid>
 </Page>
+

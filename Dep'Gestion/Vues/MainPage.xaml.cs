@@ -1,11 +1,9 @@
-
 using DAO;
 using Dep_Gestion.Model;
 using Dep_Gestion.Vues;
 using Metier;
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
@@ -27,8 +25,11 @@ namespace AppGestion
 
         private static DAO<Annee> annee = factoSQL.getAnneeDAO();
         private static DAO<PartieAnnee> partieAnnee = factoSQL.getPartieAnneeDAO();
-        private static DAO<Enseignement> enseignement = factoSQL.getEnseignementDAO();
+        private static DAO<Departement> depart = factoSQL.getDepartementDAO();
+        private static Departement departement = new Departement("Informatique");
 
+
+        private static DAO<Enseignement> enseignement = factoSQL.getEnseignementDAO();
 
 
         private Departement<ItemDepartement> dpt = new Departement<ItemDepartement>();
@@ -70,7 +71,6 @@ namespace AppGestion
             {
                 Navigate(nodeSelectionneItem.NavigationDestination, nodeSelectionneItem.NavigationParameter);
             }
-
         }
 
         public bool Navigate(Type sourcePageType, object parameter = null)
@@ -88,7 +88,8 @@ namespace AppGestion
         {
             if (nodeSelectionneItem == null)
             {
-                Annee nouvelleAnnee = new Annee("Nouvelle annee");
+
+                Annee nouvelleAnnee = new Annee("Nouvelle annee", departement);
                 annee.create(nouvelleAnnee);
                 dpt.Add(new ItemDepartement { Text = nouvelleAnnee.nom, Objet = nouvelleAnnee });
             }
@@ -116,7 +117,7 @@ namespace AppGestion
             }
             else if (nodeSelectionneItem.Objet.GetType() == typeof(PartieAnnee))
             {
-            
+
                 partieAnnee.delete((PartieAnnee)nodeSelectionneItem.Objet);
                 nodeSelectionneItem.Parent.Children.Remove(nodeSelectionneItem);
             }

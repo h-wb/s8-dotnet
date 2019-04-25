@@ -43,5 +43,16 @@ namespace DAO
         {
             return new EnseignementSQL();
         }
+
+        public override DAO<EC> getECDAO()
+        {
+            return new ECSQL();
+        }
+
+        public override DAO<Departement> getDepartementDAO()
+        {
+            return new DepartementSQL();
+        }
+
     }
 }

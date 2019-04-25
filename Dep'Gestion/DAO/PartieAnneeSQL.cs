@@ -133,7 +133,7 @@ namespace DAO
 
         public override PartieAnnee update(PartieAnnee objAupdate, PartieAnnee update)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE partie_annee SET nom='" + update.nom + "', SET id_annee=" + update.annee.id + " WHERE id=" + objAupdate.id + ";", Connexion.getInstance()))
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE partie_annee SET nom='" + update.nom + "', id_annee=" + update.annee.id + " WHERE id=" + objAupdate.id + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }

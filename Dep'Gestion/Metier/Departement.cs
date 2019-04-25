@@ -8,41 +8,32 @@ namespace Metier
 {
     public class Departement : ObjetAvecIdEtNom
     {
-
-        public List<Annee> annees;
+        public Departement dep { get; set; }
 
         public Departement()
         {
             init();
         }
 
+        public Departement(int id, string nom)
+        {
+            init();
+            this.id = id;
+            this.nom = nom;
+            this.dep = dep;
+        }
+
         public Departement(string nom)
         {
             init();
             this.nom = nom;
+            this.dep = dep;
         }
-
-        public Departement(string nom, List<Annee> annees)
-        {
-            init();
-            this.nom = nom;
-            this.annees = annees;
-        }
+        
 
         new public void init()
         {
             base.init();
-            this.annees = new List<Annee>();
-        }
-
-        override public string ToString()
-        {
-            string res = "";
-            foreach (Annee val in annees)
-            {
-                res += "(" + val.ToString() + ")";
-            }
-            return base.ToString() + res;
         }
 
 

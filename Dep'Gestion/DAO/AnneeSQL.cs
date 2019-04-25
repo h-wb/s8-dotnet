@@ -26,7 +26,7 @@ namespace Dep_Gestion.DAO
 
             if (tc == null)
             {
-                using (SqlCommand command_c = new SqlCommand("INSERT INTO annee VALUES (" + obj.id + ", '" + obj.nom + "');", Connexion.getInstance()))
+                using (SqlCommand command_c = new SqlCommand("INSERT INTO annee VALUES (" + obj.id + ", '" + obj.nom + "', " + obj.dep.id + ");", Connexion.getInstance()))
                 {
                     command_c.ExecuteNonQuery();
                     // Connexion.getInstance().Close();
@@ -49,7 +49,7 @@ namespace Dep_Gestion.DAO
         {
             Annee annee = null;
 
-            using (SqlCommand command_f = new SqlCommand("SELECT id, nom FROM annee WHERE id=" + id + ";", Connexion.getInstance()))
+            using (SqlCommand command_f = new SqlCommand("SELECT id, nom, id_departement FROM annee WHERE id=" + id + ";", Connexion.getInstance()))
             {
                 using (SqlDataReader reader_f = command_f.ExecuteReader())
                 {
@@ -57,7 +57,12 @@ namespace Dep_Gestion.DAO
                     {
                         while (reader_f.Read())
                         {
-                            annee = new Annee(reader_f.GetInt32(0), reader_f.GetString(1));
+                            AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
+                            DAO<Departement> TPSQL = factoSQL.getDepartementDAO();
+
+                            Departement dep2 = TPSQL.find(reader_f.GetInt32(2));
+
+                            annee = new Annee(reader_f.GetInt32(0), reader_f.GetString(1), dep2);
 
                             reader_f.NextResult();
                         }
@@ -78,7 +83,7 @@ namespace Dep_Gestion.DAO
         {
             Annee annee = null;
 
-            using (SqlCommand command_f = new SqlCommand("SELECT id, nom FROM annee WHERE nom='" + nom + "';", Connexion.getInstance()))
+            using (SqlCommand command_f = new SqlCommand("SELECT id, nom, id_departement FROM annee WHERE nom='" + nom + "';", Connexion.getInstance()))
             {
                 using (SqlDataReader reader_f = command_f.ExecuteReader())
                 {
@@ -86,7 +91,13 @@ namespace Dep_Gestion.DAO
                     {
                         while (reader_f.Read())
                         {
-                            annee = new Annee(reader_f.GetInt32(0), reader_f.GetString(1));
+
+                            AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
+                            DAO<Departement> TPSQL = factoSQL.getDepartementDAO();
+
+                            Departement dep2 = TPSQL.find(reader_f.GetInt32(2));
+
+                            annee = new Annee(reader_f.GetInt32(0), reader_f.GetString(1), dep2);
                         }
                     }
 
@@ -111,7 +122,13 @@ namespace Dep_Gestion.DAO
                     {
                         while (reader_f.Read())
                         {
-                            ans.Add(new Annee(reader_f.GetInt32(0), reader_f.GetString(1)));
+                            AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
+                            DAO<Departement> TPSQL = factoSQL.getDepartementDAO();
+
+                            Departement dep2 = TPSQL.find(reader_f.GetInt32(2));
+                            
+
+                            ans.Add(new Annee(reader_f.GetInt32(0), reader_f.GetString(1), dep2));
                         }
                     }
 
@@ -123,7 +140,7 @@ namespace Dep_Gestion.DAO
 
         public override Annee update(Annee objAupdate, Annee update)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE annee SET nom='" + update.nom + "' WHERE id=" + objAupdate.id + ";", Connexion.getInstance()))
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE annee SET nom='" + update.nom + "', id_departement=" + update.dep.id + " WHERE id=" + objAupdate.id + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }
