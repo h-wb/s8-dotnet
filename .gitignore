@@ -22,3 +22,7 @@
 /Dep'Gestion/obj/x64/Debug/Vues/PartieAnneeVue.xbf
 /Dep'Gestion/obj/x64/Debug/intermediatexaml/Dep'Gestion.exe
 /Dep'Gestion/obj/x64/Debug/intermediatexaml/Dep'Gestion.pdb
+*.vs
+Dep\'Gestion/obj/*
+Dep\'Gestion/bin/x64/Debug/
+UpgradeLog.htm

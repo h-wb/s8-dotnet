@@ -1,1 +1,0 @@
-C:\Developpement\DotNet\Dep-Gestion\Dep'Gestion\Dep'Gestion.csproj;x64

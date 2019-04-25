@@ -1,1 +1,0 @@
-Server=DESKTOP-EP8R3C5;Database=ProjetDotnet;Trusted_Connection=True;
