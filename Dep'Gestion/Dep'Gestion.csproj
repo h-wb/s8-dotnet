@@ -148,11 +148,10 @@
     <Compile Include="Metier\PartieAnnee.cs" />
     <Compile Include="Metier\TypeCours.cs" />
     <Compile Include="Model\ButtonModel.cs" />
-    <Compile Include="Model\ControlDataContext.cs" />
-    <Compile Include="Model\MenuItem.cs" />
-    <Compile Include="Model\TextBlockModel.cs" />
-    <Compile Include="Model\NavigationMenuItem.cs" />
+    <Compile Include="Model\Departement.cs" />
+    <Compile Include="Model\ItemDepartement.cs" />
     <Compile Include="Model\NavigationMenuItemExtensions.cs" />
+    <Compile Include="Model\TextBlockModel.cs" />
     <Compile Include="Model\TextBoxModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\ConversionFormats.cs" />
@@ -200,7 +199,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.7</Version>
+      <Version>6.2.8</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

@@ -37,7 +37,7 @@ namespace Metier
             this.prenom = prenom;
             this.categorie = categorie;
         }
-        
+
         new public void init()
         {
             base.init();

@@ -24,7 +24,7 @@ namespace Dep_Gestion.DAO
 
             if (tc == null)
             {
-                using (SqlCommand command_c = new SqlCommand("INSERT INTO departement VALUES (" + obj.id + ", '" + obj.nom + "', " + obj.dep.id + ");", Connexion.getInstance()))
+                using (SqlCommand command_c = new SqlCommand("INSERT INTO departement VALUES (" + obj.id + ", '" + obj.nom + "');", Connexion.getInstance()))
                 {
                     command_c.ExecuteNonQuery();
                 }

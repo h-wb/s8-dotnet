@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using Metier;
 
 namespace DAO
 {
@@ -13,13 +14,14 @@ namespace DAO
 
         public abstract T find(string nom);
 
-        public abstract T create(T obj);
-
         public abstract List<T> findAll();
 
+        public abstract T create(T obj);
+        
         public abstract T update(T objAupdate, T update);
 
         public abstract void delete(T obj);
+
     }
 
 }

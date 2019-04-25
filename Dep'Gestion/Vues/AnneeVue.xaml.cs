@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
+﻿using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using System.Diagnostics;
 using Dep_Gestion.Model;
+
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -24,6 +12,7 @@ namespace Dep_Gestion.Vues
     /// </summary>
     public sealed partial class AnneeVue : Page
     {
+
         private TextBlockModel tbmodel;
 
         public AnneeVue()
@@ -32,16 +21,21 @@ namespace Dep_Gestion.Vues
 
             tbmodel = new TextBlockModel();
             DataContext = tbmodel;
+
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (e.Parameter != null)
             {
+
                 this.tbmodel.Text = e.Parameter.ToString();
+
             }
 
             base.OnNavigatedTo(e);
         }
     }
+
 }
+

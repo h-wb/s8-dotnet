@@ -20,6 +20,7 @@ namespace DAO
         public abstract DAO<EC> getECDAO();
         public abstract DAO<Departement> getDepartementDAO();
 
+
         public static AbstractDAOFactory getFactory(types type)
         {
             if (type.Equals(types.SQL_FACTORY))

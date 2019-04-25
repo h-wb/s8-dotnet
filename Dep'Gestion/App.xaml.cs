@@ -30,7 +30,32 @@ namespace Dep_Gestion
             Connexion connexion = new Connexion();
             connexion.creerConnexion();
 
-            
+            TypeCours tp = new TypeCours("TP", true);
+            Categorie maitreDeConference = new Categorie("maitre de conférences", 240);
+            Departement dpt = new Departement("Informatique");
+
+            AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
+
+            DAO<Departement> depart = factoSQL.getDepartementDAO();
+            depart.create(dpt);
+
+            DAO<Annee> an = factoSQL.getAnneeDAO();  
+            an.create(new Annee("M1", dpt));
+            an.create(new Annee("M2", dpt));
+
+
+            DAO<PartieAnnee> pan = factoSQL.getPartieAnneeDAO();
+            PartieAnnee test = new PartieAnnee("Semestre 1", an.find(1));
+            pan.create(test);
+            pan.create(new PartieAnnee("Semestre 2", an.find(1)));
+            pan.create(new PartieAnnee("Semestre 3", an.find(2)));
+
+            DAO<Enseignement> en = factoSQL.getEnseignementDAO();
+          //  en.create(new Enseignement("EC1", test));
+
+            //Console.WriteLine(maitreDeConference);
+            //Console.ReadLine();
+
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }

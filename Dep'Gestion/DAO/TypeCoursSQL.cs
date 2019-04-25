@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Metier;
-using System.Reflection;
-using System.Data.SqlClient;
-using System.Data;
+﻿using Metier;
 using Outils;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace DAO
 {
@@ -24,6 +19,7 @@ namespace DAO
             {
                 obj.id = OutilsSQL.getLastInsertedId("type_cours", Connexion.getInstance()) + 1;
             }
+
 
             Console.WriteLine("création type cours");
             TypeCours tc =null;
@@ -126,6 +122,7 @@ namespace DAO
         }
 
         public override List<TypeCours> findAll()
+
         {
             List<TypeCours> tps = new List<TypeCours>();
 

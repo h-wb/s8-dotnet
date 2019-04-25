@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Data.SqlClient;
 using System.Data;
 using Outils;
+using System.Diagnostics;
 
 namespace DAO
 {
@@ -17,9 +18,12 @@ namespace DAO
 
         public override Categorie create(Categorie obj)
         {
+
             AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
             DAO<Categorie> categorie = factoSQL.getCategorieDAO();
 
+
+            Debug.WriteLine(obj.heuresATravailler);
 
             if (obj.id == -1)
             {
@@ -28,7 +32,9 @@ namespace DAO
             Categorie tc = null;
             tc = this.find(obj.nom);
 
+
             if (tc == null)
+
             {
                 using (SqlCommand command_c = new SqlCommand(@"INSERT INTO categorie_enseignant VALUES 
                             (" + obj.id + ", '" + obj.nom + "', " + obj.heuresATravailler + ");", Connexion.getInstance()))
@@ -42,18 +48,24 @@ namespace DAO
 
         public override void delete(Categorie obj)
         {
+
             using (SqlCommand command_d = new SqlCommand("DELETE FROM categorie_enseignant WHERE id=" + obj.id + ";", Connexion.getInstance()))
+
             {
                 command_d.ExecuteNonQuery();
             }
+
             //Connexion.getInstance().Close();
+
         }
 
 
         public override Categorie find(int id)
         {
             Categorie categorieEnseignant = null;
+
             
+
             using (SqlCommand command_f = new SqlCommand("SELECT nom, heures_a_travailler FROM categorie_enseignant WHERE id=" + id + ";", Connexion.getInstance()))
             {
                 using (SqlDataReader reader_f = command_f.ExecuteReader())
@@ -62,7 +74,9 @@ namespace DAO
                     {
                         while (reader_f.Read())
                         {
+
                             categorieEnseignant = new Categorie(id, reader_f.GetString(0), reader_f.GetDouble(1));
+
 
                             reader_f.NextResult();
                         }
@@ -86,6 +100,7 @@ namespace DAO
         public override Categorie find(string nom)
         {
             Categorie categ = null;
+
 
             using (SqlCommand command_f = new SqlCommand("SELECT id, nom, heures_a_travailler FROM categorie_enseignant WHERE nom='" + nom + "';", Connexion.getInstance()))
             {
@@ -116,6 +131,7 @@ namespace DAO
             using (SqlCommand command_f = new SqlCommand("SELECT * FROM categorie_enseignant;", Connexion.getInstance()))
             {
                 using (SqlDataReader reader_f = command_f.ExecuteReader())
+
                 {
                     if (reader_f.HasRows)
                     {

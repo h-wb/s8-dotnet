@@ -9,14 +9,14 @@ namespace Dep_Gestion.Model
 {
     internal static class NavigationMenuItemExtensions
     {
-        internal static TreeViewNode AsTreeViewNode(this NavigationMenuItem menuItem)
+        internal static TreeViewNode AsTreeViewNode(this ItemDepartement menuItem)
         {
             var result = new TreeViewNode
             {
                 Content = menuItem
             };
 
-            foreach (NavigationMenuItem subItem in menuItem.Children)
+            foreach (ItemDepartement subItem in menuItem.Children)
             {
                 result.Children.Add(subItem.AsTreeViewNode());
             }

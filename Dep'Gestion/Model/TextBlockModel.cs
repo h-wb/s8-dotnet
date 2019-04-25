@@ -11,7 +11,7 @@ namespace Dep_Gestion.Model
     class TextBlockModel : ViewModelBase
     {
         private string text;
-        
+
         public string Text
         {
             get { return text; }

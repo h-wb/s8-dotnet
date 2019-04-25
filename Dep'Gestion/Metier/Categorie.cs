@@ -31,7 +31,7 @@ namespace Metier
             this.nom = nom;
             this.heuresATravailler = heuresATravailler;
         }
-        
+
 
         public override string ToString()
         {
