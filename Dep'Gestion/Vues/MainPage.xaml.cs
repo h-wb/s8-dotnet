@@ -27,6 +27,8 @@ namespace AppGestion
 
         private static DAO<Annee> annee = factoSQL.getAnneeDAO();
         private static DAO<PartieAnnee> partieAnnee = factoSQL.getPartieAnneeDAO();
+        private static DAO<Departement> depart = factoSQL.getDepartementDAO();
+        
 
 
         private ObservableCollection<NavigationMenuItem> annees = new ObservableCollection<NavigationMenuItem>();
@@ -38,6 +40,11 @@ namespace AppGestion
         public MainPage()
         {
             this.InitializeComponent();
+
+
+            depart.create(new Departement("Informatique"));
+
+
             foreach (Annee annee in annee.findAll())
             {
                 NavigationMenuItem nodeAnnee = new NavigationMenuItem { Text = annee.nom, Objet = annee, Children = new ObservableCollection<MenuItem>(), NavigationDestination = typeof(AnneeVue) };
@@ -57,6 +64,8 @@ namespace AppGestion
                 NavigationTree.RootNodes.Add(item.AsTreeViewNode());
 
             }
+
+
         }
 
         private void TreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
@@ -70,7 +79,7 @@ namespace AppGestion
                     if (nodeSelectionneItem.NavigationDestination != null)
                     {
                         Debug.WriteLine(menuItem.NavigationDestination);
-                        Navigate(menuItem.NavigationDestination);
+                        Navigate(menuItem.NavigationDestination, menuItem.Text);
                     }
                 }
             }
@@ -79,6 +88,7 @@ namespace AppGestion
         public bool Navigate(Type sourcePageType, object parameter = null)
         {
             return SplitViewFrame.Navigate(sourcePageType, parameter);
+            //return frametest.Navigate(sourcePageType, parameter);
         }
 
         private void SplitViewFrame_OnNavigated(object sender, NavigationEventArgs e)

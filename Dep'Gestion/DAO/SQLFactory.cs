@@ -48,5 +48,10 @@ namespace DAO
         {
             return new ECSQL();
         }
+
+        public override DAO<Departement> getDepartementDAO()
+        {
+            return new DepartementSQL();
+        }
     }
 }

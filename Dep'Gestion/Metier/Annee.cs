@@ -8,22 +8,26 @@ namespace Metier
 {
     public class Annee : ObjetAvecIdEtNom
     {
+        public Departement dep { get; set; }
+
         public Annee()
         {
             this.init();
         }
 
-        public Annee(string nom)
+        public Annee(string nom, Departement dep)
         {
             this.init();
             this.nom = nom;
+            this.dep = dep;
         }
 
-        public Annee(int id, string nom)
+        public Annee(int id, string nom, Departement dep)
         {
             this.init();
             this.id = id;
             this.nom = nom;
+            this.dep = dep;
         }
         
         new public void init()

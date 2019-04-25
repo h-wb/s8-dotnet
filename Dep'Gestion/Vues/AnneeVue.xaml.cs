@@ -30,7 +30,7 @@ namespace Dep_Gestion.Vues
         {
             this.InitializeComponent();
 
-            tbmodel = new TextBlockModel { Text = "Hello" };
+            tbmodel = new TextBlockModel();
             DataContext = tbmodel;
         }
 
@@ -38,7 +38,7 @@ namespace Dep_Gestion.Vues
         {
             if (e.Parameter != null)
             {
-                txtTest.Text = e.Parameter.ToString();
+                this.tbmodel.Text = e.Parameter.ToString();
             }
 
             base.OnNavigatedTo(e);

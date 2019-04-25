@@ -17,6 +17,6 @@
                    HorizontalAlignment="Right"
                    FontSize="36"
                    Margin="20" />
-        <TextBlock x:Name="txtTest" HorizontalAlignment="Left" Margin="299,385,0,0" Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="361" Height="114"/>
+        <TextBlock x:Name="txtTest" HorizontalAlignment="Left" Margin="299,385,0,0" Text="{x:Bind Path=tbmodel.Text, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="361" Height="114"/>
     </Grid>
 </Page>

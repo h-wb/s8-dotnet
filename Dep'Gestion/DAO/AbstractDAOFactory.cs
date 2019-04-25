@@ -18,6 +18,7 @@ namespace DAO
         public abstract DAO<PartieAnnee> getPartieAnneeDAO();
         public abstract DAO<Enseignement> getEnseignementDAO();
         public abstract DAO<EC> getECDAO();
+        public abstract DAO<Departement> getDepartementDAO();
 
         public static AbstractDAOFactory getFactory(types type)
         {

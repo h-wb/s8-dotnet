@@ -14,7 +14,7 @@ Data\schemas\diagramme_classe.xml
 Data\schemas\schema_bdd.xml
 Data\SQL\dbo.categorie_enseignant.sql
 Data\SQL\dbo.equivalent_td.sql
-Data\SQL\script_create_tables.txt
+Data\SQL\sql.txt
 Data\SQL\SQLConnection.txt
 Properties\Default.rd.xml
 WinMetadata\Windows.winmd

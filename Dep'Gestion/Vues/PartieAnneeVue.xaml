@@ -8,17 +8,18 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid Width="1500" Height="1000">
 
         <TextBlock 
             FontSize="40"
-                   Margin="638,96,603,832"
+                   Margin="380,42,861,886"
                    FontFamily="Segoe UI">Partie Année</TextBlock>
         <TextBlock x:Name="SubTitle"
                    HorizontalAlignment="Right"
                    FontSize="36"
                    Margin="20" />
-        <TextBlock x:Name="txtTest" HorizontalAlignment="Left" Margin="556,81,0,0" Text="{Binding TextBlockModel.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="361" Height="114"/>
-        <TextBox HorizontalAlignment="Left" Margin="556,340,0,0" Text="{Binding TextBox}" VerticalAlignment="Top" Height="100" Width="523"/>
+        <TextBlock HorizontalAlignment="Left" Margin="393,104,0,0" Text="{x:Bind Path=tbmodel.Text, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="185"/>
+        <Button x:Name="btnPartAnnee" Content="{x:Bind Path=bmmodel.Content, Mode=OneWay}" HorizontalAlignment="Left" Margin="434,190,0,0" VerticalAlignment="Top" Click="btnPartAnnee_Click"/>
+        <TextBox x:Name="txtbox" HorizontalAlignment="Left" Margin="380,143,0,0" Text="{x:Bind Path=tboxmodel.Text, Mode=OneWay}" VerticalAlignment="Top" Width="165"/>
     </Grid>
 </Page>

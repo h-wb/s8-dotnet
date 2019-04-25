@@ -125,6 +125,7 @@
     <Compile Include="DAO\ConnectionSQL.cs" />
     <Compile Include="DAO\Connexion.cs" />
     <Compile Include="DAO\DAO.cs" />
+    <Compile Include="DAO\DepartementSQL.cs" />
     <Compile Include="DAO\ECSQL.cs" />
     <Compile Include="DAO\EnseignementSQL.cs" />
     <Compile Include="DAO\EquivalentTDSQL.cs" />
@@ -146,11 +147,13 @@
     <Compile Include="Metier\ObjetAvecIdEtNom.cs" />
     <Compile Include="Metier\PartieAnnee.cs" />
     <Compile Include="Metier\TypeCours.cs" />
+    <Compile Include="Model\ButtonModel.cs" />
     <Compile Include="Model\ControlDataContext.cs" />
     <Compile Include="Model\MenuItem.cs" />
     <Compile Include="Model\TextBlockModel.cs" />
     <Compile Include="Model\NavigationMenuItem.cs" />
     <Compile Include="Model\NavigationMenuItemExtensions.cs" />
+    <Compile Include="Model\TextBoxModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\ConversionFormats.cs" />
     <Compile Include="Utils\FileUtils.cs" />
@@ -178,7 +181,7 @@
     <Content Include="Data\schemas\schema_bdd.xml" />
     <Content Include="Data\SQL\dbo.categorie_enseignant.sql" />
     <Content Include="Data\SQL\dbo.equivalent_td.sql" />
-    <Content Include="Data\SQL\script_create_tables.txt" />
+    <Content Include="Data\SQL\sql.txt" />
     <Content Include="Data\SQL\SQLConnection.txt" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
