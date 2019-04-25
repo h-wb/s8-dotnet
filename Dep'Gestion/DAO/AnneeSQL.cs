@@ -83,7 +83,7 @@ namespace Dep_Gestion.DAO
         {
             Annee annee = null;
 
-            using (SqlCommand command_f = new SqlCommand("SELECT id, nom FROM annee, id_departement WHERE nom='" + nom + "';", Connexion.getInstance()))
+            using (SqlCommand command_f = new SqlCommand("SELECT id, nom, id_departement FROM annee WHERE nom='" + nom + "';", Connexion.getInstance()))
             {
                 using (SqlDataReader reader_f = command_f.ExecuteReader())
                 {

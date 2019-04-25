@@ -15,7 +15,7 @@ namespace Metier
             init();
         }
 
-        public Departement(int id, string nom, Departement dep)
+        public Departement(int id, string nom)
         {
             init();
             this.id = id;
@@ -23,7 +23,7 @@ namespace Metier
             this.dep = dep;
         }
 
-        public Departement(string nom, Departement dep)
+        public Departement(string nom)
         {
             init();
             this.nom = nom;

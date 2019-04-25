@@ -42,7 +42,8 @@ namespace AppGestion
             this.InitializeComponent();
 
 
-            depart.create(new Departement("Informatique"));
+            annee.create(new Annee("M1", depart.find(1)));
+            partieAnnee.create(new PartieAnnee("Semstre 1", annee.find(1)));
 
 
             foreach (Annee annee in annee.findAll())
@@ -102,7 +103,7 @@ namespace AppGestion
 
             if (nodeSelectionne == null)
             {
-                Annee nouvelleAnnee = new Annee("Nouvelle annee");
+                Annee nouvelleAnnee = new Annee("Nouvelle annee", depart.find(1));
                 NavigationMenuItem nouveauNode = new NavigationMenuItem { Text = nouvelleAnnee.nom, Objet = nouvelleAnnee };
                 NavigationTree.RootNodes.Add(nouveauNode.AsTreeViewNode());
             }
