@@ -22,8 +22,7 @@ namespace DAO
             AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
             DAO<Categorie> categorie = factoSQL.getCategorieDAO();
 
-
-            Debug.WriteLine(obj.heuresATravailler);
+            
 
             if (obj.id == -1)
             {

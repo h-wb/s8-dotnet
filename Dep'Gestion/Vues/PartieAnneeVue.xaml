@@ -8,18 +8,27 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Width="1500" Height="1000">
+    <Grid Margin="0,0,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
-        <TextBlock 
-            FontSize="40"
-                   Margin="380,42,861,886"
-                   FontFamily="Segoe UI">Partie Année</TextBlock>
-        <TextBlock x:Name="SubTitle"
-                   HorizontalAlignment="Right"
-                   FontSize="36"
-                   Margin="20" />
-        <TextBlock HorizontalAlignment="Left" Margin="393,104,0,0" Text="{x:Bind Path=tbmodel.Text, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="185"/>
-        <Button x:Name="btnPartAnnee" Content="{x:Bind Path=bmmodel.Content, Mode=OneWay}" HorizontalAlignment="Left" Margin="434,190,0,0" VerticalAlignment="Top" Click="btnPartAnnee_Click"/>
-        <TextBox x:Name="txtbox" HorizontalAlignment="Left" Margin="380,143,0,0" Text="{x:Bind Path=tboxmodel.Text, Mode=OneWay}" VerticalAlignment="Top" Width="165"/>
+        <TextBlock HorizontalAlignment="Left" Margin="150,35,0,0" Text="de l'année" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="25"/>
+        <TextBlock x:Name="textblockPartieAnneeVue" HorizontalAlignment="Left" Margin="24,35,0,0" Text="{x:Bind Path=textblockPartieAnnee.Text, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="25"/>
+        <Button x:Name="btnModifAnnee"  HorizontalAlignment="Left" Margin="24,448,0,0" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" Click="BtnModifAnnee_Click">
+            <StackPanel>
+                <SymbolIcon Symbol="Edit" />
+                <TextBlock>Modifier</TextBlock>
+            </StackPanel>
+            <Button.Resources>
+                <Flyout x:Name="MyFlyout"  >
+                    <StackPanel>
+                        <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="{x:Bind Path=tbmodelFlyout.Text, Mode=OneWay}"/>
+                    </StackPanel>
+                </Flyout>
+            </Button.Resources>
+        </Button>
+        <TextBox x:Name="textboxNomVue" HorizontalAlignment="Left" Margin="24,172,0,0" Text="{x:Bind Path=tboxNom.Text.Trim(), Mode=OneWay}" VerticalAlignment="Top" Header="Nom " PlaceholderText="Nom" Height="57" Width="447"/>
+        <TextBlock x:Name="textblockAnneeVue" HorizontalAlignment="Left" Margin="275,35,0,0" Text="{x:Bind Path=textblockAnnee.Text, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="25"/>
+        <ComboBox x:Name="comboboxAnnee" ItemsSource="{x:Bind Path=CAM.Items, Mode=OneWay}" SelectedIndex="0" HorizontalAlignment="Left" Margin="24,294,0,0" VerticalAlignment="Top" Header="Année" Width="447"/>
+
     </Grid>
 </Page>
+

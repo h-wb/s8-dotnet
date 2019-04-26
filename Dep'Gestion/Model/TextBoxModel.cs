@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Model
+namespace Dep_Gestion.Model
 {
     class TextBoxModel : ViewModelBase
     {

@@ -8,17 +8,25 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <TextBlock 
-            FontSize="40"
-                   Margin="300"
-                   FontFamily="Segoe UI">Année</TextBlock>
-        <TextBlock x:Name="SubTitle"
-                   HorizontalAlignment="Right"
-                   FontSize="36"
-                   Margin="20" />
+    <Grid Margin="0,0,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
-        <TextBlock x:Name="txtTest" HorizontalAlignment="Left" Margin="299,385,0,0" Text="{x:Bind Path=tbmodel.Text, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Top" Width="361" Height="114"/>
+        <TextBlock HorizontalAlignment="Left" Margin="136,35,0,0" Text="{x:Bind Path=tbmodel.Text, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="25"/>
+        <TextBlock HorizontalAlignment="Left" Margin="24,35,0,0" Text="Année" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="25"/>
+        <Button x:Name="btnModifAnnee"  HorizontalAlignment="Left" Margin="24,336,0,0" VerticalAlignment="Top" FontFamily="Segoe MDL2 Assets" Click="BtnModifAnnee_Click">
+            <StackPanel>
+                <SymbolIcon Symbol="Edit" />
+                <TextBlock>Modifier</TextBlock>
+            </StackPanel>
+            <Button.Resources>
+                <Flyout x:Name="MyFlyout"  >
+                    <StackPanel>
+                        <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="{x:Bind Path=tbmodelFlyout.Text, Mode=OneWay}"/>
+                    </StackPanel>
+                </Flyout>
+            </Button.Resources>
+        </Button>
+        <TextBox x:Name="textboxNomVue" HorizontalAlignment="Left" Margin="24,172,0,0" Text="{x:Bind Path=tboxNom.Text.Trim(), Mode=OneWay}" VerticalAlignment="Top" Header="Nom " PlaceholderText="Nom" Height="57" Width="447"/>
+
     </Grid>
 </Page>
 

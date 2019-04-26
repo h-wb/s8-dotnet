@@ -5,23 +5,14 @@
     xmlns:local="using:AppGestion"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
-    xmlns:local1="using:Model"
+    xmlns:local1="using:Dep_Gestion.Model"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <NavigationView
-                MenuItemsSource="{x:Bind departements, Mode=TwoWay}"
-                PaneDisplayMode="Top"
-                Margin="0,12,0,0"
-                IsTabStop="False"
-                ItemInvoked="NavigationView_ItemInvoked"
-                IsBackButtonVisible="Collapsed"
-                IsSettingsVisible="False">
-            <SplitView x:Name="MainSplitView" IsPaneOpen="True" CompactPaneLength="48" OpenPaneLength="280" DisplayMode="Inline" FontFamily="Segoe UI">
+        <SplitView x:Name="MainSplitView" IsPaneOpen="True" CompactPaneLength="48" OpenPaneLength="280" DisplayMode="Inline" FontFamily="Segoe UI">
             <SplitView.Pane>
-                <Grid x:Name="LeftPanel" Margin="0,0,0,0">
+                <Grid x:Name="LeftPanel" Background="#FFAEAEAE" Margin="0,0,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="auto" />
@@ -32,14 +23,15 @@
                         <AppBarButton x:Name="Add" Icon="Add" Label="Ajouter" Click="Add_Click"/>
                         <AppBarButton x:Name="Clear" Icon="Clear" Label="Supprimer" Click="Clear_Click"/>
                     </CommandBar>
-                    <TreeView x:Name="TreeView" ItemsSource="{x:Bind annees, Mode=OneWay}" ItemInvoked="TreeView_ItemInvoked" FontFamily="Segoe UI" Margin="0,40,0,0">
+                    <TreeView x:Name="TreeView" ItemsSource="{x:Bind dpt, Mode=OneWay}" ItemInvoked="TreeView_ItemInvoked" FontFamily="Segoe UI" Margin="0,40,0,0" CanDragItems="False">
                         <TreeView.ItemTemplate>
-                            <DataTemplate x:DataType="local1:Item">
-                                <TreeViewItem ItemsSource="{x:Bind Children,  Mode=OneWay}" Content="{x:Bind Text,  Mode=OneWay}"/>
+                            <DataTemplate x:DataType="local1:ItemDepartement">
+                                <TreeViewItem ItemsSource="{x:Bind Children,  Mode=OneWay}"
+                                      Content="{x:Bind Text,  Mode=OneWay}"/>
                             </DataTemplate>
                         </TreeView.ItemTemplate>
                     </TreeView>
-                         
+
                 </Grid>
             </SplitView.Pane>
             <SplitView.Content>
@@ -51,10 +43,7 @@
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="auto" />
                                 </Grid.RowDefinitions>
-                                <ListView x:Name="ListView" ItemsSource="{x:Bind enseignants, Mode=OneWay}" FontFamily="Segoe UI" Margin="0,40,0,0">
-                    
-                                </ListView>
-                                   
+                                <ListView/>
                             </Grid>
                         </SplitView.Pane>
                         <SplitView.Content>
@@ -74,6 +63,6 @@
                 </Grid>
             </SplitView.Content>
         </SplitView>
-        </NavigationView>
+
     </Grid>
 </Page>

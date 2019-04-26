@@ -28,7 +28,7 @@ namespace Dep_Gestion
             Connexion connexion = new Connexion();
             connexion.creerConnexion();
 
-            TypeCours tp = new TypeCours("TP", true);
+            /*TypeCours tp = new TypeCours("TP", true);
             Categorie maitreDeConference = new Categorie("maitre de conférences", 240);
             Departement dpt = new Departement("Informatique");
             Departement dpt2 = new Departement("Informatique2");
@@ -61,8 +61,9 @@ namespace Dep_Gestion
             ens.create(new Enseignant("John", "Bob", categorie.find(1)));
             ens.create(new Enseignant("Bobby", "Malik", categorie.find(1)));
             ens.create(new Enseignant("Benoit", "Martin", categorie.find(1)));
-            ens.create(new Enseignant("Make", "Crelo", categorie.find(1)));
+            ens.create(new Enseignant("Make", "Crelo", categorie.find(1)));*/
 
+            Connexion.getInstance().Close();
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }

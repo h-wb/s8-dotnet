@@ -149,6 +149,9 @@
     <Compile Include="Metier\PartieAnnee.cs" />
     <Compile Include="Metier\TypeCours.cs" />
     <Compile Include="Model\ButtonModel.cs" />
+    <Compile Include="Model\ComboboxAnneeModel.cs" />
+    <Compile Include="Model\Departement.cs" />
+    <Compile Include="Model\ItemDepartement.cs" />
     <Compile Include="Model\ObservableCollectionExt.cs" />
     <Compile Include="Model\Item.cs" />
     <Compile Include="Model\NavigationMenuItemExtensions.cs" />
