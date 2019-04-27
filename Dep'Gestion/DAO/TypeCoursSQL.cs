@@ -20,29 +20,21 @@ namespace DAO
                 obj.Id = OutilsSQL.getLastInsertedId("type_cours", Connexion.getInstance()) + 1;
             }
 
-
-            Console.WriteLine("création type cours");
-            TypeCours tc =null;
-            tc = this.find(obj.Nom);
-
-            if(tc ==null)
+            int hasGroups = ConversionFormats.convert(obj.hasGroups);
+            using (SqlCommand command_c = new SqlCommand("INSERT INTO type_cours VALUES (" + obj.Id + ", '" + obj.Nom + "', '" + hasGroups + "');", Connexion.getInstance()))
             {
-                int hasGroups = ConversionFormats.convert(obj.hasGroups);
-                using (SqlCommand command_c = new SqlCommand("INSERT INTO type_cours VALUES (" + obj.Id + ", '" + obj.Nom + "', '" + hasGroups + "');", Connexion.getInstance()))
+                command_c.ExecuteNonQuery();
+                // Connexion.getInstance().Close();
+            }
+
+
+
+            foreach (Categorie categ in categorie.findAll())
+            {
+                int idT = OutilsSQL.getLastInsertedId("equivalent_td", Connexion.getInstance()) + 1;
+                using (SqlCommand command_test = new SqlCommand("INSERT INTO equivalent_td VALUES (" + idT + ", '" + categ.Id + "', '" + obj.Id + "', 1 );", Connexion.getInstance()))
                 {
-                    command_c.ExecuteNonQuery();
-                    // Connexion.getInstance().Close();
-                }
-
-
-
-                foreach (Categorie categ in categorie.findAll())
-                {
-                    int idT = OutilsSQL.getLastInsertedId("equivalent_td", Connexion.getInstance()) + 1;
-                    using (SqlCommand command_test = new SqlCommand("INSERT INTO equivalent_td VALUES (" + idT + ", '" + categ.Id + "', '" + obj.Id + "', 1 );", Connexion.getInstance()))
-                    {
-                        command_test.ExecuteNonQuery();
-                    }
+                    command_test.ExecuteNonQuery();
                 }
             }
 
@@ -145,16 +137,16 @@ namespace DAO
             return tps;
         }
 
-        public override TypeCours update(TypeCours objAupdate, TypeCours update)
+        public override TypeCours update(int idAupdate, TypeCours update)
         {
             using (SqlCommand command_u = new SqlCommand(@"UPDATE type_cours SET nom='" + update.Nom + "', " +
-                "has_groups=" + ConversionFormats.convert(update.hasGroups) + " WHERE id=" + objAupdate.Id + ";", Connexion.getInstance()))
+                "has_groups=" + ConversionFormats.convert(update.hasGroups) + " WHERE id=" + idAupdate + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }
 
            // Connexion.getInstance().Close();
-            return objAupdate;
+            return update;
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Diagnostics;
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=234238
 
-namespace Dep_Gestion.Vues
+namespace AppGestion
 {
     /// <summary>
     /// Une page vide peut être utilisée seule ou constituer une page de destination au sein d'un frame.
@@ -98,12 +98,12 @@ namespace Dep_Gestion.Vues
             //On parcourt la liste des années et on vérifie si il existe une année identique dans la BDD (même nom + même département)
             foreach (PartieAnnee pan in pannee.findAll())
             {
-                if ((this.textboxNomVue.Text.Trim() == pan.Nom.Trim())&&((int)listeID[this.comboboxAnnee.SelectedIndex] == pan.Annee.Id))
-                {
+                //if ((this.textboxNomVue.Text.Trim() == pan.Nom.Trim())&&((int)listeID[this.comboboxAnnee.SelectedIndex] == pan.Annee.Id))
+                //{
                     //tbmodelFlyout.Text = "Cette partie année existe déjà";
                     //MyFlyout.ShowAt(button);
                     //return false;
-                }
+                //}
             }
 
             return true;

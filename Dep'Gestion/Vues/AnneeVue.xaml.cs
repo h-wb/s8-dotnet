@@ -20,6 +20,7 @@ namespace AppGestion
 
         public ObjetBase nodeSelectionne;
 
+
         public AnneeVue()
         {
             this.InitializeComponent();
@@ -40,7 +41,7 @@ namespace AppGestion
         {
             Annee anneeSelectionne = (Annee)nodeSelectionne;
             anneeSelectionne.Nom = this.textboxNomVue.Text;
-            annee.update(annee.find(anneeSelectionne.Id), new Annee(anneeSelectionne.Nom, anneeSelectionne.Departement));
+            annee.update(anneeSelectionne.Id, new Annee(anneeSelectionne.Nom, anneeSelectionne.Departement));
         }
     }
 

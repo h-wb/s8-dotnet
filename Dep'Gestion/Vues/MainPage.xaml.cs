@@ -1,6 +1,6 @@
 using DAO;
 using Dep_Gestion.Model;
-using Dep_Gestion.Vues;
+using AppGestion;
 using Metier;
 using System;
 using System.Collections.ObjectModel;

@@ -18,16 +18,10 @@ namespace Dep_Gestion.DAO
             {
                 obj.Id = OutilsSQL.getLastInsertedId("departement", Connexion.getInstance()) + 1;
             }
-
-            Departement tc = null;
-            tc = this.find(obj.Nom);
-
-            if (tc == null)
+            
+            using (SqlCommand command_c = new SqlCommand("INSERT INTO departement VALUES (" + obj.Id + ", '" + obj.Nom + "');", Connexion.getInstance()))
             {
-                using (SqlCommand command_c = new SqlCommand("INSERT INTO departement VALUES (" + obj.Id + ", '" + obj.Nom + "');", Connexion.getInstance()))
-                {
-                    command_c.ExecuteNonQuery();
-                }
+                command_c.ExecuteNonQuery();
             }
 
             return obj;
@@ -118,14 +112,14 @@ namespace Dep_Gestion.DAO
             return deps;
         }
 
-        public override Departement update(Departement objAupdate, Departement update)
+        public override Departement update(int idAupdate, Departement update)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE departement SET nom='" + update.Nom + "' WHERE id=" + objAupdate.Id + ";", Connexion.getInstance()))
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE departement SET nom='" + update.Nom + "' WHERE id=" + idAupdate + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }
             
-            return objAupdate;
+            return update;
         }
     }
 }
