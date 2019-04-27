@@ -14,6 +14,8 @@ namespace Metier
         protected string _nom;
         protected ObservableCollectionExt<ObjetBase> _children = new ObservableCollectionExt<ObjetBase>();
         protected ObjetBase _parent;
+        private Type _navigationDestination;
+        private object _navigationParameter;
 
         public void init()
         {
@@ -49,6 +51,18 @@ namespace Metier
         {
             get { return _parent; }
             set { SetProperty(ref _parent, value); }
+        }
+
+        public Type NavigationDestination
+        {
+            get { return _navigationDestination; }
+            set { SetProperty(ref _navigationDestination, value); }
+        }
+
+        public object NavigationParameter
+        {
+            get { return _navigationParameter; }
+            set { SetProperty(ref _navigationParameter, value); }
         }
 
     }

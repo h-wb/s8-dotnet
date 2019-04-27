@@ -149,13 +149,7 @@
     <Compile Include="Metier\TypeCours.cs" />
     <Compile Include="Model\ButtonModel.cs" />
     <Compile Include="Model\ComboboxAnneeModel.cs" />
-    <Compile Include="Model\Departement.cs" />
-    <Compile Include="Model\ItemDepartement.cs" />
     <Compile Include="Model\ObservableCollectionExt.cs" />
-    <Compile Include="Model\Item.cs" />
-    <Compile Include="Model\NavigationMenuItemExtensions.cs" />
-    <Compile Include="Model\TextBlockModel.cs" />
-    <Compile Include="Model\TextBoxModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\ConversionFormats.cs" />
     <Compile Include="Utils\FileUtils.cs" />

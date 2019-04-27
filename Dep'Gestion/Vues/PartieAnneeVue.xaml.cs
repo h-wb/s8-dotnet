@@ -17,10 +17,9 @@ namespace Dep_Gestion.Vues
     /// </summary>
     public sealed partial class PartieAnneeVue : Page
     {
-        private TextBlockModel textblockPartieAnnee;
-        private TextBlockModel tbmodelFlyout;
-        private TextBoxModel tboxNom;
-        private TextBlockModel textblockAnnee;
+
+
+
         private ComboboxAnneeModel CAM;
         private PartieAnnee panneCourante;
         private Annee anneeParent;
@@ -34,10 +33,7 @@ namespace Dep_Gestion.Vues
         {
             this.InitializeComponent();
 
-            textblockPartieAnnee = new TextBlockModel();
-            tboxNom = new TextBoxModel();
-            tbmodelFlyout = new TextBlockModel();
-            textblockAnnee = new TextBlockModel();
+
             CAM = new ComboboxAnneeModel();
             listeID = new ArrayList();
             
@@ -47,21 +43,21 @@ namespace Dep_Gestion.Vues
         {
             if (e.Parameter != null)
             {
-                ArrayList parametres = (ArrayList)e.Parameter;
-                this.textblockAnnee.Text = (string)parametres[0];
-                this.tboxNom.Text = this.textblockPartieAnnee.Text = (string)parametres[1];
+                //ArrayList parametres = (ArrayList)e.Parameter;
+                //this.textblockAnnee.Text = (string)parametres[0];
+                //this.tboxNom.Text = this.textblockPartieAnnee.Text = (string)parametres[1];
                 
-                panneCourante = pannee.find((int)parametres[2]);
-                anneeParent = annee.find((int)parametres[3]);
+                //panneCourante = pannee.find((int)parametres[2]);
+                //anneeParent = annee.find((int)parametres[3]);
 
-                foreach (Annee an in annee.findAll())
-                {
-                    if (an.dep.id == anneeParent.dep.id)
-                    {
-                        listeID.Add(an.id);
-                        CAM.Items.Add(an.nom);
-                    }
-                }
+                //foreach (Annee an in annee.findAll())
+                //{
+                //    if (an.Departement.Id == anneeParent.Departement.Id)
+                //    {
+                //        listeID.Add(an.Id);
+                //        CAM.Items.Add(an.Nom);
+                //    }
+                //}
 
             }
 
@@ -73,16 +69,16 @@ namespace Dep_Gestion.Vues
 
             if (verif(sender))
             {
-                //On update la partie année courante
-                pannee.update(pannee.find(panneCourante.id), new PartieAnnee(textboxNomVue.Text, annee.find((int)listeID[this.comboboxAnnee.SelectedIndex])));
+                ////On update la partie année courante
+                //pannee.update(pannee.find(panneCourante.Id), new PartieAnnee(textboxNomVue.Text, annee.find((int)listeID[this.comboboxAnnee.SelectedIndex])));
 
-                //On met à jour la textbox de présentation dans la vue et on vide la textbox
-                Debug.WriteLine("Bloup");
-                Debug.WriteLine(this.comboboxAnnee.Text);
-                this.textblockAnnee.Text = this.comboboxAnnee.Text;
-                this.textblockPartieAnnee.Text = this.textboxNomVue.Text;
-                this.tboxNom.Text = "";
-                this.comboboxAnnee.SelectedIndex = 0;
+                ////On met à jour la textbox de présentation dans la vue et on vide la textbox
+                //Debug.WriteLine("Bloup");
+                //Debug.WriteLine(this.comboboxAnnee.Text);
+                //this.textblockAnnee.Text = this.comboboxAnnee.Text;
+                //this.textblockPartieAnnee.Text = this.textboxNomVue.Text;
+                //this.tboxNom.Text = "";
+                //this.comboboxAnnee.SelectedIndex = 0;
             }
         }
 
@@ -94,19 +90,19 @@ namespace Dep_Gestion.Vues
             //Vérification Longueur de la chaîne
             if (textboxNomVue.Text.Trim().Length == 0)
             {
-                tbmodelFlyout.Text = "Le nom doit faire au moins 1 caractère";
-                MyFlyout.ShowAt(button);
-                return false;
+                //tbmodelFlyout.Text = "Le nom doit faire au moins 1 caractère";
+                //MyFlyout.ShowAt(button);
+                //return false;
             }
 
             //On parcourt la liste des années et on vérifie si il existe une année identique dans la BDD (même nom + même département)
             foreach (PartieAnnee pan in pannee.findAll())
             {
-                if ((this.textboxNomVue.Text.Trim() == pan.nom.Trim())&&((int)listeID[this.comboboxAnnee.SelectedIndex] == pan.annee.id))
+                if ((this.textboxNomVue.Text.Trim() == pan.Nom.Trim())&&((int)listeID[this.comboboxAnnee.SelectedIndex] == pan.Annee.Id))
                 {
-                    tbmodelFlyout.Text = "Cette partie année existe déjà";
-                    MyFlyout.ShowAt(button);
-                    return false;
+                    //tbmodelFlyout.Text = "Cette partie année existe déjà";
+                    //MyFlyout.ShowAt(button);
+                    //return false;
                 }
             }
 

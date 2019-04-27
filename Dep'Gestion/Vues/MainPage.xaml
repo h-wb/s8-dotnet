@@ -11,38 +11,46 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <SplitView x:Name="MainSplitView" IsPaneOpen="True" CompactPaneLength="48" OpenPaneLength="280" DisplayMode="Inline" FontFamily="Segoe UI">
-            <SplitView.Pane>
-                <Grid x:Name="LeftPanel" Background="#FFAEAEAE" Margin="0,0,0,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
+        <NavigationView
+                MenuItemsSource="{x:Bind departements, Mode=TwoWay}"
+                PaneDisplayMode="Top"
+                Margin="0,12,0,0"
+                IsTabStop="False"
+                ItemInvoked="NavigationView_ItemInvoked"
+                IsBackButtonVisible="Collapsed"
+                IsSettingsVisible="False">
+            <SplitView x:Name="MainSplitView" IsPaneOpen="True" CompactPaneLength="48" OpenPaneLength="280" DisplayMode="Inline" FontFamily="Segoe UI">
+                <SplitView.Pane>
+                    <Grid x:Name="LeftPanel" Margin="0,0,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
 
-                    <CommandBar DefaultLabelPosition="Right" Grid.Row="0" Background="Transparent" HorizontalAlignment="Left" FontFamily="Segoe UI">
+                        <CommandBar DefaultLabelPosition="Right" Grid.Row="0" Background="Transparent" HorizontalAlignment="Left" FontFamily="Segoe UI">
 
-                        <AppBarButton x:Name="Add" Icon="Add" Label="Ajouter" Click="Add_Click"/>
-                        <AppBarButton x:Name="Clear" Icon="Clear" Label="Supprimer" Click="Clear_Click"/>
-                    </CommandBar>
-                    <TreeView x:Name="TreeView" ItemsSource="{x:Bind dpt, Mode=OneWay}" ItemInvoked="TreeView_ItemInvoked" FontFamily="Segoe UI" Margin="0,40,0,0" CanDragItems="False">
-                        <TreeView.ItemTemplate>
-                            <DataTemplate x:DataType="local11:ObjetBase">
-                                <TreeViewItem ItemsSource="{x:Bind Children,  Mode=OneWay}" Content="{x:Bind Nom,  Mode=OneWay}"/>
-                            </DataTemplate>
-                        </TreeView.ItemTemplate>
-                    </TreeView>
+                            <AppBarButton x:Name="Add" Icon="Add" Label="Ajouter" Click="Add_Click"/>
+                            <AppBarButton x:Name="Clear" Icon="Clear" Label="Supprimer" Click="Clear_Click"/>
+                        </CommandBar>
+                        <TreeView x:Name="TreeView" ItemsSource="{x:Bind annees, Mode=OneWay}" ItemInvoked="TreeView_ItemInvoked" FontFamily="Segoe UI" Margin="0,40,0,0">
+                            <TreeView.ItemTemplate>
+                                <DataTemplate x:DataType="local11:ObjetBase">
+                                    <TreeViewItem ItemsSource="{x:Bind Children,  Mode=OneWay}" Content="{x:Bind Nom,  Mode=OneWay}"/>
+                                </DataTemplate>
+                            </TreeView.ItemTemplate>
+                        </TreeView>
 
-                </Grid>
-            </SplitView.Pane>
-            <SplitView.Content>
-                <Grid>
-                    <SplitView x:Name="SecondSplitView" IsPaneOpen="True" OpenPaneLength="350" Background="White" DisplayMode="Inline" PanePlacement="Right">
-                        <SplitView.Pane>
-                            <Grid x:Name="RightPanel" Margin="0,0,0,0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="auto" />
-                                </Grid.RowDefinitions>
+                    </Grid>
+                </SplitView.Pane>
+                <SplitView.Content>
+                    <Grid>
+                        <SplitView x:Name="SecondSplitView" IsPaneOpen="True" OpenPaneLength="350" Background="White" DisplayMode="Inline" PanePlacement="Right">
+                            <SplitView.Pane>
+                                <Grid x:Name="RightPanel" Margin="0,0,0,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
                                     <ListView x:Name="ListView" ItemsSource="{x:Bind enseignants, Mode=OneWay}" FontFamily="Segoe UI" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
@@ -52,26 +60,27 @@
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ListView.ItemTemplate>
-                                </ListView>
-                            </Grid>
-                        </SplitView.Pane>
-                        <SplitView.Content>
-                            <Frame x:Name="Frame" Navigated="Frame_OnNavigated" Padding="0" FontFamily="Segoe UI">
-                                <Frame.ContentTransitions>
-                                    <TransitionCollection>
-                                        <NavigationThemeTransition>
-                                            <NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                                                <DrillInNavigationTransitionInfo />
-                                            </NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                                        </NavigationThemeTransition>
-                                    </TransitionCollection>
-                                </Frame.ContentTransitions>
-                            </Frame>
-                        </SplitView.Content>
-                    </SplitView>
-                </Grid>
-            </SplitView.Content>
-        </SplitView>
+                                    </ListView>
 
+                                </Grid>
+                            </SplitView.Pane>
+                            <SplitView.Content>
+                                <Frame x:Name="Frame" Navigated="Frame_OnNavigated" Padding="0" FontFamily="Segoe UI">
+                                    <Frame.ContentTransitions>
+                                        <TransitionCollection>
+                                            <NavigationThemeTransition>
+                                                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                                                    <DrillInNavigationTransitionInfo />
+                                                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                                            </NavigationThemeTransition>
+                                        </TransitionCollection>
+                                    </Frame.ContentTransitions>
+                                </Frame>
+                            </SplitView.Content>
+                        </SplitView>
+                    </Grid>
+                </SplitView.Content>
+            </SplitView>
+        </NavigationView>
     </Grid>
 </Page>
