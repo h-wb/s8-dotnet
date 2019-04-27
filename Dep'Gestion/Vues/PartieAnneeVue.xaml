@@ -10,9 +10,9 @@
 
     <Grid Margin="0,0,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
-        <TextBlock HorizontalAlignment="Left" Margin="136,35,0,0" Text="r" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="25"/>
-        <TextBlock HorizontalAlignment="Left" Margin="24,35,0,0" Text="Année" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="25"/>
-        <TextBox x:Name="textboxNomVue" HorizontalAlignment="Left" Margin="24,172,0,0" Text="r" VerticalAlignment="Top" Header="Nom " PlaceholderText="Nom" Height="57" Width="447"/>
+        <TextBlock x:Name="textblockAnneeVue" HorizontalAlignment="Left" Margin="401,41,0,0" Text="{x:Bind Path=nodeSelectionne.Parent.Nom, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="20"/>
+        <TextBlock x:Name="textblockPartieAnneeVue" HorizontalAlignment="Left" Margin="24,35,0,0" Text="{x:Bind Path=nodeSelectionne.Nom, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="20"/>
+        <TextBox x:Name="textboxNomVue" HorizontalAlignment="Left" Margin="24,172,0,0" Text="r" VerticalAlignment="Top" Header="Nom " PlaceholderText="Nom" Height="57" Width="447" TextChanged="TextboxNomVue_TextChanged"/>
 
     </Grid>
 </Page>

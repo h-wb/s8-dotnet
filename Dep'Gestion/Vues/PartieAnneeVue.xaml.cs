@@ -17,96 +17,37 @@ namespace AppGestion
     /// </summary>
     public sealed partial class PartieAnneeVue : Page
     {
-
-
-
-        private ComboboxAnneeModel CAM;
-        private PartieAnnee panneCourante;
-        private Annee anneeParent;
-        private ArrayList listeID;
-
         private static AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
-        private static DAO<Annee> annee = factoSQL.getAnneeDAO();
         private static DAO<PartieAnnee> pannee = factoSQL.getPartieAnneeDAO();
+
+        private ObjetBase nodeSelectionne;
 
         public PartieAnneeVue()
         {
             this.InitializeComponent();
-
-
-            CAM = new ComboboxAnneeModel();
-            listeID = new ArrayList();
-            
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (e.Parameter != null)
             {
-                //ArrayList parametres = (ArrayList)e.Parameter;
-                //this.textblockAnnee.Text = (string)parametres[0];
-                //this.tboxNom.Text = this.textblockPartieAnnee.Text = (string)parametres[1];
-                
-                //panneCourante = pannee.find((int)parametres[2]);
-                //anneeParent = annee.find((int)parametres[3]);
+                nodeSelectionne = (ObjetBase)e.Parameter;
+                if (e.Parameter != null)
+                {
+                    this.textboxNomVue.Text = nodeSelectionne.Nom;
 
-                //foreach (Annee an in annee.findAll())
-                //{
-                //    if (an.Departement.Id == anneeParent.Departement.Id)
-                //    {
-                //        listeID.Add(an.Id);
-                //        CAM.Items.Add(an.Nom);
-                //    }
-                //}
+                }
+                base.OnNavigatedTo(e);
 
             }
 
             base.OnNavigatedTo(e);
         }
 
-        private void BtnModifAnnee_Click(object sender, RoutedEventArgs e)
+        private void TextboxNomVue_TextChanged(object sender, TextChangedEventArgs e)
         {
-
-            if (verif(sender))
-            {
-                ////On update la partie année courante
-                //pannee.update(pannee.find(panneCourante.Id), new PartieAnnee(textboxNomVue.Text, annee.find((int)listeID[this.comboboxAnnee.SelectedIndex])));
-
-                ////On met à jour la textbox de présentation dans la vue et on vide la textbox
-                //Debug.WriteLine("Bloup");
-                //Debug.WriteLine(this.comboboxAnnee.Text);
-                //this.textblockAnnee.Text = this.comboboxAnnee.Text;
-                //this.textblockPartieAnnee.Text = this.textboxNomVue.Text;
-                //this.tboxNom.Text = "";
-                //this.comboboxAnnee.SelectedIndex = 0;
-            }
-        }
-
-        //Fonction de vérification du formulaire
-        private bool verif(object sender)
-        {
-            var button = sender as Button;
-
-            //Vérification Longueur de la chaîne
-            if (textboxNomVue.Text.Trim().Length == 0)
-            {
-                //tbmodelFlyout.Text = "Le nom doit faire au moins 1 caractère";
-                //MyFlyout.ShowAt(button);
-                //return false;
-            }
-
-            //On parcourt la liste des années et on vérifie si il existe une année identique dans la BDD (même nom + même département)
-            foreach (PartieAnnee pan in pannee.findAll())
-            {
-                //if ((this.textboxNomVue.Text.Trim() == pan.Nom.Trim())&&((int)listeID[this.comboboxAnnee.SelectedIndex] == pan.Annee.Id))
-                //{
-                    //tbmodelFlyout.Text = "Cette partie année existe déjà";
-                    //MyFlyout.ShowAt(button);
-                    //return false;
-                //}
-            }
-
-            return true;
+            nodeSelectionne.Nom = this.textboxNomVue.Text;
+            pannee.update(nodeSelectionne.Id, new PartieAnnee(nodeSelectionne.Nom, (Annee)nodeSelectionne.Parent));
         }
     }
 }
