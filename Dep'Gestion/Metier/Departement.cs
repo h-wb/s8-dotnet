@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Metier
 {
-    public class Departement : ObjetAvecIdEtNom
+    public class Departement : ObjetBase
     {
-        public Departement dep { get; set; }
-
         public Departement()
         {
             init();
@@ -18,16 +16,14 @@ namespace Metier
         public Departement(int id, string nom)
         {
             init();
-            this.id = id;
-            this.nom = nom;
-            this.dep = dep;
+            this.Id = id;
+            this.Nom = nom;
         }
 
         public Departement(string nom)
         {
             init();
-            this.nom = nom;
-            this.dep = dep;
+            this.Nom = nom;
         }
         
 

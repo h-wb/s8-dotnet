@@ -14,17 +14,17 @@ namespace Dep_Gestion.DAO
     {
         public override EC create(EC obj)
         {
-            if (obj.id == -1)
+            if (obj.Id == -1)
             {
-                obj.id = OutilsSQL.getLastInsertedId("ec", Connexion.getInstance()) + 1;
+                obj.Id = OutilsSQL.getLastInsertedId("ec", Connexion.getInstance()) + 1;
             }
 
             EC tc = null;
-            tc = this.find(obj.nom);
+            tc = this.find(obj.Nom);
 
             if (tc == null)
             {
-                using (SqlCommand command_c = new SqlCommand("INSERT INTO ec VALUES (" + obj.id + ", '" + obj.nom + "', " + obj.enseignement.id + ");", Connexion.getInstance()))
+                using (SqlCommand command_c = new SqlCommand("INSERT INTO ec VALUES (" + obj.Id + ", '" + obj.Nom + "', " + obj.enseignement.Id + ");", Connexion.getInstance()))
                 {
                     command_c.ExecuteNonQuery();
                 }
@@ -35,7 +35,7 @@ namespace Dep_Gestion.DAO
 
         public override void delete(EC obj)
         {
-            using (SqlCommand command_d = new SqlCommand("DELETE FROM ec WHERE id=" + obj.id + ";", Connexion.getInstance()))
+            using (SqlCommand command_d = new SqlCommand("DELETE FROM ec WHERE id=" + obj.Id + ";", Connexion.getInstance()))
             {
                 command_d.ExecuteNonQuery();
             }
@@ -134,7 +134,7 @@ namespace Dep_Gestion.DAO
 
         public override EC update(EC objAupdate, EC update)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE ec SET nom='" + update.nom + "', id_enseignement=" + update.enseignement.id + " WHERE id=" + objAupdate.id + ";", Connexion.getInstance()))
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE ec SET nom='" + update.Nom + "', id_enseignement=" + update.enseignement.Id + " WHERE id=" + objAupdate.Id + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }

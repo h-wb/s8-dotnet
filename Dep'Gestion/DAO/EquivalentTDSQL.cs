@@ -66,7 +66,7 @@ namespace DAO
 
         public override void delete(EquivalentTD obj)
         {
-            using (SqlCommand command = new SqlCommand("DELETE FROM equivalent_td WHERE id=" + obj.id + ";", Connexion.getInstance()))
+            using (SqlCommand command = new SqlCommand("DELETE FROM equivalent_td WHERE id=" + obj.Id + ";", Connexion.getInstance()))
             {
                 command.ExecuteNonQuery();
             }
@@ -151,8 +151,8 @@ namespace DAO
 
         public override EquivalentTD update(EquivalentTD objAupdate, EquivalentTD update)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE equivalent_td SET id_categorie_enseignant=" + update.categ.id + ", " +
-               "id_type_cours=" + update.tc.id + ", ratio_cours_td=" + update.ratio + " WHERE id=" + objAupdate.id + ";", Connexion.getInstance()))
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE equivalent_td SET id_categorie_enseignant=" + update.categ.Id + ", " +
+               "id_type_cours=" + update.tc.Id + ", ratio_cours_td=" + update.ratio + " WHERE id=" + objAupdate.Id + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }

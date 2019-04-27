@@ -144,8 +144,7 @@
     <Compile Include="Metier\Enseignement.cs" />
     <Compile Include="Metier\EquivalentTD.cs" />
     <Compile Include="Metier\Groupe.cs" />
-    <Compile Include="Metier\ObjetAvecId.cs" />
-    <Compile Include="Metier\ObjetAvecIdEtNom.cs" />
+    <Compile Include="Metier\ObjetBase.cs" />
     <Compile Include="Metier\PartieAnnee.cs" />
     <Compile Include="Metier\TypeCours.cs" />
     <Compile Include="Model\ButtonModel.cs" />

@@ -1,14 +1,16 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Metier
 {
-    public class Annee : ObjetAvecIdEtNom
+    public class Annee : ObjetBase
     {
-        public Departement dep { get; set; }
+        public Departement _departement;
 
         public Annee()
         {
@@ -18,21 +20,28 @@ namespace Metier
         public Annee(string nom, Departement dep)
         {
             this.init();
-            this.nom = nom;
-            this.dep = dep;
+            this.Nom = nom;
+            this._departement = dep;
         }
 
         public Annee(int id, string nom, Departement dep)
         {
             this.init();
-            this.id = id;
-            this.nom = nom;
-            this.dep = dep;
+            this.Id = id;
+            this.Nom = nom;
+            this._departement = dep;
         }
         
         new public void init()
         {
             base.init();
         }
+
+        public Departement Departement
+        {
+            get { return _departement; }
+            set { SetProperty(ref _departement, value); }
+        }
+
     }
 }

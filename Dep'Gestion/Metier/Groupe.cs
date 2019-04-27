@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Metier
 {
     //Représente un groupe de TD, TP ou autre
-    public class Groupe : ObjetAvecIdEtNom
+    public class Groupe : ObjetBase
     {
         //L'enseignant pour ce groupe
         public Enseignant enseignant;
@@ -21,7 +21,7 @@ namespace Metier
         public Groupe(string nom)
         {
             this.init();
-            this.nom = nom;
+            this.Nom = nom;
         }
 
         public Groupe(Enseignant enseignant)
@@ -34,7 +34,7 @@ namespace Metier
         {
             this.init();
             this.idCours = -1;
-            this.nom = nom;
+            this.Nom = nom;
             this.enseignant = enseignant;
         }
 
@@ -42,7 +42,7 @@ namespace Metier
         {
             this.init();
             this.idCours = idCours;
-            this.nom = nom;
+            this.Nom = nom;
             this.enseignant = enseignant;
         }
     }

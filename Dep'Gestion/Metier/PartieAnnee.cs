@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Metier
 {
-    public class PartieAnnee : ObjetAvecIdEtNom
+    public class PartieAnnee : ObjetBase
     {
-        public Annee annee { get; set; }
+        private Annee _annee;
 
         public PartieAnnee()
         {
@@ -18,21 +18,27 @@ namespace Metier
         public PartieAnnee(string nom, Annee annee)
         {
             this.init();
-            this.nom = nom;
-            this.annee = annee;
+            this.Nom = nom;
+            this.Annee = annee;
         }
 
         public PartieAnnee(int id, string nom, Annee annee)
         {
             this.init();
-            this.id = id;
-            this.nom = nom;
-            this.annee = annee;
+            this.Id = id;
+            this.Nom = nom;
+            this.Annee = annee;
         }
 
         new public void init()
         {
             base.init();
+        }
+
+        public Annee Annee
+        {
+            get { return _annee; }
+            set { SetProperty(ref _annee, value); }
         }
     }
 }

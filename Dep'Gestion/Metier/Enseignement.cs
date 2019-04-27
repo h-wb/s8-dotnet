@@ -1,33 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Metier
+﻿namespace Metier
 {
-    public class Enseignement : ObjetAvecIdEtNom
+    public class Enseignement : ObjetBase
     {
-        public PartieAnnee partAnnee { get; set; }
+        private PartieAnnee _partieAnnee;
 
-        public Enseignement(int id, string nom, PartieAnnee partAnnee)
+        public Enseignement()
         {
             this.init();
-            this.id = id;
-            this.nom = nom;
-            this.partAnnee = partAnnee;
         }
 
-        public Enseignement(string nom, PartieAnnee partAnnee)
+        public Enseignement(int id, string nom, PartieAnnee partieAnnee)
         {
             this.init();
-            this.nom = nom;
-            this.partAnnee = partAnnee;
+            this.Id = id;
+            this.Nom = nom;
+            this.PartieAnnee = partieAnnee;
+        }
+
+        public Enseignement(string nom, PartieAnnee partieAnnee)
+        {
+            this.init();
+            this.Nom = nom;
+            this.PartieAnnee = partieAnnee;
         }
 
         new public void init()
         {
             base.init();
+        }
+
+        public PartieAnnee PartieAnnee
+        {
+            get { return _partieAnnee; }
+            set { SetProperty(ref _partieAnnee, value); }
         }
     }
 }

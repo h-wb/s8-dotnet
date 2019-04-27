@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Metier
 {
     //Représente une catégorie d'enseignant, ex: Maître de conférence, enseignant chercher, etc.
-    public class Categorie : ObjetAvecIdEtNom
+    public class Categorie : ObjetBase
     {
         //Exemple: un maître de conférence doit donner 300h de cours en equivalent TD
         public double heuresATravailler { get; set; }
@@ -20,15 +20,15 @@ namespace Metier
         public Categorie(string nom, double heuresATravailler)
         {
             base.init();
-            this.nom = nom;
+            this.Nom = nom;
             this.heuresATravailler = heuresATravailler;
         }
 
         public Categorie(int id, string nom, double heuresATravailler)
         {
             base.init();
-            this.id = id;
-            this.nom = nom;
+            this.Id = id;
+            this.Nom = nom;
             this.heuresATravailler = heuresATravailler;
         }
 

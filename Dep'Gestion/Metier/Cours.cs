@@ -8,7 +8,7 @@ namespace Metier
 {
     //Représente un groupe de cours et pas forcément un seul cours. Un cours = 1H. 
     //Exemple, que l'on souhaite créer 1 ou 10 TP, on utilise cette classe
-    public class Cours : ObjetAvecIdEtNom
+    public class Cours : ObjetBase
     {
         //L'enseignant responsable de ce cours, s'il n'est pas divisé en groupes 
         public Enseignant enseignant
@@ -69,7 +69,7 @@ namespace Metier
         public Cours(string nom, int nbCours, TypeCours typeCours)
         {
             this.init();
-            this.nom = nom;
+            this.Nom = nom;
             this.typeCours = typeCours;
             this.nbCours = nbCours;
         }
@@ -77,7 +77,7 @@ namespace Metier
         public Cours(string nom, int nbCours, TypeCours typeCours, List<Groupe> groupes)
         {
             this.init();
-            this.nom = nom;
+            this.Nom = nom;
             this.typeCours = typeCours;
             this.nbCours = nbCours;
             this.groupes = groupes;

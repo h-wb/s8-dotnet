@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
-    xmlns:local1="using:Model"
+    xmlns:local11="using:Metier"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -34,8 +34,8 @@
                     </CommandBar>
                     <TreeView x:Name="TreeView" ItemsSource="{x:Bind annees, Mode=OneWay}" ItemInvoked="TreeView_ItemInvoked" FontFamily="Segoe UI" Margin="0,40,0,0">
                         <TreeView.ItemTemplate>
-                            <DataTemplate x:DataType="local1:Item">
-                                <TreeViewItem ItemsSource="{x:Bind Children,  Mode=OneWay}" Content="{x:Bind Text,  Mode=OneWay}"/>
+                            <DataTemplate x:DataType="local11:ObjetBase">
+                                <TreeViewItem ItemsSource="{x:Bind Children,  Mode=OneWay}" Content="{x:Bind Nom,  Mode=OneWay}"/>
                             </DataTemplate>
                         </TreeView.ItemTemplate>
                     </TreeView>
@@ -51,8 +51,15 @@
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="auto" />
                                 </Grid.RowDefinitions>
-                                <ListView x:Name="ListView" ItemsSource="{x:Bind enseignants, Mode=OneWay}" FontFamily="Segoe UI" Margin="0,40,0,0">
-                    
+                                    <ListView x:Name="ListView" ItemsSource="{x:Bind enseignants, Mode=OneWay}" FontFamily="Segoe UI" Margin="0,0,0,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Prenom}"/>
+                                                    <TextBlock Text="{Binding Id}" FontSize="16" Foreground="DarkGray" Opacity="0.8" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
                                 </ListView>
                                    
                             </Grid>

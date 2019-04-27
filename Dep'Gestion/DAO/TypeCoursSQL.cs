@@ -15,20 +15,20 @@ namespace DAO
             DAO<Categorie> categorie = factoSQL.getCategorieDAO();
 
 
-            if (obj.id == -1)
+            if (obj.Id == -1)
             {
-                obj.id = OutilsSQL.getLastInsertedId("type_cours", Connexion.getInstance()) + 1;
+                obj.Id = OutilsSQL.getLastInsertedId("type_cours", Connexion.getInstance()) + 1;
             }
 
 
             Console.WriteLine("création type cours");
             TypeCours tc =null;
-            tc = this.find(obj.nom);
+            tc = this.find(obj.Nom);
 
             if(tc ==null)
             {
                 int hasGroups = ConversionFormats.convert(obj.hasGroups);
-                using (SqlCommand command_c = new SqlCommand("INSERT INTO type_cours VALUES (" + obj.id + ", '" + obj.nom + "', '" + hasGroups + "');", Connexion.getInstance()))
+                using (SqlCommand command_c = new SqlCommand("INSERT INTO type_cours VALUES (" + obj.Id + ", '" + obj.Nom + "', '" + hasGroups + "');", Connexion.getInstance()))
                 {
                     command_c.ExecuteNonQuery();
                     // Connexion.getInstance().Close();
@@ -39,7 +39,7 @@ namespace DAO
                 foreach (Categorie categ in categorie.findAll())
                 {
                     int idT = OutilsSQL.getLastInsertedId("equivalent_td", Connexion.getInstance()) + 1;
-                    using (SqlCommand command_test = new SqlCommand("INSERT INTO equivalent_td VALUES (" + idT + ", '" + categ.id + "', '" + obj.id + "', 1 );", Connexion.getInstance()))
+                    using (SqlCommand command_test = new SqlCommand("INSERT INTO equivalent_td VALUES (" + idT + ", '" + categ.Id + "', '" + obj.Id + "', 1 );", Connexion.getInstance()))
                     {
                         command_test.ExecuteNonQuery();
                     }
@@ -53,7 +53,7 @@ namespace DAO
 
         public override void delete(TypeCours obj)
         {
-            using (SqlCommand command_d = new SqlCommand("DELETE FROM type_cours WHERE id=" + obj.id + ";", Connexion.getInstance()))
+            using (SqlCommand command_d = new SqlCommand("DELETE FROM type_cours WHERE id=" + obj.Id + ";", Connexion.getInstance()))
             {
                 command_d.ExecuteNonQuery();
             }
@@ -147,8 +147,8 @@ namespace DAO
 
         public override TypeCours update(TypeCours objAupdate, TypeCours update)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE type_cours SET nom='" + update.nom + "', " +
-                "has_groups=" + ConversionFormats.convert(update.hasGroups) + " WHERE id=" + objAupdate.id + ";", Connexion.getInstance()))
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE type_cours SET nom='" + update.Nom + "', " +
+                "has_groups=" + ConversionFormats.convert(update.hasGroups) + " WHERE id=" + objAupdate.Id + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }
