@@ -1,13 +1,14 @@
 using DAO;
-using Model;
+using Dep_Gestion.Model;
 using Dep_Gestion.Vues;
 using Metier;
 using System;
 using System.Collections.ObjectModel;
+using System.Collections;
+using System.Diagnostics;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using System.Diagnostics;
-
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -24,12 +25,17 @@ namespace AppGestion
 
         private static AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
 
+
         private static DAO<Annee> annee = factoSQL.getAnneeDAO();
         private static DAO<PartieAnnee> partieAnnee = factoSQL.getPartieAnneeDAO();
         private static DAO<Departement> depart = factoSQL.getDepartementDAO();
+
+
+
         private static DAO<Enseignement> enseignement = factoSQL.getEnseignementDAO();
         private static DAO<Enseignant> enseignant = factoSQL.getEnseignantDAO();
-
+        private static DAO<Categorie> categ = factoSQL.getCategorieDAO();
+        private static DAO<Departement> dep = factoSQL.getDepartementDAO();
 
         private ObservableCollectionExt<Departement> departements = new ObservableCollectionExt<Departement>();
         private ObservableCollectionExt<Annee> annees = new ObservableCollectionExt<Annee>();
@@ -37,19 +43,62 @@ namespace AppGestion
 
 
 
-        private static Departement departement = new Departement("Informatique");
+        private Departement<ItemDepartement> dpt = new Departement<ItemDepartement>();
+
+
+
+        private ItemDepartement nodeSelectionneItem;
 
         private ObjetBase nodeSelectionne;
         private ObjetBase departementSelectionne;
 
+
         public MainPage()
         {
             this.InitializeComponent();
+           // this.reload_Treeview();
             departements = GetDepartements();
             enseignants = GetEnseignants();
         }
 
+        public void reload_Treeview()
+        {
+            foreach (Annee annee in annee.findAll())
+            {
+                ItemDepartement nodeAnnee = new ItemDepartement { Text = annee.nom, Objet = annee, Children = new ObservableCollection<ItemDepartement>(), NavigationDestination = typeof(AnneeVue), NavigationParameter = annee};
+                dpt.Add(nodeAnnee);
+                foreach (PartieAnnee partieAnnee in partieAnnee.findAll())
+                {
+                    if (annee.id == partieAnnee.annee.id)
+                    {
+                        ItemDepartement nodePartieAnnee = new ItemDepartement { Text = partieAnnee.nom, Objet = partieAnnee, Children = new ObservableCollection<ItemDepartement>(), Parent = nodeAnnee, NavigationDestination= typeof(PartieAnneeVue) };
+                        
+                        /*Paramètres PartieAnnée*/
+                        ArrayList paramsPartieAnnee = new ArrayList();
+                        //Nom du parent
+                        paramsPartieAnnee.Add(nodePartieAnnee.Parent.Text);
+                        //Nom de la partie annee Selectionné
+                        paramsPartieAnnee.Add(nodePartieAnnee.Text);
+                        //Id de la partie année selectionné
+                        paramsPartieAnnee.Add(partieAnnee.id);
+                        //Id du parent
+                        paramsPartieAnnee.Add(nodePartieAnnee.Parent.Objet.id);
 
+                        nodePartieAnnee.NavigationParameter = paramsPartieAnnee;
+
+                        nodeAnnee.Children.Add(nodePartieAnnee);
+                        foreach (Enseignement enseignement in enseignement.findAll())
+                        {
+                            if (partieAnnee.id == enseignement.partAnnee.id)
+                            {
+                                ItemDepartement nodeEnseignement = new ItemDepartement { Text = enseignement.nom, Objet = enseignement, Children = new ObservableCollection<ItemDepartement>(), Parent = nodePartieAnnee };
+                                nodePartieAnnee.Children.Add(nodeEnseignement);
+                    }
+                        }
+
+                    }
+                }
+            }
 
         private ObservableCollectionExt<Departement> GetDepartements()
         {
@@ -95,13 +144,11 @@ namespace AppGestion
                                     nodePartieAnnee.Children.Add(nodeEnseignement);
                                 }
                             }
-
                         }
+
                     }
                 }
-               
             }
-
             return annees;
         }
 
@@ -137,8 +184,7 @@ namespace AppGestion
 
         private void Add_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-
-            if (nodeSelectionne == null)
+            if (nodeSelectionneItem == null)
             {
                 Annee nouvelleAnne = new Annee { Nom = "Nouvelle annee", Departement = depart.find(1)};
                 annee.create(nouvelleAnne);
