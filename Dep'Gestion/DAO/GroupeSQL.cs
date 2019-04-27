@@ -15,9 +15,9 @@ namespace DAO
         public override Groupe create(Groupe obj)
         {
             //Si l'objet n'a pas d'id, on récupère le dernier id dans la table, pour que l'id de l'objet actuel soit le suivant 
-            if (obj.id == -1)
+            if (obj.Id == -1)
             {
-                obj.id = OutilsSQL.getLastInsertedId("groupe", Connexion.getInstance()) + 1;
+                obj.Id = OutilsSQL.getLastInsertedId("groupe", Connexion.getInstance()) + 1;
             }
 
             /*
@@ -27,9 +27,9 @@ namespace DAO
                 * id_cours
                 */
             string query = @"INSERT INTO groupe(id, nom, id_enseignant, id_cours)
-                VALUES (" + obj.id
-                + ", '" + obj.nom
-                + "', " + obj.enseignant.id
+                VALUES (" + obj.Id
+                + ", '" + obj.Nom
+                + "', " + obj.enseignant.Id
                 + ", " + obj.idCours + ");";
 
             //Console.ReadLine();
@@ -44,7 +44,7 @@ namespace DAO
 
         public override void delete(Groupe obj)
         {
-            using (SqlCommand command = new SqlCommand("DELETE FROM group WHERE id=" + obj.id + ";", Connexion.getInstance()))
+            using (SqlCommand command = new SqlCommand("DELETE FROM group WHERE id=" + obj.Id + ";", Connexion.getInstance()))
             {
                 command.ExecuteNonQuery();
             }

@@ -49,7 +49,7 @@ namespace Dep_Gestion
             pan.create(new PartieAnnee("Semestre 3", an.find(2)));
 
             DAO<Enseignement> en = factoSQL.getEnseignementDAO();
-            //  en.create(new Enseignement("EC1", test));
+              en.create(new Enseignement("EC1", pan.find(1)));
 
             //Console.WriteLine(maitreDeConference);
             //Console.ReadLine();

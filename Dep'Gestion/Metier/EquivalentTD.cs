@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Metier
 {
-    public class EquivalentTD : ObjetAvecId
+    public class EquivalentTD : ObjetBase
     {
 
         public Dictionary<TypeCours, double> ratiosCoursTD { get; set; }
@@ -45,7 +45,7 @@ namespace Metier
         public EquivalentTD(int id, Categorie categ, TypeCours tc, double ratio)
         {
             this.init();
-            this.id = id;
+            this.Id = id;
             this.categ = categ;
             this.tc = tc;
             this.ratio = ratio;
@@ -56,7 +56,7 @@ namespace Metier
             bool alreadyExists = false;
             foreach (KeyValuePair<TypeCours, double> typeCours in ratiosCoursTD)
             {
-                if (tc.nom == typeCours.Key.nom)
+                if (tc.Nom == typeCours.Key.Nom)
                 {
                     alreadyExists = true;
                 }

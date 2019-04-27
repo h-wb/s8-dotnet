@@ -16,7 +16,6 @@ namespace Model
         private string _glyph;
         private string _text;
         private int _id;
-        private ObjetAvecIdEtNom _objet;
         private ObservableCollection<Item> _children = new ObservableCollection<Item>();
         private Item _parent;
         private Type _navigationDestination;
@@ -40,11 +39,6 @@ namespace Model
             set { SetProperty(ref _id, value); }
         }
 
-        public ObjetAvecIdEtNom Objet
-        {
-            get { return _objet; }
-            set { SetProperty(ref _objet, value); }
-        }
 
         public ObservableCollection<Item> Children
         {

@@ -14,17 +14,17 @@ namespace Dep_Gestion.DAO
     {
         public override Enseignement create(Enseignement obj)
         {
-            if (obj.id == -1)
+            if (obj.Id == -1)
             {
-                obj.id = OutilsSQL.getLastInsertedId("enseignement", Connexion.getInstance()) + 1;
+                obj.Id = OutilsSQL.getLastInsertedId("enseignement", Connexion.getInstance()) + 1;
             }
 
             Enseignement tc = null;
-            tc = this.find(obj.nom);
+            tc = this.find(obj.Nom);
 
             if (tc == null)
             {
-                using (SqlCommand command_c = new SqlCommand("INSERT INTO enseignement VALUES (" + obj.id + ", '" + obj.nom + "', " + obj.partAnnee.id + ");", Connexion.getInstance()))
+                using (SqlCommand command_c = new SqlCommand("INSERT INTO enseignement VALUES (" + obj.Id + ", '" + obj.Nom + "', " + obj.PartieAnnee.Id + ");", Connexion.getInstance()))
                 {
                     command_c.ExecuteNonQuery();
                 }
@@ -35,7 +35,7 @@ namespace Dep_Gestion.DAO
 
         public override void delete(Enseignement obj)
         {
-            using (SqlCommand command_d = new SqlCommand("DELETE FROM enseignement WHERE id=" + obj.id + ";", Connexion.getInstance()))
+            using (SqlCommand command_d = new SqlCommand("DELETE FROM enseignement WHERE id=" + obj.Id + ";", Connexion.getInstance()))
             {
                 command_d.ExecuteNonQuery();
             }
@@ -134,7 +134,7 @@ namespace Dep_Gestion.DAO
 
         public override Enseignement update(Enseignement objAupdate, Enseignement update)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE enseignement SET nom='" + update.nom + "', id_partie_annee=" + update.partAnnee.id + " WHERE id=" + objAupdate.id + ";", Connexion.getInstance()))
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE enseignement SET nom='" + update.Nom + "', id_partie_annee=" + update.PartieAnnee.Id + " WHERE id=" + objAupdate.Id + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }

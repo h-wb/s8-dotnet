@@ -4,6 +4,7 @@ using Outils;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,17 +15,20 @@ namespace DAO
     {
         public override PartieAnnee create(PartieAnnee obj)
         {
-            if (obj.id == -1)
+            if (obj.Id == -1)
             {
-                obj.id = OutilsSQL.getLastInsertedId("partie_annee", Connexion.getInstance()) + 1;
+                obj.Id = OutilsSQL.getLastInsertedId("partie_annee", Connexion.getInstance()) + 1;
             }
 
+
+            Debug.WriteLine(obj.Annee.Id);
+
             PartieAnnee tc = null;
-            tc = this.find(obj.nom);
+            tc = this.find(obj.Nom);
 
             if (tc == null)
             {
-                using (SqlCommand command_c = new SqlCommand("INSERT INTO partie_annee VALUES (" + obj.id + ", '" + obj.nom + "', " + obj.annee.id + ");", Connexion.getInstance()))
+                using (SqlCommand command_c = new SqlCommand("INSERT INTO partie_annee VALUES (" + obj.Id + ", '" + obj.Nom + "', " + obj.Annee.Id + ");", Connexion.getInstance()))
                 {
                     command_c.ExecuteNonQuery();
                 }
@@ -35,7 +39,7 @@ namespace DAO
 
         public override void delete(PartieAnnee obj)
         {
-            using (SqlCommand command_d = new SqlCommand("DELETE FROM partie_annee WHERE id=" + obj.id + ";", Connexion.getInstance()))
+            using (SqlCommand command_d = new SqlCommand("DELETE FROM partie_annee WHERE id=" + obj.Id + ";", Connexion.getInstance()))
             {
                 command_d.ExecuteNonQuery();
             }
@@ -133,7 +137,7 @@ namespace DAO
 
         public override PartieAnnee update(PartieAnnee objAupdate, PartieAnnee update)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE partie_annee SET nom='" + update.nom + "', id_annee=" + update.annee.id + " WHERE id=" + objAupdate.id + ";", Connexion.getInstance()))
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE partie_annee SET nom='" + update.Nom + "', id_annee=" + update.Annee.Id + " WHERE id=" + objAupdate.Id + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }

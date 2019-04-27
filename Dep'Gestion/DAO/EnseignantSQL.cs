@@ -14,17 +14,17 @@ namespace Dep_Gestion.DAO
     {
         public override Enseignant create(Enseignant obj)
         {
-            if (obj.id == -1)
+            if (obj.Id == -1)
             {
-                obj.id = OutilsSQL.getLastInsertedId("enseignant", Connexion.getInstance()) + 1;
+                obj.Id = OutilsSQL.getLastInsertedId("enseignant", Connexion.getInstance()) + 1;
             }
 
             Enseignant tc = null;
-            tc = this.find(obj.nom);
+            tc = this.find(obj.Nom);
 
             if (tc == null)
             {
-                using (SqlCommand command_c = new SqlCommand("INSERT INTO enseignant VALUES (" + obj.id + ", '" + obj.nom + "', '" + obj.prenom + "', " + obj.nbHeuresTravaillees + ", " + obj.categorie.id + ");", Connexion.getInstance()))
+                using (SqlCommand command_c = new SqlCommand("INSERT INTO enseignant VALUES (" + obj.Id + ", '" + obj.Nom + "', '" + obj.Prenom + "', " + obj.nbHeuresTravaillees + ", " + obj.categorie.Id + ");", Connexion.getInstance()))
                 {
                     command_c.ExecuteNonQuery();
                 }
@@ -35,7 +35,7 @@ namespace Dep_Gestion.DAO
 
         public override void delete(Enseignant obj)
         {
-            using (SqlCommand command_d = new SqlCommand("DELETE FROM enseignant WHERE id=" + obj.id + ";", Connexion.getInstance()))
+            using (SqlCommand command_d = new SqlCommand("DELETE FROM enseignant WHERE id=" + obj.Id + ";", Connexion.getInstance()))
             {
                 command_d.ExecuteNonQuery();
             }
@@ -135,7 +135,7 @@ namespace Dep_Gestion.DAO
 
         public override Enseignant update(Enseignant objAupdate, Enseignant update)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE enseignant SET nom='" + update.nom + "', prenom='" + update.prenom + "', nb_heures_assignees=" + update.nbHeuresTravaillees + ", id_categorie_enseignant=" + update.categorie.id + " WHERE id=" + objAupdate.id + ";", Connexion.getInstance()))
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE enseignant SET nom='" + update.Nom + "', prenom='" + update.Prenom + "', nb_heures_assignees=" + update.nbHeuresTravaillees + ", id_categorie_enseignant=" + update.categorie.Id + " WHERE id=" + objAupdate.Id + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }

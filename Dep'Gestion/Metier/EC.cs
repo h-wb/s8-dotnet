@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 
 namespace Metier
 {
-    public class EC : ObjetAvecIdEtNom
+    public class EC : ObjetBase
     {
         public Enseignement enseignement { get; set; }
 
         public EC(int id, string nom, Enseignement enseignement)
         {
             this.init();
-            this.id = id;
-            this.nom = nom;
+            this.Id = id;
+            this.Nom = nom;
             this.enseignement = enseignement;
         }
 
         public EC(string nom, Enseignement enseignement)
         {
             this.init();
-            this.nom = nom;
+            this.Nom = nom;
             this.enseignement = enseignement;
         }
 

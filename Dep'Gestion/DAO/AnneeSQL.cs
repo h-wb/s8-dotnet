@@ -16,17 +16,17 @@ namespace Dep_Gestion.DAO
         {
 
 
-            if (obj.id == -1)
+            if (obj.Id == -1)
             {
-                obj.id = OutilsSQL.getLastInsertedId("annee", Connexion.getInstance()) + 1;
+                obj.Id = OutilsSQL.getLastInsertedId("annee", Connexion.getInstance()) + 1;
             }
             
             Annee tc = null;
-            tc = this.find(obj.nom);
+            tc = this.find(obj.Nom);
 
             if (tc == null)
             {
-                using (SqlCommand command_c = new SqlCommand("INSERT INTO annee VALUES (" + obj.id + ", '" + obj.nom + "', " + obj.dep.id + ");", Connexion.getInstance()))
+                using (SqlCommand command_c = new SqlCommand("INSERT INTO annee VALUES (" + obj.Id + ", '" + obj.Nom + "', " + obj._departement.Id + ");", Connexion.getInstance()))
                 {
                     command_c.ExecuteNonQuery();
                     // Connexion.getInstance().Close();
@@ -38,7 +38,7 @@ namespace Dep_Gestion.DAO
 
         public override void delete(Annee obj)
         {
-            using (SqlCommand command_d = new SqlCommand("DELETE FROM annee WHERE id=" + obj.id + ";", Connexion.getInstance()))
+            using (SqlCommand command_d = new SqlCommand("DELETE FROM annee WHERE id=" + obj.Id + ";", Connexion.getInstance()))
             {
                 command_d.ExecuteNonQuery();
             }
@@ -140,7 +140,7 @@ namespace Dep_Gestion.DAO
 
         public override Annee update(Annee objAupdate, Annee update)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE annee SET nom='" + update.nom + "', id_departement=" + update.dep.id + " WHERE id=" + objAupdate.id + ";", Connexion.getInstance()))
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE annee SET nom='" + update.Nom + "', id_departement=" + update._departement.Id + " WHERE id=" + objAupdate.Id + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }
