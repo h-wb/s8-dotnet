@@ -12,6 +12,7 @@ namespace Metier
     {
         protected int _id;
         protected string _nom;
+        protected bool _visibility;
         protected ObservableCollectionExt<ObjetBase> _children = new ObservableCollectionExt<ObjetBase>();
         protected ObjetBase _parent;
         private Type _navigationDestination;
@@ -39,6 +40,12 @@ namespace Metier
         {
             get { return _nom; }
             set { SetProperty(ref _nom, value); }
+        }
+
+        public bool Visibility
+        {
+            get { return _visibility; }
+            set { SetProperty(ref _visibility, value); }
         }
 
         public ObservableCollectionExt<ObjetBase> Children
