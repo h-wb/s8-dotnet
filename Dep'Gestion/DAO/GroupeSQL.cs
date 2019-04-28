@@ -119,7 +119,7 @@ namespace DAO
             throw new NotImplementedException();
         }
 
-        public override Groupe update(Groupe objAupdate, Groupe update)
+        public override Groupe update(int idAupdate, Groupe update)
         {
             throw new NotImplementedException();
         }

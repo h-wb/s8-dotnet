@@ -149,16 +149,16 @@ namespace DAO
             return eqtds;
         }
 
-        public override EquivalentTD update(EquivalentTD objAupdate, EquivalentTD update)
+        public override EquivalentTD update(int idAupdate, EquivalentTD update)
         {
             using (SqlCommand command_u = new SqlCommand(@"UPDATE equivalent_td SET id_categorie_enseignant=" + update.categ.Id + ", " +
-               "id_type_cours=" + update.tc.Id + ", ratio_cours_td=" + update.ratio + " WHERE id=" + objAupdate.Id + ";", Connexion.getInstance()))
+               "id_type_cours=" + update.tc.Id + ", ratio_cours_td=" + update.ratio + " WHERE id=" + idAupdate + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }
 
             //Connexion.getInstance().Close();
-            return objAupdate;
+            return update;
         }
     }
 }

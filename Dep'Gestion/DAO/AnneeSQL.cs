@@ -21,16 +21,11 @@ namespace Dep_Gestion.DAO
                 obj.Id = OutilsSQL.getLastInsertedId("annee", Connexion.getInstance()) + 1;
             }
             
-            Annee tc = null;
-            tc = this.find(obj.Nom);
 
-            if (tc == null)
+            using (SqlCommand command_c = new SqlCommand("INSERT INTO annee VALUES (" + obj.Id + ", '" + obj.Nom + "', " + obj._departement.Id + ");", Connexion.getInstance()))
             {
-                using (SqlCommand command_c = new SqlCommand("INSERT INTO annee VALUES (" + obj.Id + ", '" + obj.Nom + "', " + obj._departement.Id + ");", Connexion.getInstance()))
-                {
-                    command_c.ExecuteNonQuery();
-                    // Connexion.getInstance().Close();
-                }
+                command_c.ExecuteNonQuery();
+                // Connexion.getInstance().Close();
             }
 
             return obj;
@@ -138,15 +133,15 @@ namespace Dep_Gestion.DAO
             return ans;
         }
 
-        public override Annee update(Annee objAupdate, Annee update)
+        public override Annee update(int idAupdate, Annee update)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE annee SET nom='" + update.Nom + "', id_departement=" + update._departement.Id + " WHERE id=" + objAupdate.Id + ";", Connexion.getInstance()))
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE annee SET nom='" + update.Nom + "', id_departement=" + update._departement.Id + " WHERE id=" + idAupdate + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }
 
             //Connexion.getInstance().Close();
-            return objAupdate;
+            return update;
         }
     }
 }

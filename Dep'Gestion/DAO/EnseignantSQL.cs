@@ -18,16 +18,10 @@ namespace Dep_Gestion.DAO
             {
                 obj.Id = OutilsSQL.getLastInsertedId("enseignant", Connexion.getInstance()) + 1;
             }
-
-            Enseignant tc = null;
-            tc = this.find(obj.Nom);
-
-            if (tc == null)
+            
+            using (SqlCommand command_c = new SqlCommand("INSERT INTO enseignant VALUES (" + obj.Id + ", '" + obj.Nom + "', '" + obj.Prenom + "', " + obj.nbHeuresTravaillees + ", " + obj.categorie.Id + ");", Connexion.getInstance()))
             {
-                using (SqlCommand command_c = new SqlCommand("INSERT INTO enseignant VALUES (" + obj.Id + ", '" + obj.Nom + "', '" + obj.Prenom + "', " + obj.nbHeuresTravaillees + ", " + obj.categorie.Id + ");", Connexion.getInstance()))
-                {
-                    command_c.ExecuteNonQuery();
-                }
+                command_c.ExecuteNonQuery();
             }
 
             return obj;
@@ -133,14 +127,14 @@ namespace Dep_Gestion.DAO
             return enss;
         }
 
-        public override Enseignant update(Enseignant objAupdate, Enseignant update)
+        public override Enseignant update(int idAupdate, Enseignant update)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE enseignant SET nom='" + update.Nom + "', prenom='" + update.Prenom + "', nb_heures_assignees=" + update.nbHeuresTravaillees + ", id_categorie_enseignant=" + update.categorie.Id + " WHERE id=" + objAupdate.Id + ";", Connexion.getInstance()))
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE enseignant SET nom='" + update.Nom + "', prenom='" + update.Prenom + "', nb_heures_assignees=" + update.nbHeuresTravaillees + ", id_categorie_enseignant=" + update.categorie.Id + " WHERE id=" + idAupdate + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }
 
-            return objAupdate;
+            return update;
         }
     }
 }

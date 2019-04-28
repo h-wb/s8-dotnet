@@ -18,16 +18,10 @@ namespace Dep_Gestion.DAO
             {
                 obj.Id = OutilsSQL.getLastInsertedId("enseignement", Connexion.getInstance()) + 1;
             }
-
-            Enseignement tc = null;
-            tc = this.find(obj.Nom);
-
-            if (tc == null)
+            
+            using (SqlCommand command_c = new SqlCommand("INSERT INTO enseignement VALUES (" + obj.Id + ", '" + obj.Nom + "', " + obj.PartieAnnee.Id + ");", Connexion.getInstance()))
             {
-                using (SqlCommand command_c = new SqlCommand("INSERT INTO enseignement VALUES (" + obj.Id + ", '" + obj.Nom + "', " + obj.PartieAnnee.Id + ");", Connexion.getInstance()))
-                {
-                    command_c.ExecuteNonQuery();
-                }
+                command_c.ExecuteNonQuery();
             }
 
             return obj;
@@ -132,14 +126,14 @@ namespace Dep_Gestion.DAO
             return enses;
         }
 
-        public override Enseignement update(Enseignement objAupdate, Enseignement update)
+        public override Enseignement update(int idAupdate, Enseignement update)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE enseignement SET nom='" + update.Nom + "', id_partie_annee=" + update.PartieAnnee.Id + " WHERE id=" + objAupdate.Id + ";", Connexion.getInstance()))
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE enseignement SET nom='" + update.Nom + "', id_partie_annee=" + update.PartieAnnee.Id + " WHERE id=" + idAupdate + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }
 
-            return objAupdate;
+            return update;
         }
     }
 }

@@ -24,6 +24,7 @@ namespace AppGestion
         public ObjetBase semestreSelectionne;
 
 
+
         public AnneeVue()
         {
             this.InitializeComponent();
@@ -44,8 +45,8 @@ namespace AppGestion
         private void TextBoxAnnee_TextChanged(object sender, TextChangedEventArgs e)
         {
             Annee anneeSelectionne = (Annee)nodeSelectionne;
-            anneeSelectionne.Nom = this.textBoxAnnee.Text;
-            annee.update(annee.find(anneeSelectionne.Id), new Annee(anneeSelectionne.Nom, anneeSelectionne.Departement));
+            anneeSelectionne.Nom = this.textBlockAnnee.Text;
+            annee.update(anneeSelectionne.Id, new Annee(anneeSelectionne.Nom, anneeSelectionne.Departement));
         }
 
         private void TextBlock_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)

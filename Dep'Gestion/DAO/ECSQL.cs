@@ -18,16 +18,10 @@ namespace Dep_Gestion.DAO
             {
                 obj.Id = OutilsSQL.getLastInsertedId("ec", Connexion.getInstance()) + 1;
             }
-
-            EC tc = null;
-            tc = this.find(obj.Nom);
-
-            if (tc == null)
+            
+            using (SqlCommand command_c = new SqlCommand("INSERT INTO ec VALUES (" + obj.Id + ", '" + obj.Nom + "', " + obj.enseignement.Id + ");", Connexion.getInstance()))
             {
-                using (SqlCommand command_c = new SqlCommand("INSERT INTO ec VALUES (" + obj.Id + ", '" + obj.Nom + "', " + obj.enseignement.Id + ");", Connexion.getInstance()))
-                {
-                    command_c.ExecuteNonQuery();
-                }
+                command_c.ExecuteNonQuery();
             }
 
             return obj;
@@ -132,14 +126,14 @@ namespace Dep_Gestion.DAO
             return ECs;
         }
 
-        public override EC update(EC objAupdate, EC update)
+        public override EC update(int idAupdate, EC update)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE ec SET nom='" + update.Nom + "', id_enseignement=" + update.enseignement.Id + " WHERE id=" + objAupdate.Id + ";", Connexion.getInstance()))
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE ec SET nom='" + update.Nom + "', id_enseignement=" + update.enseignement.Id + " WHERE id=" + idAupdate + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }
 
-            return objAupdate;
+            return update;
         }
     }
 }
