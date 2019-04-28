@@ -32,6 +32,10 @@ namespace Metier
             base.init();
         }
 
+        override public string ToString()
+        {
+            return this.Nom;
+        }
 
     }
 }

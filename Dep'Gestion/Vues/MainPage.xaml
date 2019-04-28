@@ -12,13 +12,17 @@
 
     <Grid>
         <NavigationView
-                MenuItemsSource="{x:Bind departements, Mode=TwoWay}"
+            MenuItemsSource="{x:Bind departements}"
                 PaneDisplayMode="Top"
                 Margin="0,12,0,0"
                 IsTabStop="False"
+                FontSize="100"
                 ItemInvoked="NavigationView_ItemInvoked"
                 IsBackButtonVisible="Collapsed"
                 IsSettingsVisible="False">
+            <NavigationView.PaneHeader>
+                <NavigationViewItem  Icon="Add" Tapped="AddDepartement_Tapped"/>
+            </NavigationView.PaneHeader>
             <SplitView x:Name="MainSplitView" IsPaneOpen="True" CompactPaneLength="48" OpenPaneLength="280" DisplayMode="Inline" FontFamily="Segoe UI">
                 <SplitView.Pane>
                     <Grid x:Name="LeftPanel" Margin="0,0,0,0">

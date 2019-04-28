@@ -35,7 +35,6 @@ namespace AppGestion
         private static DAO<Enseignement> enseignement = factoSQL.getEnseignementDAO();
         private static DAO<Enseignant> enseignant = factoSQL.getEnseignantDAO();
         private static DAO<Categorie> categ = factoSQL.getCategorieDAO();
-        private static DAO<Departement> dep = factoSQL.getDepartementDAO();
 
         private ObservableCollectionExt<Departement> departements = new ObservableCollectionExt<Departement>();
         private ObservableCollectionExt<Annee> annees = new ObservableCollectionExt<Annee>();
@@ -74,7 +73,7 @@ namespace AppGestion
             ObservableCollectionExt<Enseignant> enseignants = new ObservableCollectionExt<Enseignant>();
             foreach (Enseignant ens in enseignant.findAll())
             {
-                enseignants.Add(new Enseignant { Prenom =  ens.Prenom, Nom = ens.Nom });
+                enseignants.Add(new Enseignant { Id = ens.Id, Prenom =  ens.Prenom, Nom = ens.Nom });
             }
             return enseignants;
         }
@@ -87,19 +86,19 @@ namespace AppGestion
             {
                 if (idDepartement == annee._departement.Id)
                 {
-                    Annee nodeAnnee = new Annee { Id = annee.Id, Nom = annee.Nom, Children = new ObservableCollectionExt<ObjetBase>(), NavigationDestination = typeof(AnneeVue), Departement = annee.Departement };
+                    Annee nodeAnnee = new Annee { Id = annee.Id, Nom = annee.Nom.TrimEnd(), Children = new ObservableCollectionExt<ObjetBase>(), NavigationDestination = typeof(AnneeVue), Departement = annee.Departement };
                     annees.Add(nodeAnnee);
                     foreach (PartieAnnee partieAnnee in partieAnnee.findAll())
                     {
                         if (annee.Id == partieAnnee.Annee.Id)
                         {
-                            PartieAnnee nodePartieAnnee = new PartieAnnee { Id = partieAnnee.Id, Nom = partieAnnee.Nom, Annee = annee, Children = new ObservableCollectionExt<ObjetBase>(), Parent = nodeAnnee, NavigationDestination = typeof(PartieAnneeVue) };
+                            PartieAnnee nodePartieAnnee = new PartieAnnee { Id = partieAnnee.Id, Nom = partieAnnee.Nom.TrimEnd(), Annee = annee, Children = new ObservableCollectionExt<ObjetBase>(), Parent = nodeAnnee };
                             nodeAnnee.Children.Add(nodePartieAnnee);
                             foreach (Enseignement enseignement in enseignement.findAll())
                             {
                                 if (partieAnnee.Id == enseignement.PartieAnnee.Id)
                                 {
-                                    Enseignement nodeEnseignement = new Enseignement { Id = enseignement.Id, Nom = enseignement.Nom, Children = new ObservableCollectionExt<ObjetBase>(), Parent = nodePartieAnnee };
+                                    Enseignement nodeEnseignement = new Enseignement { Id = enseignement.Id, Nom = enseignement.Nom.TrimEnd(), Children = new ObservableCollectionExt<ObjetBase>(), Parent = nodePartieAnnee };
                                     nodePartieAnnee.Children.Add(nodeEnseignement);
                                 }
                             }
@@ -114,7 +113,6 @@ namespace AppGestion
         private void TreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
         {
             nodeSelectionne = (ObjetBase)args.InvokedItem;
-            //Debug.WriteLine(nodeSelectionne);
             if (nodeSelectionne.NavigationDestination != null)
             {
                 Navigate(nodeSelectionne.NavigationDestination, nodeSelectionne);
@@ -144,7 +142,7 @@ namespace AppGestion
         {
             if (nodeSelectionne == null)
             {
-                Annee nouvelleAnne = new Annee { Nom = "Nouvelle annee", Departement = depart.find(1)};
+                Annee nouvelleAnne = new Annee { Nom = "Nouvelle annee", Departement = depart.find(1), NavigationDestination = typeof(AnneeVue) };
                 annee.create(nouvelleAnne);
                 annees.Add(nouvelleAnne);
             }
@@ -157,7 +155,6 @@ namespace AppGestion
             else if (nodeSelectionne.GetType() == typeof(PartieAnnee))
             {
                 Enseignement nouvelEnseignement = new Enseignement { Nom= "Nouveau enseignement", PartieAnnee = (PartieAnnee)nodeSelectionne, Parent = nodeSelectionne };
-                Debug.WriteLine(nouvelEnseignement);
                 enseignement.create(nouvelEnseignement);
                 nodeSelectionne.Children.Add(nouvelEnseignement);
             }
@@ -186,5 +183,11 @@ namespace AppGestion
 
         }
 
+        private void AddDepartement_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            Departement departement = new Departement { Nom = "Nouveau département" };
+            depart.create(departement);
+            departements.Add(departement);
+        }
     }
 }
