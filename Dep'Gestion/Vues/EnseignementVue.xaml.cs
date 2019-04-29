@@ -53,7 +53,7 @@ namespace AppGestion
                     this.textBoxEnseignement.Text = nodeSelectionne.Nom;
                     this.textBoxDescription.Text = enseignementSelectionne.Description;
 
-                    this.initialiserArray();
+                   // this.initialiserArray();
                 }
                 base.OnNavigatedTo(e); ;
 

@@ -156,19 +156,19 @@ namespace AppGestion
         {
             if (nodeSelectionne == null)
             {
-                Annee nouvelleAnne = new Annee { Nom = "Nouvelle annee", Departement = depart.find(1), NavigationDestination = typeof(AnneeVue) };
+                Annee nouvelleAnne = new Annee { Nom = "Nouvelle annee", Departement = depart.find(1), NavigationDestination = typeof(AnneeVue), Description= ""};
                 annee.create(nouvelleAnne);
                 annees.Add(nouvelleAnne);
             }
             else if (nodeSelectionne.GetType() == typeof(Annee))
             {
-                PartieAnnee nouvellePartieAnnee = new PartieAnnee { Nom = "Nouveau semestre", Annee = (Annee)nodeSelectionne, Parent = nodeSelectionne};
+                PartieAnnee nouvellePartieAnnee = new PartieAnnee { Nom = "Nouveau semestre", Annee = (Annee)nodeSelectionne, NavigationDestination = typeof(PartieAnneeVueReset), Description = "", Parent = nodeSelectionne};
                 partieAnnee.create(nouvellePartieAnnee);
                 nodeSelectionne.Children.Add(nouvellePartieAnnee);
             }
             else if (nodeSelectionne.GetType() == typeof(PartieAnnee))
             {
-                Enseignement nouvelEnseignement = new Enseignement { Nom= "Nouveau enseignement", PartieAnnee = (PartieAnnee)nodeSelectionne, Parent = nodeSelectionne };
+                Enseignement nouvelEnseignement = new Enseignement { Nom= "Nouveau enseignement", PartieAnnee = (PartieAnnee)nodeSelectionne, NavigationDestination = typeof(EnseignantVue), Description = "", Parent = nodeSelectionne };
                 enseignement.create(nouvelEnseignement);
                 nodeSelectionne.Children.Add(nouvelEnseignement);
             }
