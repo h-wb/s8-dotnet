@@ -8,7 +8,7 @@ namespace Metier
 {
     public class EquivalentTD : ObjetBase
     {
-        public Categorie _categ;
+        public Categorie _categorie;
         public TypeCours _typeCours;
         public double _ratio;
 
@@ -31,7 +31,7 @@ namespace Metier
         {
             this.init();
             this.Id = id;
-            this._categ = categ;
+            this._categorie = categ;
             this._typeCours = tc;
             this._ratio = ratio;
         }
@@ -39,7 +39,7 @@ namespace Metier
         public EquivalentTD(Categorie categ, TypeCours tc, double ratio)
         {
             this.init();
-            this._categ = categ;
+            this._categorie = categ;
             this._typeCours = tc;
             this._ratio = ratio;
         }
@@ -63,15 +63,15 @@ namespace Metier
         }
 
 
-        override public string ToString()
-        {
-            string res = "";
-            foreach (KeyValuePair<TypeCours, double> val in ratiosCoursTD)
-            {
-                res = String.Concat(res, "\n (typeCours:" + val.Key.ToString() + ", ratio:" + val.Value + ")");
-            }
-            return base.ToString() + res;
-        }
+        //override public string ToString()
+        //{
+        //    string res = "";
+        //    foreach (KeyValuePair<TypeCours, double> val in ratiosCoursTD)
+        //    {
+        //        res = String.Concat(res, "\n (typeCours:" + val.Key.ToString() + ", ratio:" + val.Value + ")");
+        //    }
+        //    return base.ToString() + res;
+        //}
 
     }
 }
