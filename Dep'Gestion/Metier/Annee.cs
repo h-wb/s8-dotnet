@@ -11,25 +11,28 @@ namespace Metier
     public class Annee : ObjetBase
     {
         public Departement _departement;
+        public String _description;
 
         public Annee()
         {
             this.init();
         }
 
-        public Annee(string nom, Departement dep)
+        public Annee(string nom, Departement dep, String description)
         {
             this.init();
             this.Nom = nom;
             this._departement = dep;
+            this._description = description;
         }
 
-        public Annee(int id, string nom, Departement dep)
+        public Annee(int id, string nom, Departement dep, String description)
         {
             this.init();
             this.Id = id;
             this.Nom = nom;
             this._departement = dep;
+            this._description = description;
         }
         
         new public void init()
@@ -43,5 +46,10 @@ namespace Metier
             set { SetProperty(ref _departement, value); }
         }
 
+        public String Description
+        {
+            get { return _description; }
+            set { SetProperty(ref _description, value); }
+        }
     }
 }

@@ -5,15 +5,56 @@
     xmlns:local="using:Dep_Gestion.Vues"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converters:BoolToObjectConverter x:Key="InverseBoolToVisibilityConverter" TrueValue="Collapsed" FalseValue="Visible"/>
+    </Page.Resources>
+
     <Grid Margin="0,0,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-
-        <TextBlock x:Name="textblockAnneeVue" HorizontalAlignment="Left" Margin="401,41,0,0" Text="{x:Bind Path=nodeSelectionne.Parent.Nom, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="20"/>
-        <TextBlock x:Name="textblockPartieAnneeVue" HorizontalAlignment="Left" Margin="24,35,0,0" Text="{x:Bind Path=nodeSelectionne.Nom, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="20"/>
-        <TextBox x:Name="textboxNomVue" HorizontalAlignment="Left" Margin="24,172,0,0" Text="r" VerticalAlignment="Top" Header="Nom " PlaceholderText="Nom" Height="57" Width="447" TextChanged="TextboxNomVue_TextChanged"/>
-
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="100" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="textBlockPartieAnnee" Style="{StaticResource HeaderTextBlockStyle}" Text="{x:Bind Path=nodeSelectionne.Nom, Mode=OneWay}" Visibility="{x:Bind Path=nodeSelectionne.Visibility, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" FontSize="40" Grid.Row="1" Grid.Column="1" DoubleTapped="TextBlockPartieAnnee_DoubleTapped" />
+            <TextBox Background="Transparent" x:Name="textBoxPartieAnnee" Text="{x:Bind Path=nodeSelectionne.Nom, Mode=OneWay}" Visibility="{x:Bind Path=nodeSelectionne.Visibility, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" FontSize="30" Grid.Row="1" Grid.Column="1" TextChanged="TextBoxPartieAnnee_TextChanged" LostFocus="TextBoxPartieAnnee_LostFocus" KeyDown="TextBoxPartieAnnee_KeyDown" />
+            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Informations" FontSize="30" Grid.Row="2"  Grid.Column="1"/>
+            <TextBox x:Name="textBoxDescription" Text="{x:Bind Path=partieAnneeSelectionne.Description}" AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="172" Width="500" Header="Description" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="3" Grid.Column="1" TextChanged="TextBoxDescription_TextChanged"/>
+            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Enseignements" FontSize="30" Grid.Row="4"  Grid.Column="1"/>
+            <Grid VerticalAlignment="Top" Grid.Row="5" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ListView IsItemClickEnabled="True" ItemsSource="{x:Bind Path=nodeSelectionne.Children, Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemClick="ListView_ItemClick">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Nom}" FontFamily="Calibri"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <CommandBar Grid.Row="1">
+                    <AppBarButton Icon="Add" Content="Ajouter" Tapped="AjouterEnseignement_Tapped" />
+                    <AppBarButton Icon="Clear" Content="Supprimer" Tapped="SupprimerEnseignementTapped" />
+                </CommandBar>
+            </Grid>
+        </Grid>
+        <TextBlock x:Name="textBlockAnnee" Style="{StaticResource HeaderTextBlockStyle}" Text="{x:Bind Path=nodeSelectionne.Parent.Nom, Mode=OneWay}" FontSize="30"/>
     </Grid>
 </Page>
-

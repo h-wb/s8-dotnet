@@ -3,6 +3,7 @@ using Windows.UI.Xaml.Navigation;
 using DAO;
 using Metier;
 using System.Diagnostics;
+using System.Text;
 
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=234238
@@ -22,6 +23,7 @@ namespace AppGestion
 
         public ObjetBase nodeSelectionne;
         public ObjetBase semestreSelectionne;
+        public Annee anneeSelectionne;
 
 
 
@@ -33,20 +35,28 @@ namespace AppGestion
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {     
             nodeSelectionne = (ObjetBase)e.Parameter;
+            anneeSelectionne = (Annee)nodeSelectionne;
             nodeSelectionne.Visibility = true;
             if (nodeSelectionne.GetType() == typeof(Annee))
             {
                 this.textBoxAnnee.Text = nodeSelectionne.Nom;
-                
+                this.textBoxDescription.Text = anneeSelectionne.Description;
             } 
             base.OnNavigatedTo(e);
         }
 
         private void TextBoxAnnee_TextChanged(object sender, TextChangedEventArgs e)
         {
-            Annee anneeSelectionne = (Annee)nodeSelectionne;
             anneeSelectionne.Nom = this.textBlockAnnee.Text;
-            annee.update(anneeSelectionne.Id, new Annee(anneeSelectionne.Nom, anneeSelectionne.Departement));
+            annee.update(anneeSelectionne.Id, new Annee(anneeSelectionne.Nom, anneeSelectionne.Departement, anneeSelectionne.Description.Replace("\'", "\'\'")));
+        }
+
+        
+        private void TextBoxDescription_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            anneeSelectionne.Description = this.textBoxDescription.Text;
+            annee.update(anneeSelectionne.Id, new Annee(anneeSelectionne.Nom, anneeSelectionne.Departement, anneeSelectionne.Description.Replace("\'", "\'\'")));
+
         }
 
         private void TextBlock_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)

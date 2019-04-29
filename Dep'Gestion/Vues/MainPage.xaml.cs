@@ -86,13 +86,14 @@ namespace AppGestion
             {
                 if (idDepartement == annee._departement.Id)
                 {
-                    Annee nodeAnnee = new Annee { Id = annee.Id, Nom = annee.Nom.TrimEnd(), Children = new ObservableCollectionExt<ObjetBase>(), NavigationDestination = typeof(AnneeVue), Departement = annee.Departement };
+                    Annee nodeAnnee = new Annee { Id = annee.Id, Nom = annee.Nom.TrimEnd(), Description = annee._description, Children = new ObservableCollectionExt<ObjetBase>(), NavigationDestination = typeof(AnneeVue), Departement = annee.Departement };
+                    Debug.WriteLine(nodeAnnee.Description);
                     annees.Add(nodeAnnee);
                     foreach (PartieAnnee partieAnnee in partieAnnee.findAll())
                     {
                         if (annee.Id == partieAnnee.Annee.Id)
                         {
-                            PartieAnnee nodePartieAnnee = new PartieAnnee { Id = partieAnnee.Id, Nom = partieAnnee.Nom.TrimEnd(), Annee = annee, Children = new ObservableCollectionExt<ObjetBase>(), Parent = nodeAnnee };
+                            PartieAnnee nodePartieAnnee = new PartieAnnee { Id = partieAnnee.Id, Nom = partieAnnee.Nom.TrimEnd(), Description = partieAnnee.Description, Annee = annee, Children = new ObservableCollectionExt<ObjetBase>(), Parent = nodeAnnee, NavigationDestination=typeof(PartieAnneeVue) };
                             nodeAnnee.Children.Add(nodePartieAnnee);
                             foreach (Enseignement enseignement in enseignement.findAll())
                             {
@@ -112,6 +113,7 @@ namespace AppGestion
 
         private void TreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
         {
+
             nodeSelectionne = (ObjetBase)args.InvokedItem;
             if (nodeSelectionne.NavigationDestination != null)
             {

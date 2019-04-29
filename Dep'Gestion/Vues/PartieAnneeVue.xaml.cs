@@ -21,6 +21,7 @@ namespace AppGestion
         private static DAO<PartieAnnee> pannee = factoSQL.getPartieAnneeDAO();
 
         private ObjetBase nodeSelectionne;
+        private PartieAnnee partieAnneeSelectionne;
 
         public PartieAnneeVue()
         {
@@ -32,22 +33,64 @@ namespace AppGestion
             if (e.Parameter != null)
             {
                 nodeSelectionne = (ObjetBase)e.Parameter;
-                if (e.Parameter != null)
+                partieAnneeSelectionne = (PartieAnnee)nodeSelectionne;
+                nodeSelectionne.Visibility = true;
+                if (nodeSelectionne.GetType() == typeof(Annee))
                 {
-                    this.textboxNomVue.Text = nodeSelectionne.Nom;
-
+                    //this.textBoxAnnee.Text = nodeSelectionne.Nom;
+                    //this.textBoxDescription.Text = anneeSelectionne.Description;
                 }
-                base.OnNavigatedTo(e);
+                base.OnNavigatedTo(e); ;
 
             }
 
             base.OnNavigatedTo(e);
         }
 
-        private void TextboxNomVue_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBlockPartieAnnee_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
         {
-            nodeSelectionne.Nom = this.textboxNomVue.Text;
-            pannee.update(nodeSelectionne.Id, new PartieAnnee(nodeSelectionne.Nom, (Annee)nodeSelectionne.Parent));
+            nodeSelectionne.Visibility = false;
+            textBoxPartieAnnee.Focus(Windows.UI.Xaml.FocusState.Programmatic);
+        }
+
+        private void TextBoxPartieAnnee_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                nodeSelectionne.Visibility = true;
+            }
+        }
+
+        private void TextBoxPartieAnnee_LostFocus(object sender, RoutedEventArgs e)
+        {
+            nodeSelectionne.Visibility = true;
+        }
+
+        private void TextBoxPartieAnnee_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            partieAnneeSelectionne.Nom = this.textBoxPartieAnnee.Text;
+            pannee.update(partieAnneeSelectionne.Id, new PartieAnnee(partieAnneeSelectionne.Nom, partieAnneeSelectionne.Annee, partieAnneeSelectionne.Description));
+        }
+
+        private void TextBoxDescription_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            partieAnneeSelectionne.Description = this.textBoxDescription.Text;
+            pannee.update(partieAnneeSelectionne.Id, new PartieAnnee(partieAnneeSelectionne.Nom, partieAnneeSelectionne.Annee, partieAnneeSelectionne.Description.Replace("\'", "\'\'")));
+        }
+
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void AjouterEnseignement_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+
+        }
+
+        private void SupprimerEnseignementTapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -1,8 +1,13 @@
-﻿namespace Metier
+﻿using DAO;
+
+namespace Metier
 {
     public class Enseignement : ObjetBase
     {
         private PartieAnnee _partieAnnee;
+
+        private static AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
+        private static DAO<EnseignementEnseignant> ense = factoSQL.getEnseignementEnseignantDAO();
 
         public Enseignement()
         {
@@ -33,6 +38,11 @@
         {
             get { return _partieAnnee; }
             set { SetProperty(ref _partieAnnee, value); }
+        }
+
+        public void ajouterEnseignant(Enseignant enseignant)
+        {
+            ense.create(new EnseignementEnseignant(this, enseignant));
         }
     }
 }
