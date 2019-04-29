@@ -164,6 +164,9 @@
     <Compile Include="Vues\EnseignementVue.xaml.cs">
       <DependentUpon>EnseignementVue.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vues\EnseignantVue.xaml.cs">
+      <DependentUpon>EnseignantVue.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vues\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -178,6 +181,8 @@
     <None Include="Dep'Gestion_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Avatar.png" />
+    <Content Include="Assets\PlaceHolder.png" />
     <Content Include="Data\schemas\diagramme_classe.xml" />
     <Content Include="Data\schemas\schema_bdd.xml" />
     <Content Include="Data\SQL\dbo.categorie_enseignant.sql" />
@@ -216,6 +221,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vues\EnseignementVue.xaml">
+       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vues\EnseignantVue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

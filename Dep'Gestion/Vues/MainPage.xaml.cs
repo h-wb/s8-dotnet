@@ -49,6 +49,7 @@ namespace AppGestion
 
         public ObjetBase nodeSelectionne;
         private ObjetBase departementSelectionne;
+        private ObjetBase enseignantSelectionne;
 
 
         public MainPage()
@@ -64,7 +65,7 @@ namespace AppGestion
             ObservableCollectionExt<Departement> departements = new ObservableCollectionExt<Departement>();
             foreach (Departement dpt in depart.findAll())
             {
-                departements.Add(new Departement { Id = dpt.Id, Nom = dpt.Nom});
+                departements.Add(new Departement { Id = dpt.Id, Nom = dpt.Nom });
             }
             return departements;
         }
@@ -74,7 +75,7 @@ namespace AppGestion
             ObservableCollectionExt<Enseignant> enseignants = new ObservableCollectionExt<Enseignant>();
             foreach (Enseignant ens in enseignant.findAll())
             {
-                enseignants.Add(new Enseignant { Id = ens.Id, Prenom =  ens.Prenom, Nom = ens.Nom });
+                enseignants.Add(new Enseignant { Id = ens.Id, Prenom =  ens.Prenom.TrimEnd(), Nom = ens.Nom.TrimEnd(), NavigationDestination = typeof(EnseignantVue) });
             }
             return enseignants;
         }
@@ -127,6 +128,16 @@ namespace AppGestion
         {
             departementSelectionne = (ObjetBase)args.InvokedItem;
             annees.Replace(GetAnnees(departementSelectionne.Id));
+
+        }
+
+        private void EnseignantSelection(object sender, ItemClickEventArgs e)
+        {
+            enseignantSelectionne = (ObjetBase)e.ClickedItem;
+            if (enseignantSelectionne.NavigationDestination != null)
+            {
+                Navigate(enseignantSelectionne.NavigationDestination, enseignantSelectionne);
+            }
 
         }
 
@@ -192,5 +203,6 @@ namespace AppGestion
             depart.create(departement);
             departements.Add(departement);
         }
+
     }
 }

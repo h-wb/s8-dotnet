@@ -57,7 +57,6 @@ namespace AppGestion
         {
             anneeSelectionne.Description = this.textBoxDescription.Text;
             annee.update(anneeSelectionne.Id, new Annee(nodeSelectionne.Nom, anneeSelectionne.Departement, anneeSelectionne.Description.Replace("\'", "\'\'")));
-
         }
 
         private void TextBlock_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
