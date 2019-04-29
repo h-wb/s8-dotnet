@@ -35,6 +35,7 @@ namespace AppGestion
         private static DAO<Enseignement> enseignement = factoSQL.getEnseignementDAO();
         private static DAO<Enseignant> enseignant = factoSQL.getEnseignantDAO();
         private static DAO<Categorie> categ = factoSQL.getCategorieDAO();
+        private static DAO<EC> ecs = factoSQL.getECDAO();
 
         private ObservableCollectionExt<Departement> departements = new ObservableCollectionExt<Departement>();
         private ObservableCollectionExt<Annee> annees = new ObservableCollectionExt<Annee>();
@@ -93,13 +94,13 @@ namespace AppGestion
                     {
                         if (annee.Id == partieAnnee.Annee.Id)
                         {
-                            PartieAnnee nodePartieAnnee = new PartieAnnee { Id = partieAnnee.Id, Nom = partieAnnee.Nom.TrimEnd(), Description = partieAnnee.Description, Annee = annee, Children = new ObservableCollectionExt<ObjetBase>(), Parent = nodeAnnee, NavigationDestination=typeof(PartieAnneeVue) };
+                            PartieAnnee nodePartieAnnee = new PartieAnnee { Id = partieAnnee.Id, Nom = partieAnnee.Nom.TrimEnd(), Description = partieAnnee.Description, Annee = annee, Children = new ObservableCollectionExt<ObjetBase>(), Parent = nodeAnnee, NavigationDestination=typeof(PartieAnneeVueReset) };
                             nodeAnnee.Children.Add(nodePartieAnnee);
                             foreach (Enseignement enseignement in enseignement.findAll())
                             {
                                 if (partieAnnee.Id == enseignement.PartieAnnee.Id)
                                 {
-                                    Enseignement nodeEnseignement = new Enseignement { Id = enseignement.Id, Nom = enseignement.Nom.TrimEnd(), Children = new ObservableCollectionExt<ObjetBase>(), Parent = nodePartieAnnee };
+                                    Enseignement nodeEnseignement = new Enseignement { Id = enseignement.Id, Nom = enseignement.Nom.TrimEnd(), PartieAnnee=partieAnnee, Description=enseignement.Description, Children = new ObservableCollectionExt<ObjetBase>(), Parent = nodePartieAnnee, NavigationDestination=typeof(EnseignementVue) };
                                     nodePartieAnnee.Children.Add(nodeEnseignement);
                                 }
                             }

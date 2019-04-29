@@ -47,15 +47,16 @@ namespace AppGestion
 
         private void TextBoxAnnee_TextChanged(object sender, TextChangedEventArgs e)
         {
-            anneeSelectionne.Nom = this.textBlockAnnee.Text;
-            annee.update(anneeSelectionne.Id, new Annee(anneeSelectionne.Nom, anneeSelectionne.Departement, anneeSelectionne.Description.Replace("\'", "\'\'")));
+            nodeSelectionne.Nom = this.textBoxAnnee.Text;
+            Debug.WriteLine(nodeSelectionne.Nom);
+            annee.update(anneeSelectionne.Id, new Annee(nodeSelectionne.Nom, anneeSelectionne.Departement, anneeSelectionne.Description.Replace("\'", "\'\'")));
         }
 
         
         private void TextBoxDescription_TextChanged(object sender, TextChangedEventArgs e)
         {
             anneeSelectionne.Description = this.textBoxDescription.Text;
-            annee.update(anneeSelectionne.Id, new Annee(anneeSelectionne.Nom, anneeSelectionne.Departement, anneeSelectionne.Description.Replace("\'", "\'\'")));
+            annee.update(anneeSelectionne.Id, new Annee(nodeSelectionne.Nom, anneeSelectionne.Departement, anneeSelectionne.Description.Replace("\'", "\'\'")));
 
         }
 

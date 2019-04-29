@@ -19,7 +19,7 @@ namespace Dep_Gestion.DAO
                 obj.Id = OutilsSQL.getLastInsertedId("enseignement", Connexion.getInstance()) + 1;
             }
             
-            using (SqlCommand command_c = new SqlCommand("INSERT INTO enseignement VALUES (" + obj.Id + ", '" + obj.Nom + "', " + obj.PartieAnnee.Id + ");", Connexion.getInstance()))
+            using (SqlCommand command_c = new SqlCommand("INSERT INTO enseignement VALUES (" + obj.Id + ", '" + obj.Nom + "', " + obj.PartieAnnee.Id + ", '" + obj.Description + "');", Connexion.getInstance()))
             {
                 command_c.ExecuteNonQuery();
             }
@@ -39,7 +39,7 @@ namespace Dep_Gestion.DAO
         {
             Enseignement ens = null;
 
-            using (SqlCommand command_f = new SqlCommand("SELECT id, nom, id_partie_annee FROM enseignement WHERE id=" + id + ";", Connexion.getInstance()))
+            using (SqlCommand command_f = new SqlCommand("SELECT id, nom, id_partie_annee, description FROM enseignement WHERE id=" + id + ";", Connexion.getInstance()))
             {
                 using (SqlDataReader reader_f = command_f.ExecuteReader())
                 {
@@ -52,7 +52,7 @@ namespace Dep_Gestion.DAO
 
                             PartieAnnee partannee2 = TPSQL.find(reader_f.GetInt32(2));
 
-                            ens = new Enseignement(reader_f.GetInt32(0), reader_f.GetString(1), partannee2);
+                            ens = new Enseignement(reader_f.GetInt32(0), reader_f.GetString(1), partannee2, reader_f.GetString(3));
 
                             reader_f.NextResult();
                         }
@@ -73,7 +73,7 @@ namespace Dep_Gestion.DAO
         {
             Enseignement ens = null;
 
-            using (SqlCommand command_f = new SqlCommand("SELECT id, nom, id_partie_annee FROM enseignement WHERE nom='" + nom + "';", Connexion.getInstance()))
+            using (SqlCommand command_f = new SqlCommand("SELECT id, nom, id_partie_annee, description FROM enseignement WHERE nom='" + nom + "';", Connexion.getInstance()))
             {
                 using (SqlDataReader reader_f = command_f.ExecuteReader())
                 {
@@ -86,7 +86,7 @@ namespace Dep_Gestion.DAO
 
                             PartieAnnee partannee2 = TPSQL.find(reader_f.GetInt32(2));
 
-                            ens = new Enseignement(reader_f.GetInt32(0), reader_f.GetString(1), partannee2);
+                            ens = new Enseignement(reader_f.GetInt32(0), reader_f.GetString(1), partannee2, reader_f.GetString(3));
 
                             reader_f.NextResult();
                         }
@@ -116,7 +116,7 @@ namespace Dep_Gestion.DAO
                             DAO<PartieAnnee> TPSQL = factoSQL.getPartieAnneeDAO();
 
                             PartieAnnee partannee2 = TPSQL.find(reader_f.GetInt32(2));
-                            enses.Add(new Enseignement(reader_f.GetInt32(0), reader_f.GetString(1), partannee2));
+                            enses.Add(new Enseignement(reader_f.GetInt32(0), reader_f.GetString(1), partannee2, reader_f.GetString(3)));
                         }
                     }
 
@@ -128,7 +128,7 @@ namespace Dep_Gestion.DAO
 
         public override Enseignement update(int idAupdate, Enseignement update)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE enseignement SET nom='" + update.Nom + "', id_partie_annee=" + update.PartieAnnee.Id + " WHERE id=" + idAupdate + ";", Connexion.getInstance()))
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE enseignement SET nom='" + update.Nom + "', id_partie_annee=" + update.PartieAnnee.Id + ", description='" + update.Description + "' WHERE id=" + idAupdate + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }

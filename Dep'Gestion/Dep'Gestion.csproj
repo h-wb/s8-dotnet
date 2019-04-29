@@ -161,11 +161,14 @@
     <Compile Include="Vues\AnneeVue.xaml.cs">
       <DependentUpon>AnneeVue.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vues\EnseignementVue.xaml.cs">
+      <DependentUpon>EnseignementVue.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vues\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Vues\PartieAnneeVue.xaml.cs">
-      <DependentUpon>PartieAnneeVue.xaml</DependentUpon>
+    <Compile Include="Vues\PartieAnneeVueReset.xaml.cs">
+      <DependentUpon>PartieAnneeVueReset.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -212,11 +215,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Vues\EnseignementVue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Vues\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Vues\PartieAnneeVue.xaml">
+    <Page Include="Vues\PartieAnneeVueReset.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

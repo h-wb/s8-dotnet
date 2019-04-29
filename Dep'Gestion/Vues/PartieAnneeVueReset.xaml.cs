@@ -1,12 +1,19 @@
-﻿using Dep_Gestion.Model;
-using Model;
+﻿using DAO;
+using Metier;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Foundation;
+using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using System.Collections;
-using DAO;
-using Metier;
-using System.Diagnostics;
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -15,15 +22,17 @@ namespace AppGestion
     /// <summary>
     /// Une page vide peut être utilisée seule ou constituer une page de destination au sein d'un frame.
     /// </summary>
-    public sealed partial class PartieAnneeVue : Page
+    public sealed partial class PartieAnneeVueReset : Page
     {
         private static AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
         private static DAO<PartieAnnee> pannee = factoSQL.getPartieAnneeDAO();
+        private static DAO<Enseignement> ens = factoSQL.getEnseignementDAO();
 
         private ObjetBase nodeSelectionne;
+        public ObjetBase enseignementSelectionne;
         private PartieAnnee partieAnneeSelectionne;
 
-        public PartieAnneeVue()
+        public PartieAnneeVueReset()
         {
             this.InitializeComponent();
         }
@@ -35,10 +44,10 @@ namespace AppGestion
                 nodeSelectionne = (ObjetBase)e.Parameter;
                 partieAnneeSelectionne = (PartieAnnee)nodeSelectionne;
                 nodeSelectionne.Visibility = true;
-                if (nodeSelectionne.GetType() == typeof(Annee))
+                if (nodeSelectionne.GetType() == typeof(PartieAnnee))
                 {
-                    //this.textBoxAnnee.Text = nodeSelectionne.Nom;
-                    //this.textBoxDescription.Text = anneeSelectionne.Description;
+                    this.textBoxPartieAnnee.Text = nodeSelectionne.Nom;
+                    this.textBoxDescription.Text = partieAnneeSelectionne.Description;
                 }
                 base.OnNavigatedTo(e); ;
 
@@ -80,17 +89,20 @@ namespace AppGestion
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+            enseignementSelectionne = (Enseignement)e.ClickedItem;
         }
 
         private void AjouterEnseignement_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-
+            Enseignement nouvelleEnseignement = new Enseignement { Nom = "Nouvelle Enseignement", PartieAnnee = (PartieAnnee)nodeSelectionne, Parent = nodeSelectionne };
+            ens.create(nouvelleEnseignement);
+            nodeSelectionne.Children.Add(nouvelleEnseignement);
         }
 
         private void SupprimerEnseignementTapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-
+            enseignementSelectionne.Parent.Children.Remove((Enseignement)enseignementSelectionne);
+            ens.delete((Enseignement)enseignementSelectionne);
         }
     }
 }
