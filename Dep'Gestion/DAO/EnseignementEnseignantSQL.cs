@@ -1,5 +1,4 @@
 ﻿using DAO;
-using Dep_Gestion.Metier;
 using Metier;
 using Outils;
 using System;
