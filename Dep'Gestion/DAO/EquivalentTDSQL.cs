@@ -3,6 +3,7 @@ using Outils;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
 
 namespace DAO
 {
@@ -135,7 +136,8 @@ namespace DAO
                             AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
                             DAO<Categorie> TPSQL = factoSQL.getCategorieDAO();
                             DAO<TypeCours> TPSQL2 = factoSQL.getTypeCoursDao();
-
+                            Debug.WriteLine(reader_f.GetInt32(0));
+                            Debug.WriteLine(reader_f.GetInt32(1));
                             Categorie categ = TPSQL.find(reader_f.GetInt32(0));
                             TypeCours tp = TPSQL2.find(reader_f.GetInt32(1));
 
@@ -152,7 +154,7 @@ namespace DAO
         public override EquivalentTD update(int idAupdate, EquivalentTD update)
         {
             using (SqlCommand command_u = new SqlCommand(@"UPDATE equivalent_td SET id_categorie_enseignant=" + update.categ.Id + ", " +
-               "id_type_cours=" + update.tc.Id + ", ratio_cours_td=" + update.ratio + " WHERE id=" + idAupdate + ";", Connexion.getInstance()))
+               "id_type_cours=" + update.TypeCours.Id + ", ratio_cours_td=" + update.ratio + " WHERE id=" + idAupdate + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }

@@ -10,6 +10,11 @@ namespace Metier
     {
         //vrai: ce type de cours peut être composé de plusieurs groupes (ex: TD, TP), faux sinon (ex: CM)
         public bool hasGroups;
+
+        public TypeCours()
+        {
+            base.init();
+        }
         public TypeCours(string nom)
         {
             base.init();
@@ -31,6 +36,7 @@ namespace Metier
             this.Nom = nom;
             this.hasGroups = hasGroups;
         }
+
 
         override public string ToString()
         {

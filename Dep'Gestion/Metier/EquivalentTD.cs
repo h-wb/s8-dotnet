@@ -13,7 +13,7 @@ namespace Metier
         public int idCategorieEnseignant { get; set; }
         public int idTypeCours { get; set; }
         public Categorie categ { get; set; }
-        public TypeCours tc { get; set; }
+        public TypeCours _typeCours;
         public double ratio;
 
         public EquivalentTD()
@@ -24,22 +24,22 @@ namespace Metier
         public EquivalentTD(Dictionary<TypeCours, double> ratios)
         {
             this.init();
-            this.ajouterRatiosCoursTD(ratios);
+            //this.ajouterRatiosCoursTD(ratios);
         }
 
         public EquivalentTD(TypeCours tc, double ratio)
         {
             this.init();
-            this.ajouterRatiosCoursTD(tc, ratio);
+           // this.ajouterRatiosCoursTD(tc, ratio);
         }
 
         new public void init()
         {
-            this.idCategorieEnseignant = -1;
-            base.init();
-            ratiosCoursTD = new Dictionary<TypeCours, double>();
-            TypeCours TD = new TypeCours("TD");
-            ratiosCoursTD.Add(TD, 1);
+            //this.idCategorieEnseignant = -1;
+            //base.init();
+            //ratiosCoursTD = new Dictionary<TypeCours, double>();
+            //TypeCours TD = new TypeCours("TD");
+            //ratiosCoursTD.Add(TD, 1);
         }
 
         public EquivalentTD(int id, Categorie categ, TypeCours tc, double ratio)
@@ -47,36 +47,43 @@ namespace Metier
             this.init();
             this.Id = id;
             this.categ = categ;
-            this.tc = tc;
+            this.TypeCours = tc;
             this.ratio = ratio;
         }
-        public void ajouterRatiosCoursTD(TypeCours tc, double ratio)
-        {
-            //Vérification des doublons
-            bool alreadyExists = false;
-            foreach (KeyValuePair<TypeCours, double> typeCours in ratiosCoursTD)
-            {
-                if (tc.Nom == typeCours.Key.Nom)
-                {
-                    alreadyExists = true;
-                }
-            }
 
-            if (!alreadyExists)
-            {
-                ratiosCoursTD.Add(tc, ratio);
-            }
-        }
+
+        //public void ajouterRatiosCoursTD(TypeCours tc, double ratio)
+        //{
+        //    //Vérification des doublons
+        //    bool alreadyExists = false;
+        //    foreach (KeyValuePair<TypeCours, double> typeCours in ratiosCoursTD)
+        //    {
+        //        if (tc.Nom == typeCours.Key.Nom)
+        //        {
+        //            alreadyExists = true;
+        //        }
+        //    }
+
+        //    if (!alreadyExists)
+        //    {
+        //        ratiosCoursTD.Add(tc, ratio);
+        //    }
+        //}
 
 
 
         //Ajoute des ratiosCoursTD à ceux existants
 
-        public void ajouterRatiosCoursTD(Dictionary<TypeCours, double> ratios)
-        {
-            ratios.ToList().ForEach(x => ratiosCoursTD[x.Key] = x.Value);
-        }
+        //public void ajouterRatiosCoursTD(Dictionary<TypeCours, double> ratios)
+        //{
+        //    ratios.ToList().ForEach(x => ratiosCoursTD[x.Key] = x.Value);
+        //}
 
+        public TypeCours TypeCours
+        {
+            get { return _typeCours; }
+            set { SetProperty(ref _typeCours, value); }
+        }
 
 
 

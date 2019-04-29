@@ -45,7 +45,7 @@ namespace AppGestion
         private void TextBoxAnnee_TextChanged(object sender, TextChangedEventArgs e)
         {
             Annee anneeSelectionne = (Annee)nodeSelectionne;
-            anneeSelectionne.Nom = this.textBlockAnnee.Text;
+            anneeSelectionne.Nom = this.textBoxAnnee.Text;
             annee.update(anneeSelectionne.Id, new Annee(anneeSelectionne.Nom, anneeSelectionne.Departement));
         }
 
