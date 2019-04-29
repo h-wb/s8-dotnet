@@ -8,30 +8,15 @@ namespace Metier
 {
     public class EquivalentTD : ObjetBase
     {
-
-        public Dictionary<TypeCours, double> ratiosCoursTD { get; set; }
-        public int idCategorieEnseignant { get; set; }
-        public int idTypeCours { get; set; }
-        public Categorie categ { get; set; }
+        public Categorie _categ;
         public TypeCours _typeCours;
-        public double ratio;
+        public double _ratio;
 
         public EquivalentTD()
         {
             this.init();
         }
-
-        public EquivalentTD(Dictionary<TypeCours, double> ratios)
-        {
-            this.init();
-            //this.ajouterRatiosCoursTD(ratios);
-        }
-
-        public EquivalentTD(TypeCours tc, double ratio)
-        {
-            this.init();
-           // this.ajouterRatiosCoursTD(tc, ratio);
-        }
+        
 
         new public void init()
         {
@@ -46,38 +31,18 @@ namespace Metier
         {
             this.init();
             this.Id = id;
-            this.categ = categ;
-            this.TypeCours = tc;
-            this.ratio = ratio;
+            this._categ = categ;
+            this._typeCours = tc;
+            this._ratio = ratio;
         }
 
-
-        //public void ajouterRatiosCoursTD(TypeCours tc, double ratio)
-        //{
-        //    //Vérification des doublons
-        //    bool alreadyExists = false;
-        //    foreach (KeyValuePair<TypeCours, double> typeCours in ratiosCoursTD)
-        //    {
-        //        if (tc.Nom == typeCours.Key.Nom)
-        //        {
-        //            alreadyExists = true;
-        //        }
-        //    }
-
-        //    if (!alreadyExists)
-        //    {
-        //        ratiosCoursTD.Add(tc, ratio);
-        //    }
-        //}
-
-
-
-        //Ajoute des ratiosCoursTD à ceux existants
-
-        //public void ajouterRatiosCoursTD(Dictionary<TypeCours, double> ratios)
-        //{
-        //    ratios.ToList().ForEach(x => ratiosCoursTD[x.Key] = x.Value);
-        //}
+        public EquivalentTD(Categorie categ, TypeCours tc, double ratio)
+        {
+            this.init();
+            this._categ = categ;
+            this._typeCours = tc;
+            this._ratio = ratio;
+        }
 
         public TypeCours TypeCours
         {
@@ -85,6 +50,17 @@ namespace Metier
             set { SetProperty(ref _typeCours, value); }
         }
 
+        public Categorie Categorie
+        {
+            get { return _categorie; }
+            set { SetProperty(ref _categorie, value); }
+        }
+
+        public double Ratio
+        {
+            get { return _ratio; }
+            set { SetProperty(ref _ratio, value); }
+        }
 
 
         override public string ToString()

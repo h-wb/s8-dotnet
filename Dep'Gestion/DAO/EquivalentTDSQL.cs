@@ -12,56 +12,16 @@ namespace DAO
         public override EquivalentTD create(EquivalentTD obj)
         {
 
-            /*Console.WriteLine("id categ enseignant = " + obj.idCategorieEnseignant);
-            //Si l'objet n'a pas d'id, on récupère le dernier id dans la table, pour que l'id de l'objet actuel soit le suivant 
-            if (obj.id == -1)
+            if (obj.Id == -1)
             {
-                obj.id = OutilsSQL.getLastInsertedId("equivalent_td", Connexion.getInstance()) + 1;
+                obj.Id = OutilsSQL.getLastInsertedId("equivalent_td", Connexion.getInstance()) + 1;
             }
 
-            //On insère une ligne par couple clé/valeur de la table de hachage
-            foreach (KeyValuePair<TypeCours, double> entry in obj.ratiosCoursTD)
+            using (SqlCommand command_c = new SqlCommand("INSERT INTO equivalent_td VALUES (" + obj.Id + ", " + obj.Categorie.Id + ", " + obj.TypeCours.Id + ", " + obj.Ratio + ");", Connexion.getInstance()))
             {
-                AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
-                DAO<TypeCours> TPSQL = factoSQL.getTypeCoursDao();
-                //Il faut vérifier que les types de cours existent dans la DB. S'ils n'existent pas, on les crée
-                int newID = -1;
-                try
-                {
-                    newID = TPSQL.find(entry.Key.nom).id;
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("type cours inexistant dans la DB: création de celui-ci");
-
-                    newID = TPSQL.create(entry.Key).id;
-                }
-                entry.Key.id = newID;*/
-
-            /*
-             *id
-             * id_categorie_enseignant
-             * id_type_cours
-             * ratio_cours_TD
-             */
-            /*double ratio = entry.Value;
-            string query = @"INSERT INTO equivalent_td(id, id_categorie_enseignant, id_type_cours, ratio_cours_TD)
-                VALUES (" + obj.id
-               + ", " + obj.idCategorieEnseignant
-               + ", " + entry.Key.id
-               + ", " + ratio + ");";
-               */
-            //Console.WriteLine("id type cours : " + entry.Key.id);
-            //Console.ReadLine();
-
-            /*using (SqlCommand command = new SqlCommand(query, Connexion.getInstance()))
-            {
-                command.ExecuteNonQuery();
-                //Console.WriteLine("EQTD crée: " + obj);
-                Connexion.getInstance().Close();
+                command_c.ExecuteNonQuery();
             }
 
-        }*/
             return obj;
         }
 
@@ -78,7 +38,7 @@ namespace DAO
         {
             EquivalentTD eqtd = null;
 
-            using (SqlCommand command_f = new SqlCommand("SELECT id_categorie_enseignant, id_type_cours, ratio_cours_td FROM equivalent_td WHERE id=" + id + ";", Connexion.getInstance()))
+            using (SqlCommand command_f = new SqlCommand("SELECT id, id_categorie_enseignant, id_type_cours, ratio_cours_td FROM equivalent_td WHERE id=" + id + ";", Connexion.getInstance()))
             {
                 using (SqlDataReader reader_f = command_f.ExecuteReader())
                 {
@@ -90,10 +50,10 @@ namespace DAO
                             DAO<Categorie> TPSQL = factoSQL.getCategorieDAO();
                             DAO<TypeCours> TPSQL2 = factoSQL.getTypeCoursDao();
 
-                            Categorie categ = TPSQL.find(reader_f.GetInt32(0));
-                            TypeCours tp = TPSQL2.find(reader_f.GetInt32(1));
+                            Categorie categ = TPSQL.find(reader_f.GetInt32(1));
+                            TypeCours tp = TPSQL2.find(reader_f.GetInt32(2));
 
-                            eqtd = new EquivalentTD(id, categ, tp, reader_f.GetDouble(2));
+                            eqtd = new EquivalentTD(reader_f.GetInt32(0), categ, tp, reader_f.GetDouble(3));
 
                             reader_f.NextResult();
                         }
@@ -136,10 +96,9 @@ namespace DAO
                             AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
                             DAO<Categorie> TPSQL = factoSQL.getCategorieDAO();
                             DAO<TypeCours> TPSQL2 = factoSQL.getTypeCoursDao();
-                            Debug.WriteLine(reader_f.GetInt32(0));
-                            Debug.WriteLine(reader_f.GetInt32(1));
-                            Categorie categ = TPSQL.find(reader_f.GetInt32(0));
-                            TypeCours tp = TPSQL2.find(reader_f.GetInt32(1));
+                            
+                            Categorie categ = TPSQL.find(reader_f.GetInt32(1));
+                            TypeCours tp = TPSQL2.find(reader_f.GetInt32(2));
 
                             eqtds.Add(new EquivalentTD(reader_f.GetInt32(0), categ, tp, reader_f.GetDouble(3)));
                         }
@@ -153,8 +112,8 @@ namespace DAO
 
         public override EquivalentTD update(int idAupdate, EquivalentTD update)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE equivalent_td SET id_categorie_enseignant=" + update.categ.Id + ", " +
-               "id_type_cours=" + update.TypeCours.Id + ", ratio_cours_td=" + update.ratio + " WHERE id=" + idAupdate + ";", Connexion.getInstance()))
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE equivalent_td SET id_categorie_enseignant=" + update.Categorie.Id + ", " +
+               "id_type_cours=" + update.TypeCours.Id + ", ratio_cours_td=" + update.Ratio + " WHERE id=" + idAupdate + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }
