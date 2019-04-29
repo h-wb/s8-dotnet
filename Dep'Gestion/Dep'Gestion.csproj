@@ -128,6 +128,7 @@
     <Compile Include="DAO\DepartementSQL.cs" />
     <Compile Include="DAO\ECSQL.cs" />
     <Compile Include="DAO\EnseignantSQL.cs" />
+    <Compile Include="DAO\EnseignementEnseignantSQL.cs" />
     <Compile Include="DAO\EnseignementSQL.cs" />
     <Compile Include="DAO\EquivalentTDSQL.cs" />
     <Compile Include="DAO\FactoryType.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Metier\EC.cs" />
     <Compile Include="Metier\Enseignant.cs" />
     <Compile Include="Metier\Enseignement.cs" />
+    <Compile Include="Metier\EnseignementEnseignant.cs" />
     <Compile Include="Metier\EquivalentTD.cs" />
     <Compile Include="Metier\Groupe.cs" />
     <Compile Include="Metier\ObjetBase.cs" />
@@ -159,11 +161,17 @@
     <Compile Include="Vues\AnneeVue.xaml.cs">
       <DependentUpon>AnneeVue.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vues\EnseignementVue.xaml.cs">
+      <DependentUpon>EnseignementVue.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vues\EnseignantVue.xaml.cs">
       <DependentUpon>EnseignantVue.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vues\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vues\PartieAnneeVueReset.xaml.cs">
+      <DependentUpon>PartieAnneeVueReset.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -212,6 +220,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Vues\EnseignementVue.xaml">
+       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Vues\EnseignantVue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -219,6 +231,10 @@
     <Page Include="Vues\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Vues\PartieAnneeVueReset.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

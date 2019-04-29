@@ -35,7 +35,7 @@
             <TextBlock x:Name="textBlockAnnee" Style="{StaticResource HeaderTextBlockStyle}" Text="{x:Bind Path=nodeSelectionne.Nom, Mode=OneWay}" Visibility="{x:Bind Path=nodeSelectionne.Visibility, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" FontSize="40" Grid.Row="1" Grid.Column="1" DoubleTapped="TextBlock_DoubleTapped"/>
             <TextBox Background="Transparent" x:Name="textBoxAnnee" Text="{x:Bind Path=nodeSelectionne.Nom, Mode=OneWay}" Visibility="{x:Bind Path=nodeSelectionne.Visibility, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" FontSize="40" Grid.Row="1" Grid.Column="1" TextChanged="TextBoxAnnee_TextChanged" LostFocus="TextBoxAnnee_LostFocus" KeyDown="TextBoxAnnee_KeyDown" />
             <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Informations" FontSize="30" Grid.Row="2"  Grid.Column="1"/>
-            <TextBox AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="172" Width="500" Header="Description" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="3" Grid.Column="1"/>
+            <TextBox x:Name="textBoxDescription" Text="{x:Bind Path=anneeSelectionne.Description}" AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="172" Width="500" Header="Description" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="3" Grid.Column="1" TextChanged="TextBoxDescription_TextChanged"/>
             <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Semestres" FontSize="30" Grid.Row="4"  Grid.Column="1"/>
             <Grid VerticalAlignment="Top" Grid.Row="5" Grid.Column="1">
                 <Grid.RowDefinitions>

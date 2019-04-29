@@ -22,7 +22,7 @@ namespace Dep_Gestion.DAO
             }
             
 
-            using (SqlCommand command_c = new SqlCommand("INSERT INTO annee VALUES (" + obj.Id + ", '" + obj.Nom + "', " + obj._departement.Id + ");", Connexion.getInstance()))
+            using (SqlCommand command_c = new SqlCommand("INSERT INTO annee VALUES (" + obj.Id + ", '" + obj.Nom + "', " + obj._departement.Id + ", '" + obj._description + "');", Connexion.getInstance()))
             {
                 command_c.ExecuteNonQuery();
                 // Connexion.getInstance().Close();
@@ -44,7 +44,7 @@ namespace Dep_Gestion.DAO
         {
             Annee annee = null;
 
-            using (SqlCommand command_f = new SqlCommand("SELECT id, nom, id_departement FROM annee WHERE id=" + id + ";", Connexion.getInstance()))
+            using (SqlCommand command_f = new SqlCommand("SELECT id, nom, id_departement, description FROM annee WHERE id=" + id + ";", Connexion.getInstance()))
             {
                 using (SqlDataReader reader_f = command_f.ExecuteReader())
                 {
@@ -57,7 +57,7 @@ namespace Dep_Gestion.DAO
 
                             Departement dep2 = TPSQL.find(reader_f.GetInt32(2));
 
-                            annee = new Annee(reader_f.GetInt32(0), reader_f.GetString(1), dep2);
+                            annee = new Annee(reader_f.GetInt32(0), reader_f.GetString(1), dep2, reader_f.GetString(3));
 
                             reader_f.NextResult();
                         }
@@ -78,7 +78,7 @@ namespace Dep_Gestion.DAO
         {
             Annee annee = null;
 
-            using (SqlCommand command_f = new SqlCommand("SELECT id, nom, id_departement FROM annee WHERE nom='" + nom + "';", Connexion.getInstance()))
+            using (SqlCommand command_f = new SqlCommand("SELECT id, nom, id_departement, description FROM annee WHERE nom='" + nom + "';", Connexion.getInstance()))
             {
                 using (SqlDataReader reader_f = command_f.ExecuteReader())
                 {
@@ -92,7 +92,7 @@ namespace Dep_Gestion.DAO
 
                             Departement dep2 = TPSQL.find(reader_f.GetInt32(2));
 
-                            annee = new Annee(reader_f.GetInt32(0), reader_f.GetString(1), dep2);
+                            annee = new Annee(reader_f.GetInt32(0), reader_f.GetString(1), dep2, reader_f.GetString(3));
                         }
                     }
 
@@ -122,8 +122,7 @@ namespace Dep_Gestion.DAO
 
                             Departement dep2 = TPSQL.find(reader_f.GetInt32(2));
                             
-
-                            ans.Add(new Annee(reader_f.GetInt32(0), reader_f.GetString(1), dep2));
+                            ans.Add(new Annee(reader_f.GetInt32(0), reader_f.GetString(1), dep2, reader_f.GetString(3)));
                         }
                     }
 
@@ -135,7 +134,7 @@ namespace Dep_Gestion.DAO
 
         public override Annee update(int idAupdate, Annee update)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE annee SET nom='" + update.Nom + "', id_departement=" + update._departement.Id + " WHERE id=" + idAupdate + ";", Connexion.getInstance()))
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE annee SET nom='" + update.Nom + "', id_departement=" + update._departement.Id + ", description= '" + update._description + "' WHERE id=" + idAupdate + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }

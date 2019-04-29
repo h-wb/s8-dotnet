@@ -59,5 +59,10 @@ namespace DAO
             return new EnseignantSQL();
         }
 
+        public override DAO<EnseignementEnseignant> getEnseignementEnseignantDAO()
+        {
+            return new EnseignementEnseignantSQL();
+        }
+
     }
 }

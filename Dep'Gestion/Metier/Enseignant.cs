@@ -15,6 +15,7 @@ namespace Metier
 
         private static AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
         private static DAO<Categorie> categ = factoSQL.getCategorieDAO();
+        private static DAO<EnseignementEnseignant> ense = factoSQL.getEnseignementEnseignantDAO();
 
         public Enseignant() {
             this.init();
@@ -56,6 +57,11 @@ namespace Metier
         {
             get { return prenom; }
             set { SetProperty(ref prenom, value); }
+        }
+
+        public void ajouterEnseignement(Enseignement enseignement)
+        {
+            ense.create(new EnseignementEnseignant(enseignement, this));
         }
 
     }
