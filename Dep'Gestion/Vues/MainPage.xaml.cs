@@ -36,6 +36,8 @@ namespace AppGestion
         private static DAO<Enseignant> enseignant = factoSQL.getEnseignantDAO();
         private static DAO<Categorie> categ = factoSQL.getCategorieDAO();
         private static DAO<EC> ecs = factoSQL.getECDAO();
+        private static DAO<TypeCours> tps = factoSQL.getTypeCoursDao();
+        private static DAO<InfosAssignation> IA = factoSQL.getInfosAssignationDAO();
 
         private ObservableCollectionExt<Departement> departements = new ObservableCollectionExt<Departement>();
         private ObservableCollectionExt<Annee> annees = new ObservableCollectionExt<Annee>();
@@ -55,7 +57,9 @@ namespace AppGestion
         public MainPage()
         {
             this.InitializeComponent();
-           // this.reload_Treeview();
+
+            //enseignant.create(new Enseignant("Ben", "Prunty", categ.find(1)));
+
             departements = GetDepartements();
             enseignants = GetEnseignants();
         }

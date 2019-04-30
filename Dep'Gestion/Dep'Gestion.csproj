@@ -133,6 +133,7 @@
     <Compile Include="DAO\EquivalentTDSQL.cs" />
     <Compile Include="DAO\FactoryType.cs" />
     <Compile Include="DAO\GroupeSQL.cs" />
+    <Compile Include="DAO\InfosAssignationSQL.cs" />
     <Compile Include="DAO\PartieAnneeSQL.cs" />
     <Compile Include="DAO\SQLFactory.cs" />
     <Compile Include="DAO\TypeCoursSQL.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="Metier\EnseignementEnseignant.cs" />
     <Compile Include="Metier\EquivalentTD.cs" />
     <Compile Include="Metier\Groupe.cs" />
+    <Compile Include="Metier\InfosAssignation.cs" />
     <Compile Include="Metier\ObjetBase.cs" />
     <Compile Include="Metier\PartieAnnee.cs" />
     <Compile Include="Metier\TypeCours.cs" />
@@ -221,7 +223,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vues\EnseignementVue.xaml">
-       <SubType>Designer</SubType>
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Vues\EnseignantVue.xaml">

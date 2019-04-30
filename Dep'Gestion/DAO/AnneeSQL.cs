@@ -14,8 +14,6 @@ namespace Dep_Gestion.DAO
     {
         public override Annee create(Annee obj)
         {
-
-
             if (obj.Id == -1)
             {
                 obj.Id = OutilsSQL.getLastInsertedId("annee", Connexion.getInstance()) + 1;

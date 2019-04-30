@@ -50,7 +50,7 @@ namespace AppGestion
 
             Debug.WriteLine(categorieSelectionnee);
 
-            foreach (EquivalentTD eqTD in equivalentTD.findAll())
+            /*foreach (EquivalentTD eqTD in equivalentTD.findAll())
             {
                 if (eqTD.idCategorieEnseignant == categorieSelectionne.Id)
                 {
@@ -61,6 +61,21 @@ namespace AppGestion
                         {
                             Debug.WriteLine(eqTD.Id);
                             EquivalentTD equivalent = new EquivalentTD { Id = eqTD.Id, idCategorieEnseignant = eqTD.idCategorieEnseignant, TypeCours = typeCours, ratiosCoursTD = eqTD.ratiosCoursTD };
+                        }
+                    }
+                }
+            }*/
+            foreach (EquivalentTD eqTD in equivalentTD.findAll())
+            {
+                if (eqTD.Categorie.Id == categorieSelectionne.Id)
+                {
+
+                    foreach (TypeCours typeCours in typeCours.findAll())
+                    {
+                        if (typeCours.Id == eqTD.TypeCours.Id)
+                        {
+                            Debug.WriteLine(eqTD.Id);
+                            EquivalentTD equivalent = new EquivalentTD { Id = eqTD.Id, Categorie = eqTD.Categorie, TypeCours = typeCours, Ratio = eqTD.Ratio };
                         }
                     }
                 }

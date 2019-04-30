@@ -21,6 +21,7 @@ namespace DAO
         public abstract DAO<Departement> getDepartementDAO();
         public abstract DAO<Enseignant> getEnseignantDAO();
         public abstract DAO<EnseignementEnseignant> getEnseignementEnseignantDAO();
+        public abstract DAO<InfosAssignation> getInfosAssignationDAO();
 
         public static AbstractDAOFactory getFactory(types type)
         {
