@@ -54,12 +54,10 @@ namespace AppGestion
         private ObjetBase enseignantSelectionne;
 
 
+
         public MainPage()
         {
             this.InitializeComponent();
-
-            //enseignant.create(new Enseignant("Ben", "Prunty", categ.find(1)));
-
             departements = GetDepartements();
             enseignants = GetEnseignants();
         }
@@ -79,7 +77,7 @@ namespace AppGestion
             ObservableCollectionExt<Enseignant> enseignants = new ObservableCollectionExt<Enseignant>();
             foreach (Enseignant ens in enseignant.findAll())
             {
-                enseignants.Add(new Enseignant { Id = ens.Id, Prenom =  ens.Prenom.TrimEnd(), Nom = ens.Nom.TrimEnd(), NavigationDestination = typeof(EnseignantVue) });
+                enseignants.Add(new Enseignant { Id = ens.Id, Categorie = ens.Categorie, Prenom =  ens.Prenom.TrimEnd(), Nom = ens.Nom.TrimEnd(), NavigationDestination = typeof(EnseignantVue) });
             }
             return enseignants;
         }
@@ -172,7 +170,7 @@ namespace AppGestion
             }
             else if (nodeSelectionne.GetType() == typeof(PartieAnnee))
             {
-                Enseignement nouvelEnseignement = new Enseignement { Nom= "Nouveau enseignement", PartieAnnee = (PartieAnnee)nodeSelectionne, NavigationDestination = typeof(EnseignantVue), Description = "", Parent = nodeSelectionne };
+                Enseignement nouvelEnseignement = new Enseignement { Nom= "Nouveau enseignement", PartieAnnee = (PartieAnnee)nodeSelectionne, NavigationDestination = typeof(EnseignementVue), Description = "", Parent = nodeSelectionne };
                 enseignement.create(nouvelEnseignement);
                 nodeSelectionne.Children.Add(nouvelEnseignement);
             }
@@ -208,5 +206,17 @@ namespace AppGestion
             departements.Add(departement);
         }
 
+        private void AjouterEnseignant(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            Enseignant nouvelEnseignant = new Enseignant { Nom = "Nouvel", Prenom = "enseignant", Categorie = categ.find(1), NavigationDestination = typeof(EnseignantVue) };
+            enseignant.create(nouvelEnseignant);
+            enseignants.Add(nouvelEnseignant);
+        }
+
+        private void SupprimerEnseignant(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            enseignant.delete((Enseignant)enseignantSelectionne);
+            enseignants.Remove((Enseignant)enseignantSelectionne);
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace Metier
     public class Enseignant : ObjetBase
     {
         private string prenom;
-        public Categorie categorie { get; set; }
+        public Categorie _categorie;
         public double nbHeuresTravaillees { get; set; }
         public string lienImage { get; set; }
 
@@ -28,7 +28,7 @@ namespace Metier
             this.Id = id;
             this.prenom = prenom;
             this.Nom = nom;
-            this.categorie = categorie;
+            this._categorie = categorie;
             this.nbHeuresTravaillees = nbHeuresTravaillees;
             this.lienImage = "";
         }
@@ -82,13 +82,19 @@ namespace Metier
         {
             base.init();
             this.nbHeuresTravaillees = 0;
-            this.categorie = categ.find(1);
+            this._categorie = categ.find(1);
         }
 
         public string Prenom
         {
             get { return prenom; }
             set { SetProperty(ref prenom, value); }
+        }
+
+        public Categorie Categorie
+        {
+            get { return _categorie; }
+            set { SetProperty(ref _categorie, value); }
         }
 
         public void ajouterEnseignement(Enseignement enseignement)

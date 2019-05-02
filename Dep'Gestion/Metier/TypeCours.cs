@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Metier
     public class TypeCours : ObjetBase
     {
         //vrai: ce type de cours peut être composé de plusieurs groupes (ex: TD, TP), faux sinon (ex: CM)
-        public bool hasGroups;
+        public int _groupes;
 
         public TypeCours()
         {
@@ -19,28 +20,35 @@ namespace Metier
         {
             base.init();
             this.Nom = nom;
-            this.hasGroups = false;
+            //this.Groupes = false;
         }
 
-        public TypeCours(string nom, bool hasGroups)
+        public TypeCours(string nom, int hasGroups)
         {
             base.init();
             this.Nom = nom;
-            this.hasGroups = hasGroups;
+            this.Groupes = hasGroups;
         }
 
-        public TypeCours(int id, string nom, bool hasGroups)
+        public TypeCours(int id, string nom, int hasGroups)
         {
             base.init();
             this.Id = id;
             this.Nom = nom;
-            this.hasGroups = hasGroups;
+            this.Groupes = hasGroups;
         }
+
+        public int Groupes
+        {
+            get { return _groupes; }
+            set { SetProperty(ref _groupes, value); }
+        }
+
 
 
         override public string ToString()
         {
-            return base.ToString() + ", hasGroups=" + hasGroups;
+            return base.ToString() + ", hasGroups=" + Groupes;
         }
 
     }

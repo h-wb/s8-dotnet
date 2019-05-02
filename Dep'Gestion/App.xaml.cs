@@ -2,6 +2,7 @@
 using DAO;
 using Metier;
 using System;
+using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -27,6 +28,27 @@ namespace Dep_Gestion
         {
             Connexion connexion = new Connexion();
             connexion.creerConnexion();
+
+            AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
+            DAO<Categorie> categorie = factoSQL.getCategorieDAO();
+            DAO<TypeCours> typeCours = factoSQL.getTypeCoursDao();
+
+
+            Categorie categorieDefaut = new Categorie { Id = 1, Nom = "Catégorie par défaut", Heures = 0 };
+            if(!(categorie.find(categorieDefaut.Nom) is Categorie))
+                categorie.create(categorieDefaut);
+
+            TypeCours CM = new TypeCours { Id = 1, Nom = "CM", Groupes = 1};
+            if (!(typeCours.find(CM.Nom) is TypeCours))
+                typeCours.create(CM);
+
+            TypeCours TD = new TypeCours { Id = 2, Nom = "TD", Groupes = 2 };
+            if (!(typeCours.find(TD.Nom) is TypeCours))
+                typeCours.create(TD);
+
+            TypeCours TP = new TypeCours { Id = 3, Nom = "TP", Groupes = 2 };
+            if (!(typeCours.find(TP.Nom) is TypeCours))
+                typeCours.create(TP);
 
             /*TypeCours tp = new TypeCours("TP", true);
             Categorie maitreDeConference = new Categorie("maitre de conférences", 240);
