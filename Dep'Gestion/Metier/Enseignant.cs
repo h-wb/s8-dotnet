@@ -12,6 +12,7 @@ namespace Metier
         private string prenom;
         public Categorie _categorie;
         public double nbHeuresTravaillees { get; set; }
+        public string lienImage { get; set; }
 
         private static AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
         private static DAO<Categorie> categ = factoSQL.getCategorieDAO();
@@ -29,6 +30,18 @@ namespace Metier
             this.Nom = nom;
             this._categorie = categorie;
             this.nbHeuresTravaillees = nbHeuresTravaillees;
+            this.lienImage = "";
+        }
+
+        public Enseignant(int id, string nom, string prenom, double nbHeuresTravaillees, Categorie categorie, string lienImage)
+        {
+            this.init();
+            this.Id = id;
+            this.prenom = prenom;
+            this.Nom = nom;
+            this.categorie = categorie;
+            this.nbHeuresTravaillees = nbHeuresTravaillees;
+            this.lienImage = lienImage;
         }
 
         public Enseignant(string nom, string prenom)
@@ -36,6 +49,15 @@ namespace Metier
             this.init();
             this.Nom = nom;
             this.prenom = prenom;
+            this.lienImage = "";
+        }
+
+        public Enseignant(string nom, string prenom, string lienImage)
+        {
+            this.init();
+            this.Nom = nom;
+            this.prenom = prenom;
+            this.lienImage = lienImage;
         }
 
         public Enseignant(string nom, string prenom, Categorie categorie)
@@ -43,7 +65,17 @@ namespace Metier
             this.init();
             this.Nom = nom;
             this.prenom = prenom;
-            this._categorie = categorie;
+            this.categorie = categorie;
+            this.lienImage = "";
+        }
+
+        public Enseignant(string nom, string prenom, Categorie categorie, string lienImage)
+        {
+            this.init();
+            this.Nom = nom;
+            this.prenom = prenom;
+            this.categorie = categorie;
+            this.lienImage = lienImage;
         }
 
         new public void init()

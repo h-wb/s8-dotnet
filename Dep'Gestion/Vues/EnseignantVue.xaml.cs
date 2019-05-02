@@ -68,6 +68,7 @@ namespace AppGestion
             ObservableCollectionExt<EquivalentTD> equivalentTDs = new ObservableCollectionExt<EquivalentTD>();
 
             foreach (EquivalentTD eqTD in equivalentTD.findAll())
+
             {
                 if (eqTD.Categorie.Id == categorieSelectionnee.Id)
                 {

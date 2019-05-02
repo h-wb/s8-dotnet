@@ -13,7 +13,7 @@ namespace DAO
     {
         //private static String chaineConnexion = System.IO.File.ReadAllText("..\\..\\..\\..\\Data\\SQL\\SQLconnection.txt");
         //connexion hugo = DESKTOP-EP8R3C5
-        private static String chaineConnexion = @"Data Source=DESKTOP-EP8R3C5;Initial Catalog=ProjetDotnet;Integrated Security=true;MultipleActiveResultSets=true";
+        private static String chaineConnexion = @"Data Source=DESKTOP-6EB7DT5;Initial Catalog=ProjetDotnet;Integrated Security=true;MultipleActiveResultSets=true";
 
         private static SqlConnection connexion { get; set; }
 

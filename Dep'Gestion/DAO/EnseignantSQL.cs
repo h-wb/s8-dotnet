@@ -19,7 +19,7 @@ namespace Dep_Gestion.DAO
                 obj.Id = OutilsSQL.getLastInsertedId("enseignant", Connexion.getInstance()) + 1;
             }
             
-            using (SqlCommand command_c = new SqlCommand("INSERT INTO enseignant VALUES (" + obj.Id + ", '" + obj.Nom + "', '" + obj.Prenom + "', " + obj.nbHeuresTravaillees + ", " + obj.Categorie.Id + ");", Connexion.getInstance()))
+            using (SqlCommand command_c = new SqlCommand("INSERT INTO enseignant VALUES (" + obj.Id + ", '" + obj.Nom + "', '" + obj.Prenom + "', " + obj.nbHeuresTravaillees.ToString().Replace(",", ".") + ", " + obj.categorie.Id + ", '" + obj.lienImage + "');", Connexion.getInstance()))
             {
                 command_c.ExecuteNonQuery();
             }
@@ -39,7 +39,7 @@ namespace Dep_Gestion.DAO
         {
             Enseignant ens = null;
 
-            using (SqlCommand command_f = new SqlCommand("SELECT id, nom, prenom, nb_heures_assignees, id_categorie_enseignant FROM enseignant WHERE id=" + id + ";", Connexion.getInstance()))
+            using (SqlCommand command_f = new SqlCommand("SELECT id, nom, prenom, nb_heures_assignees, id_categorie_enseignant, image FROM enseignant WHERE id=" + id + ";", Connexion.getInstance()))
             {
                 using (SqlDataReader reader_f = command_f.ExecuteReader())
                 {
@@ -52,7 +52,7 @@ namespace Dep_Gestion.DAO
 
                             Categorie categ2 = TPSQL.find(reader_f.GetInt32(4));
 
-                            ens = new Enseignant(reader_f.GetInt32(0), reader_f.GetString(1), reader_f.GetString(2), reader_f.GetDouble(3), categ2);
+                            ens = new Enseignant(reader_f.GetInt32(0), reader_f.GetString(1), reader_f.GetString(2), reader_f.GetDouble(3), categ2, reader_f.GetString(5));
 
                             reader_f.NextResult();
                         }
@@ -73,7 +73,7 @@ namespace Dep_Gestion.DAO
         {
             Enseignant ens = null;
 
-            using (SqlCommand command_f = new SqlCommand("SELECT id, nom, prenom, nb_heures_assignees, id_categorie_enseignant FROM enseignant WHERE nom='" + nom + "';", Connexion.getInstance()))
+            using (SqlCommand command_f = new SqlCommand("SELECT id, nom, prenom, nb_heures_assignees, id_categorie_enseignant, image FROM enseignant WHERE nom='" + nom + "';", Connexion.getInstance()))
             {
                 using (SqlDataReader reader_f = command_f.ExecuteReader())
                 {
@@ -86,7 +86,7 @@ namespace Dep_Gestion.DAO
 
                             Categorie categ2 = TPSQL.find(reader_f.GetInt32(4));
 
-                            ens = new Enseignant(reader_f.GetInt32(0), reader_f.GetString(1), reader_f.GetString(2), reader_f.GetDouble(3), categ2);
+                            ens = new Enseignant(reader_f.GetInt32(0), reader_f.GetString(1), reader_f.GetString(2), reader_f.GetDouble(3), categ2, reader_f.GetString(5));
 
                             reader_f.NextResult();
                         }
@@ -116,8 +116,8 @@ namespace Dep_Gestion.DAO
                             DAO<Categorie> TPSQL = factoSQL.getCategorieDAO();
 
                             Categorie categ2 = TPSQL.find(reader_f.GetInt32(4));
-
-                            enss.Add(new Enseignant(reader_f.GetInt32(0), reader_f.GetString(1), reader_f.GetString(2), reader_f.GetDouble(3), categ2));
+                            
+                            enss.Add(new Enseignant(reader_f.GetInt32(0), reader_f.GetString(1), reader_f.GetString(2), reader_f.GetDouble(3), categ2, reader_f.GetString(5)));
                         }
                     }
 
@@ -129,7 +129,7 @@ namespace Dep_Gestion.DAO
 
         public override Enseignant update(int idAupdate, Enseignant update)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE enseignant SET nom='" + update.Nom + "', prenom='" + update.Prenom + "', nb_heures_assignees=" + update.nbHeuresTravaillees + ", id_categorie_enseignant=" + update.Categorie.Id + " WHERE id=" + idAupdate + ";", Connexion.getInstance()))
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE enseignant SET nom='" + update.Nom + "', prenom='" + update.Prenom + "', nb_heures_assignees=" + update.nbHeuresTravaillees.ToString().Replace(",", ".") + ", id_categorie_enseignant=" + update.categorie.Id + ", image='" + update.lienImage +"' WHERE id=" + idAupdate + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }
