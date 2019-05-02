@@ -2,6 +2,4 @@
 
 Pour le 29/04
 
-- Ajout et supression d'enseignants
-- Formulaires partieAnnnÃ©e, finir AnnÃ©e
-
+- Pour les catégories et type par défaut, trouver autre chose que vérification par NOM

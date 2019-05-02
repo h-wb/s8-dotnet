@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,10 +12,11 @@ namespace Metier
         public Categorie _categorie;
         public TypeCours _typeCours;
         public double _ratio;
+        public ObservableCollectionExt<TypeCours> _tCs;
 
         public EquivalentTD()
         {
-            this.init();
+            base.init();
         }
         
 
@@ -31,8 +33,8 @@ namespace Metier
         {
             this.init();
             this.Id = id;
-            this._categorie = categ;
-            this._typeCours = tc;
+            this.Categorie = categ;
+            this.TypeCours = tc;
             this._ratio = ratio;
         }
 
@@ -72,6 +74,12 @@ namespace Metier
         //    }
         //    return base.ToString() + res;
         //}
+
+        public ObservableCollectionExt<TypeCours> tCs
+        {
+            get { return _tCs; }
+            set { SetProperty(ref _tCs, value); }
+        }
 
     }
 }

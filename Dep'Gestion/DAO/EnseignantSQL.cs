@@ -19,7 +19,7 @@ namespace Dep_Gestion.DAO
                 obj.Id = OutilsSQL.getLastInsertedId("enseignant", Connexion.getInstance()) + 1;
             }
             
-            using (SqlCommand command_c = new SqlCommand("INSERT INTO enseignant VALUES (" + obj.Id + ", '" + obj.Nom + "', '" + obj.Prenom + "', " + obj.nbHeuresTravaillees + ", " + obj.categorie.Id + ");", Connexion.getInstance()))
+            using (SqlCommand command_c = new SqlCommand("INSERT INTO enseignant VALUES (" + obj.Id + ", '" + obj.Nom + "', '" + obj.Prenom + "', " + obj.nbHeuresTravaillees + ", " + obj.Categorie.Id + ");", Connexion.getInstance()))
             {
                 command_c.ExecuteNonQuery();
             }
@@ -129,7 +129,7 @@ namespace Dep_Gestion.DAO
 
         public override Enseignant update(int idAupdate, Enseignant update)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE enseignant SET nom='" + update.Nom + "', prenom='" + update.Prenom + "', nb_heures_assignees=" + update.nbHeuresTravaillees + ", id_categorie_enseignant=" + update.categorie.Id + " WHERE id=" + idAupdate + ";", Connexion.getInstance()))
+            using (SqlCommand command_u = new SqlCommand(@"UPDATE enseignant SET nom='" + update.Nom + "', prenom='" + update.Prenom + "', nb_heures_assignees=" + update.nbHeuresTravaillees + ", id_categorie_enseignant=" + update.Categorie.Id + " WHERE id=" + idAupdate + ";", Connexion.getInstance()))
             {
                 command_u.ExecuteNonQuery();
             }

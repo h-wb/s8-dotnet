@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Collections;
+using Metier;
 
 namespace Model
 {
@@ -49,6 +50,13 @@ namespace Model
             Items.Clear();
             foreach (var i in collection) Items.Add(i);
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
+
+        public TypeCours Find(ObservableCollectionExt<TypeCours> collection, TypeCours TypeCours)
+        {
+            return collection.Where(p => p.Id == TypeCours.Id).FirstOrDefault();
+
+
         }
 
         public void EntityViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)

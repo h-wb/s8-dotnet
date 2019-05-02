@@ -10,6 +10,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+
     <Grid>
         <NavigationView
             MenuItemsSource="{x:Bind departements}"
@@ -52,10 +53,22 @@
                             <SplitView.Pane>
                                 <Grid x:Name="RightPanel" Margin="0,0,0,0">
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="40" />
                                         <RowDefinition Height="auto" />
                                     </Grid.RowDefinitions>
-                                    <ListView IsItemClickEnabled="True" ItemsSource="{x:Bind enseignants}" ItemClick="EnseignantSelection">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="{Binding RelativeSource={RelativeSource TemplatedParent}}"/>
+                                        </Grid.ColumnDefinitions>
+                                        <CommandBar  DefaultLabelPosition="Right" Grid.Row="0" Grid.Column="0" Background="Transparent" HorizontalAlignment="Left" FontFamily="Segoe UI">
+                                            <AppBarButton Icon="Add" Click="AjouterEnseignant" />
+                                            <AppBarButton  Icon="Clear" Click="SupprimerEnseignant"/>
+                                        </CommandBar>
+                                        <AutoSuggestBox VerticalAlignment="Center" PlaceholderText="Chercher un enseignant"  QueryIcon="Find" Grid.Column="1" />
+                                    </Grid>
+
+                                    <ListView IsItemClickEnabled="True" ItemsSource="{x:Bind enseignants}" ItemClick="EnseignantSelection" Grid.Row="2">
                                         <ListView.ItemTemplate>
                                             <DataTemplate x:Name="DoubleLineDataTemplate" x:DataType="local11:Enseignant">
                                                 <StackPanel Orientation="Horizontal" Height="64" AutomationProperties.Name="{x:Bind Nom}">
@@ -69,8 +82,8 @@
                                                             <TextBlock Text="{x:Bind Nom}"  Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" />
                                                             <TextBlock Text="{x:Bind Prenom}" Margin="5,0,0,0" Style="{ThemeResource BaseTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseHighBrush}" />
                                                         </StackPanel>
-                                                        
-                                                        <TextBlock Text="{x:Bind Id}" Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"/>
+
+                                                        <TextBlock Text="{x:Bind Categorie, Mode=OneWay}" Style="{ThemeResource BodyTextBlockStyle}" Foreground="{ThemeResource SystemControlPageTextBaseMediumBrush}"/>
                                                     </StackPanel>
                                                 </StackPanel>
                                             </DataTemplate>

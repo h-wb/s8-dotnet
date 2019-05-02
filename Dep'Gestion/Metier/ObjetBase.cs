@@ -24,9 +24,9 @@ namespace Metier
         }
 
         override public string ToString()
-        {
+        { 
             string res = "";
-            res += this.GetType().Name + ": id=" + _id + ", nom=" + _nom;
+            res += this.GetType().Name + ": id=" + _id + ", nom=" + _nom.TrimEnd();
             return res;
         }
 
