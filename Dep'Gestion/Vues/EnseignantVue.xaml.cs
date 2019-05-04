@@ -27,11 +27,11 @@ namespace AppGestion
         public Categorie categorieSelectionne;
         public TypeCours typeCoursSelectionne;
         public EquivalentTD equivalentTDSelectionne;
-  
+
 
         private ObservableCollectionExt<Categorie> categories;
         public ObservableCollectionExt<EquivalentTD> equivalentTDs;
-        public ObservableCollectionExt<TypeCours> tCs;
+        public ObservableCollectionExt<ObjetBase> tCs;
 
         public EnseignantVue()
         {
@@ -52,9 +52,9 @@ namespace AppGestion
             return categories;
         }
 
-        private ObservableCollectionExt<TypeCours> GetTypeCours()
+        private ObservableCollectionExt<ObjetBase> GetTypeCours()
         {
-            ObservableCollectionExt<TypeCours> tCs = new ObservableCollectionExt<TypeCours>();
+            ObservableCollectionExt<ObjetBase> tCs = new ObservableCollectionExt<ObjetBase>();
             foreach (TypeCours tC in typeCours.findAll())
             {
                 tCs.Add(new TypeCours { Id = tC.Id, Nom = tC.Nom.TrimEnd(), Groupes = tC.Groupes });
@@ -143,27 +143,27 @@ namespace AppGestion
 
             if (categories.IndexOf(categorieSelectionne) == categories.Count - 1)
             {
-                categorieSelectionne.Nom = "Nouvelle catégorie";  
+                categorieSelectionne.Nom = "Nouvelle catégorie";
                 categorie.create(categorieSelectionne);
                 enseignantSelectionne.Categorie = categorieSelectionne;
                 enseignant.update(enseignantSelectionne.Id, enseignantSelectionne);
                 Categorie nouvelleCategorie = new Categorie { Nom = "Créer une catégorie...", Heures = 0 };
-                categories.Add(nouvelleCategorie); 
+                categories.Add(nouvelleCategorie);
             }
             else
             {
-                
+
                 equivalentTDs.Replace(GetEquivalentTDs(categorieSelectionne));
                 enseignantSelectionne.Categorie = categorieSelectionne;
                 enseignant.update(enseignantSelectionne.Id, enseignantSelectionne);
 
-               
-            } 
 
-     }
+            }
+
+        }
 
         private void NomCategorie(ComboBox sender, ComboBoxTextSubmittedEventArgs args)
-        {        
+        {
             categorieSelectionne.Nom = args.Text;
             enseignantSelectionne.Categorie = categorieSelectionne;
             categorie.update(categorieSelectionne.Id, categorieSelectionne);
@@ -209,10 +209,10 @@ namespace AppGestion
                 typeCours.create(typeCoursSelectionne);
                 //equivalentTDs.
                 //enseignantSelectionne.Categorie = categorieSelectionne;
-               // equivalentTD.GetType
+                // equivalentTD.GetType
                 //equivalentTD.update()
-                
-               // enseignant.update(enseignantSelectionne.Id, enseignantSelectionne);
+
+                // enseignant.update(enseignantSelectionne.Id, enseignantSelectionne);
                 TypeCours nouveauTypeCours = new TypeCours { Nom = "Créer un type de cours...", Groupes = 1 };
                 tCs.Add(nouveauTypeCours);
             }
@@ -241,9 +241,9 @@ namespace AppGestion
 
         private void AjouterEquivalentTD_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            TypeCours typeCoursRestant = tCs.Where(a => !equivalentTDs.Any(b => b.TypeCours.Id == a.Id) && a.Id != -1).FirstOrDefault();
+            TypeCours typeCoursRestant = (TypeCours)tCs.Where(a => !equivalentTDs.Any(b => b.TypeCours.Id == a.Id) && a.Id != -1).FirstOrDefault();
             Debug.WriteLine(typeCoursRestant);
-            if(typeCoursRestant != null)
+            if (typeCoursRestant != null)
             {
                 EquivalentTD nouveauEquivalentTD = new EquivalentTD { Categorie = enseignantSelectionne.Categorie, TypeCours = typeCoursRestant, Ratio = 1, tCs = tCs, Nom = "" };
                 equivalentTD.create(nouveauEquivalentTD);
@@ -259,8 +259,8 @@ namespace AppGestion
             TextBox textBox = sender as TextBox;
             if (textBox.Text != "")
             {
-               equivalentTDSelectionne.Ratio = Convert.ToDouble(textBox.Text);
-               equivalentTD.update(equivalentTDSelectionne.Id, equivalentTDSelectionne);
+                equivalentTDSelectionne.Ratio = Convert.ToDouble(textBox.Text);
+                equivalentTD.update(equivalentTDSelectionne.Id, equivalentTDSelectionne);
             }
         }
 
@@ -271,7 +271,7 @@ namespace AppGestion
 
         private void CategoriesComboxBox_DropDownOpened(object sender, object e)
         {
-           
+
         }
     }
 }

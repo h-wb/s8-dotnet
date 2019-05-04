@@ -9,6 +9,8 @@ using System.Diagnostics;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Model;
+using Windows.UI.Xaml;
+using System.Linq;
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -47,7 +49,7 @@ namespace AppGestion
 
 
 
-        
+
 
         public ObjetBase nodeSelectionne;
         private ObjetBase departementSelectionne;
@@ -77,7 +79,7 @@ namespace AppGestion
             ObservableCollectionExt<Enseignant> enseignants = new ObservableCollectionExt<Enseignant>();
             foreach (Enseignant ens in enseignant.findAll())
             {
-                enseignants.Add(new Enseignant { Id = ens.Id, Categorie = ens.Categorie, Prenom =  ens.Prenom.TrimEnd(), Nom = ens.Nom.TrimEnd(), NavigationDestination = typeof(EnseignantVue) });
+                enseignants.Add(new Enseignant { Id = ens.Id, Categorie = ens.Categorie, Prenom = ens.Prenom.TrimEnd(), Nom = ens.Nom.TrimEnd(), NavigationDestination = typeof(EnseignantVue) });
             }
             return enseignants;
         }
@@ -97,13 +99,13 @@ namespace AppGestion
                     {
                         if (annee.Id == partieAnnee.Annee.Id)
                         {
-                            PartieAnnee nodePartieAnnee = new PartieAnnee { Id = partieAnnee.Id, Nom = partieAnnee.Nom.TrimEnd(), Description = partieAnnee.Description, Annee = annee, Children = new ObservableCollectionExt<ObjetBase>(), Parent = nodeAnnee, NavigationDestination=typeof(PartieAnneeVueReset) };
+                            PartieAnnee nodePartieAnnee = new PartieAnnee { Id = partieAnnee.Id, Nom = partieAnnee.Nom.TrimEnd(), Description = partieAnnee.Description, Annee = annee, Children = new ObservableCollectionExt<ObjetBase>(), Parent = nodeAnnee, NavigationDestination = typeof(PartieAnneeVueReset) };
                             nodeAnnee.Children.Add(nodePartieAnnee);
                             foreach (Enseignement enseignement in enseignement.findAll())
                             {
                                 if (partieAnnee.Id == enseignement.PartieAnnee.Id)
                                 {
-                                    Enseignement nodeEnseignement = new Enseignement { Id = enseignement.Id, Nom = enseignement.Nom.TrimEnd(), PartieAnnee=partieAnnee, Description=enseignement.Description, Children = new ObservableCollectionExt<ObjetBase>(), Parent = nodePartieAnnee, NavigationDestination=typeof(EnseignementVue) };
+                                    Enseignement nodeEnseignement = new Enseignement { Id = enseignement.Id, Nom = enseignement.Nom.TrimEnd(), PartieAnnee = partieAnnee, Description = enseignement.Description, Children = new ObservableCollectionExt<ObjetBase>(), Parent = nodePartieAnnee, NavigationDestination = typeof(EnseignementVue) };
                                     nodePartieAnnee.Children.Add(nodeEnseignement);
                                 }
                             }
@@ -119,8 +121,9 @@ namespace AppGestion
         {
 
             nodeSelectionne = (ObjetBase)args.InvokedItem;
-            if (nodeSelectionne.NavigationDestination != null)
+            if (nodeSelectionne.NavigationDestination != null && nodeSelectionne != null)
             {
+                Debug.WriteLine(nodeSelectionne.NavigationDestination);
                 Navigate(nodeSelectionne.NavigationDestination, nodeSelectionne);
             }
 
@@ -158,19 +161,19 @@ namespace AppGestion
         {
             if (nodeSelectionne == null)
             {
-                Annee nouvelleAnne = new Annee { Nom = "Nouvelle annee", Departement = depart.find(1), NavigationDestination = typeof(AnneeVue), Description= ""};
+                Annee nouvelleAnne = new Annee { Nom = "Nouvelle annee", Departement = depart.find(1), NavigationDestination = typeof(AnneeVue), Description = "" };
                 annee.create(nouvelleAnne);
                 annees.Add(nouvelleAnne);
             }
             else if (nodeSelectionne.GetType() == typeof(Annee))
             {
-                PartieAnnee nouvellePartieAnnee = new PartieAnnee { Nom = "Nouveau semestre", Annee = (Annee)nodeSelectionne, NavigationDestination = typeof(PartieAnneeVueReset), Description = "", Parent = nodeSelectionne};
+                PartieAnnee nouvellePartieAnnee = new PartieAnnee { Nom = "Nouveau semestre", Annee = (Annee)nodeSelectionne, NavigationDestination = typeof(PartieAnneeVueReset), Description = "", Parent = nodeSelectionne };
                 partieAnnee.create(nouvellePartieAnnee);
                 nodeSelectionne.Children.Add(nouvellePartieAnnee);
             }
             else if (nodeSelectionne.GetType() == typeof(PartieAnnee))
             {
-                Enseignement nouvelEnseignement = new Enseignement { Nom= "Nouveau enseignement", PartieAnnee = (PartieAnnee)nodeSelectionne, NavigationDestination = typeof(EnseignementVue), Description = "", Parent = nodeSelectionne };
+                Enseignement nouvelEnseignement = new Enseignement { Nom = "Nouveau enseignement", PartieAnnee = (PartieAnnee)nodeSelectionne, NavigationDestination = typeof(EnseignementVue), Description = "", Parent = nodeSelectionne };
                 enseignement.create(nouvelEnseignement);
                 nodeSelectionne.Children.Add(nouvelEnseignement);
             }
@@ -182,7 +185,7 @@ namespace AppGestion
             if (nodeSelectionne.GetType() == typeof(Annee))
             {
                 annee.delete((Annee)nodeSelectionne);
-                annees.Remove((Annee)nodeSelectionne);     
+                annees.Remove((Annee)nodeSelectionne);
             }
             else if (nodeSelectionne.GetType() == typeof(PartieAnnee))
             {
@@ -217,6 +220,27 @@ namespace AppGestion
         {
             enseignant.delete((Enseignant)enseignantSelectionne);
             enseignants.Remove((Enseignant)enseignantSelectionne);
+        }
+
+        private void ListView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
+        {
+            int EnseignantId = e.Items.Cast<Enseignant>().Select(i => i.Id).FirstOrDefault();
+            e.Data.SetText(EnseignantId.ToString());
+        }
+
+        private void ListeEnseignants_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
+        {
+            Debug.WriteLine("sdfsdfsdfsdfsd");
+            var test = (FrameworkElement)e.OriginalSource;
+            var test2 = (Enseignant)test.DataContext;
+
+            Debug.WriteLine(test2.ToString());
+        }
+
+        private void ListeEnseignants_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            var source = (FrameworkElement)e.OriginalSource;
+            enseignantSelectionne = (Enseignant)source.DataContext;
         }
     }
 }
