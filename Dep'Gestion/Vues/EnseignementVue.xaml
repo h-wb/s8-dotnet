@@ -6,6 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:local11="using:Metier"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -34,26 +36,76 @@
             <TextBox Background="Transparent" x:Name="textBoxEnseignement" Text="{x:Bind Path=nodeSelectionne.Nom, Mode=OneWay}" Visibility="{x:Bind Path=nodeSelectionne.Visibility, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" FontSize="30" Grid.Row="1" Grid.Column="1" TextChanged="TextBoxEnseignement_TextChanged" LostFocus="TextBoxEnseignement_LostFocus" KeyDown="TextBoxEnseignement_KeyDown" />
             <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Informations" FontSize="30" Grid.Row="2"  Grid.Column="1"/>
             <TextBox x:Name="textBoxDescription" Text="{x:Bind Path=enseignementSelectionne.Description}" AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="172" Width="500" Header="Description" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="3" Grid.Column="1" TextChanged="TextBoxDescription_TextChanged"/>
-            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="EC" FontSize="30" Grid.Row="4"  Grid.Column="1"/>
-            <Grid VerticalAlignment="Top" Grid.Row="5" Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <ListView IsItemClickEnabled="True" ItemsSource="{x:Bind Path=array, Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemClick="ListView_ItemClick">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding Nom}" FontFamily="Calibri"/>
+
+            <ItemsControl ItemsSource="{x:Bind ECs}" Grid.Row="4" Grid.Column="1" >
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="local11:EC">
+
+                        <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="1">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="EC" FontSize="30"/>
                             </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                <CommandBar Grid.Row="1">
-                    <AppBarButton Icon="Add" Content="Ajouter" Tapped="AjouterEC_Tapped" />
-                    <AppBarButton Icon="Clear" Content="Supprimer" Tapped="SupprimerECTapped" />
-                </CommandBar>
-            </Grid>
+                            <controls:DataGrid  x:Name="dataGrid" GridLinesVisibility="Horizontal" ItemsSource="{x:Bind Children}" AutoGenerateColumns="False" IsReadOnly="False" CanUserResizeColumns="False" SelectionMode="Single">
+                                <controls:DataGrid.Columns>
+
+                                    <controls:DataGridTemplateColumn Header="Nom" Width="200">
+                                        <controls:DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate x:DataType="local11:InfosAssignation">
+                                                <TextBlock Padding="5,0,5,0" Width="200" Text="{x:Bind Nom}" VerticalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </controls:DataGridTemplateColumn.CellTemplate>
+                                        <controls:DataGridTemplateColumn.CellEditingTemplate >
+                                            <DataTemplate x:DataType="local11:InfosAssignation">
+                                                <TextBox Text="{x:Bind Nom}" BorderThickness="0"/>
+                                            </DataTemplate>
+                                        </controls:DataGridTemplateColumn.CellEditingTemplate>
+                                    </controls:DataGridTemplateColumn>
+
+                                    <controls:DataGridTemplateColumn Header="Type de cours" Width="200">
+                                        <controls:DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate x:DataType="local11:InfosAssignation">
+                                                <TextBlock Padding="5,0,5,0" x:Name="eqTDTextBlock" Width="200" Text="{x:Bind TypeCours.Nom}" FontSize="20" VerticalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </controls:DataGridTemplateColumn.CellTemplate>
+                                        <controls:DataGridTemplateColumn.CellEditingTemplate >
+                                            <DataTemplate x:DataType="local11:InfosAssignation">
+                                                <ComboBox x:Name="eqTDComboBox" IsEditable="True" Width="200" SelectedItem="{x:Bind Path=Children.Find(Children, TypeCours)}" ItemsSource="{Binding Path=Children, Mode=OneWay}" DisplayMemberPath="Nom" />
+                                            </DataTemplate>
+                                        </controls:DataGridTemplateColumn.CellEditingTemplate>
+                                    </controls:DataGridTemplateColumn>
+
+
+                                    <controls:DataGridTemplateColumn Header="Enseignants" Width="200">
+                                        <controls:DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate x:DataType="local11:InfosAssignation">
+                                                <Grid AllowDrop="True" DragOver="Enseignant_DragOver" Drop="Enseignant_Drop" VerticalAlignment="Center"  Padding="5,0,5,0" >
+                                                    <TextBlock Text="{x:Bind Path=Enseignant.Nom}"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </controls:DataGridTemplateColumn.CellTemplate>
+                                        <controls:DataGridTemplateColumn.CellEditingTemplate >
+                                            <DataTemplate x:DataType="local11:InfosAssignation">
+                                                <!--<ComboBox  Width="200" SelectedItem="{x:Bind Path=Enseignants.Find(Enseignants, Enseignant)}" ItemsSource="{Binding Path=Enseignants, Mode=OneWay}" DisplayMemberPath="Nom" />-->
+                                                <TextBlock Text="{x:Bind Path=Enseignant.Nom}"/>
+                                            </DataTemplate>
+                                        </controls:DataGridTemplateColumn.CellEditingTemplate>
+                                    </controls:DataGridTemplateColumn>
+
+                                </controls:DataGrid.Columns>
+                            </controls:DataGrid>
+                            <CommandBar Grid.Row="1">
+                                <AppBarButton Icon="Add" Content="Ajouter"/>
+                                <AppBarButton Icon="Clear" Content="Supprimer"/>
+                            </CommandBar>
+                        </StackPanel>
+
+
+
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+
         </Grid>
         <TextBlock x:Name="textBlockPartieAnnee" Style="{StaticResource HeaderTextBlockStyle}" HorizontalAlignment="Left" Margin="993,20,0,0" FontSize="30" Text="{x:Bind Path=nodeSelectionne.Parent.Nom, Mode=OneWay}" TextWrapping="Wrap" VerticalAlignment="Top" Height="84" Width="440"/>
     </Grid>

@@ -31,7 +31,7 @@ namespace AppGestion
 
         private ObservableCollectionExt<Categorie> categories;
         public ObservableCollectionExt<EquivalentTD> equivalentTDs;
-        public ObservableCollectionExt<TypeCours> tCs;
+        public ObservableCollectionExt<ObjetBase> tCs;
 
         public EnseignantVue()
         {
@@ -52,9 +52,9 @@ namespace AppGestion
             return categories;
         }
 
-        private ObservableCollectionExt<TypeCours> GetTypeCours()
+        private ObservableCollectionExt<ObjetBase> GetTypeCours()
         {
-            ObservableCollectionExt<TypeCours> tCs = new ObservableCollectionExt<TypeCours>();
+            ObservableCollectionExt<ObjetBase> tCs = new ObservableCollectionExt<ObjetBase>();
             foreach (TypeCours tC in typeCours.findAll())
             {
                 tCs.Add(new TypeCours { Id = tC.Id, Nom = tC.Nom.TrimEnd(), Groupes = tC.Groupes });
@@ -198,7 +198,7 @@ namespace AppGestion
 
         private void TypeCoursSelectionne(object sender, SelectionChangedEventArgs e)
         {
-
+            
             typeCoursSelectionne = (TypeCours)e.AddedItems[0];
 
             Debug.WriteLine(equivalentTDSelectionne.TypeCours);
@@ -241,7 +241,7 @@ namespace AppGestion
 
         private void AjouterEquivalentTD_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            TypeCours typeCoursRestant = tCs.Where(a => !equivalentTDs.Any(b => b.TypeCours.Id == a.Id) && a.Id != -1).FirstOrDefault();
+            TypeCours typeCoursRestant = (TypeCours)tCs.Where(a => !equivalentTDs.Any(b => b.TypeCours.Id == a.Id) && a.Id != -1).FirstOrDefault();
             Debug.WriteLine(typeCoursRestant);
             if(typeCoursRestant != null)
             {

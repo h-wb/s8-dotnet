@@ -68,10 +68,10 @@
                                         <AutoSuggestBox VerticalAlignment="Center" PlaceholderText="Chercher un enseignant"  QueryIcon="Find" Grid.Column="1" />
                                     </Grid>
 
-                                    <ListView IsItemClickEnabled="True" ItemsSource="{x:Bind enseignants}" ItemClick="EnseignantSelection" Grid.Row="2">
+                                    <ListView x:Name="ListeEnseignants" IsItemClickEnabled="True" ItemsSource="{x:Bind enseignants}" ItemClick="EnseignantSelection" Grid.Row="2" CanDragItems="True" DragItemsStarting="ListView_DragItemsStarting" IsHoldingEnabled="True" Holding="ListeEnseignants_Holding" >
                                         <ListView.ItemTemplate>
                                             <DataTemplate x:Name="DoubleLineDataTemplate" x:DataType="local11:Enseignant">
-                                                <StackPanel Orientation="Horizontal" Height="64" AutomationProperties.Name="{x:Bind Nom}">
+                                                <StackPanel Orientation="Horizontal" Height="64" AutomationProperties.Name="{x:Bind Nom}" PointerPressed="ListeEnseignants_PointerPressed" >
                                                     <Ellipse Height="48" Width="48" VerticalAlignment="Center">
                                                         <Ellipse.Fill>
                                                             <ImageBrush ImageSource="/Assets/PlaceHolder.png"/>
