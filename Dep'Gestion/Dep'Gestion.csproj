@@ -163,6 +163,9 @@
     <Compile Include="Vues\AnneeVue.xaml.cs">
       <DependentUpon>AnneeVue.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vues\EnseignementVue.GetData.xaml.cs">
+      <DependentUpon>EnseignementVue.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vues\EnseignementVue.xaml.cs">
       <DependentUpon>EnseignementVue.xaml</DependentUpon>
     </Compile>
