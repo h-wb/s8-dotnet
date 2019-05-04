@@ -59,8 +59,14 @@ namespace Model
 
         public ObjetBase Find(ObservableCollectionExt<ObjetBase> collection, ObjetBase objetBase)
         {
-            return collection.Where(p => p.Id == objetBase.Id).FirstOrDefault();
-
+            if(!(objetBase is null)) { 
+                return collection.Where(p => p.Id == objetBase.Id).FirstOrDefault();
+            }
+            else
+            {
+                return objetBase;
+            }
+ 
 
         }
 

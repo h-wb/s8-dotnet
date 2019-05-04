@@ -17,10 +17,19 @@ namespace DAO
                 obj.Id = OutilsSQL.getLastInsertedId("equivalent_td", Connexion.getInstance()) + 1;
             }
 
-            using (SqlCommand command_c = new SqlCommand("INSERT INTO equivalent_td VALUES (" + obj.Id + ", " + obj.Categorie.Id + ", " + obj.TypeCours.Id + ", " + obj.Ratio + ");", Connexion.getInstance()))
+
+            string query = "INSERT INTO dbo.equivalent_td (id, id_categorie_enseignant, id_type_cours, ratio_cours_td) VALUES (@id, @id_categorie_enseignant, @id_type_cours, @ratio_cours_td)";
+            using (SqlCommand command = new SqlCommand(query, Connexion.getInstance()))
             {
-                command_c.ExecuteNonQuery();
+                command.Parameters.AddWithValue("@id", obj.Id);
+                command.Parameters.AddWithValue("@id_categorie_enseignant", obj.Categorie.Id);
+                command.Parameters.AddWithValue("@id_type_cours", obj.TypeCours is null ? DBNull.Value : (object)obj.TypeCours.Id);
+                command.Parameters.AddWithValue("@ratio_cours_td", obj.Ratio);
+
+                
+                command.ExecuteNonQuery();
             }
+
 
             return obj;
         }
@@ -98,7 +107,9 @@ namespace DAO
                             DAO<TypeCours> TPSQL2 = factoSQL.getTypeCoursDao();
                             
                             Categorie categ = TPSQL.find(reader_f.GetInt32(1));
-                            TypeCours tp = TPSQL2.find(reader_f.GetInt32(2));
+
+
+                            TypeCours tp = reader_f.IsDBNull(2) ? default(TypeCours) : TPSQL2.find(reader_f.GetInt32(2));
 
                             eqtds.Add(new EquivalentTD(reader_f.GetInt32(0), categ, tp, reader_f.GetDouble(3)));
                         }

@@ -45,7 +45,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="EC" FontSize="30"/>
                             </StackPanel>
-                            <controls:DataGrid  x:Name="dataGrid" GridLinesVisibility="Horizontal" ItemsSource="{x:Bind Children}" AutoGenerateColumns="False" IsReadOnly="False" CanUserResizeColumns="False" SelectionMode="Single">
+                            <controls:DataGrid  x:Name="dataGrid" GridLinesVisibility="Horizontal" ItemsSource="{x:Bind Children}" AutoGenerateColumns="False" IsReadOnly="False" CanUserResizeColumns="False" SelectionMode="Single" SelectionChanged="InfosAssignationSelectionne">
                                 <controls:DataGrid.Columns>
 
                                     <controls:DataGridTemplateColumn Header="Nom" Width="200">
@@ -74,8 +74,22 @@
                                         </controls:DataGridTemplateColumn.CellEditingTemplate>
                                     </controls:DataGridTemplateColumn>
 
+                                    <controls:DataGridTemplateColumn Header="Nombres d'heures" Width="200">
+                                        <controls:DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate x:DataType="local11:InfosAssignation">
+                                                <TextBlock Padding="5,0,5,0" Width="200" Text="{x:Bind NbHeures}" VerticalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </controls:DataGridTemplateColumn.CellTemplate>
+                                        <controls:DataGridTemplateColumn.CellEditingTemplate >
+                                            <DataTemplate x:DataType="local11:InfosAssignation">
+                                                <TextBox Text="{x:Bind NbHeures}" BorderThickness="0"/>
+                                            </DataTemplate>
+                                        </controls:DataGridTemplateColumn.CellEditingTemplate>
+                                    </controls:DataGridTemplateColumn>
 
-                                    <controls:DataGridTemplateColumn Header="Enseignants" Width="200">
+
+
+                                    <controls:DataGridTemplateColumn Header="Enseignant assigné" Width="200">
                                         <controls:DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate x:DataType="local11:InfosAssignation">
                                                 <Grid AllowDrop="True" DragOver="Enseignant_DragOver" Drop="Enseignant_Drop" VerticalAlignment="Center"  Padding="5,0,5,0" >
@@ -85,8 +99,7 @@
                                         </controls:DataGridTemplateColumn.CellTemplate>
                                         <controls:DataGridTemplateColumn.CellEditingTemplate >
                                             <DataTemplate x:DataType="local11:InfosAssignation">
-                                                <!--<ComboBox  Width="200" SelectedItem="{x:Bind Path=Enseignants.Find(Enseignants, Enseignant)}" ItemsSource="{Binding Path=Enseignants, Mode=OneWay}" DisplayMemberPath="Nom" />-->
-                                                <TextBlock Text="{x:Bind Path=Enseignant.Nom}"/>
+                                                <ComboBox  Width="200" SelectedItem="{x:Bind Path=Enseignants.Find(Enseignants, Enseignant)}" ItemsSource="{Binding Path=Enseignants, Mode=OneWay}" DisplayMemberPath="Nom" SelectionChanged="ModifierAssignationEnseignant"/>
                                             </DataTemplate>
                                         </controls:DataGridTemplateColumn.CellEditingTemplate>
                                     </controls:DataGridTemplateColumn>
@@ -94,7 +107,7 @@
                                 </controls:DataGrid.Columns>
                             </controls:DataGrid>
                             <CommandBar Grid.Row="1">
-                                <AppBarButton Icon="Add" Content="Ajouter"/>
+                                <AppBarButton Icon="Add" Content="Ajouter" Click="Ajouter_InfosAssignation"/>
                                 <AppBarButton Icon="Clear" Content="Supprimer"/>
                             </CommandBar>
                         </StackPanel>

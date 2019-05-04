@@ -124,6 +124,7 @@ namespace DAO
                     {
                         while (reader_f.Read())
                         {
+
                             tps.Add(new TypeCours(reader_f.GetInt32(0), reader_f.GetString(1), reader_f.GetInt32(2)));
                         }
                     }

@@ -1,12 +1,12 @@
 ﻿using DAO;
 using Metier;
 using Model;
+using System;
 using System.Diagnostics;
+using System.Linq;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using System.Linq;
-using System;
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -241,14 +241,11 @@ namespace AppGestion
 
         private void AjouterEquivalentTD_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            TypeCours typeCoursRestant = (TypeCours)tCs.Where(a => !equivalentTDs.Any(b => b.TypeCours.Id == a.Id) && a.Id != -1).FirstOrDefault();
-            Debug.WriteLine(typeCoursRestant);
-            if (typeCoursRestant != null)
-            {
-                EquivalentTD nouveauEquivalentTD = new EquivalentTD { Categorie = enseignantSelectionne.Categorie, TypeCours = typeCoursRestant, Ratio = 1, tCs = tCs, Nom = "" };
-                equivalentTD.create(nouveauEquivalentTD);
-                equivalentTDs.Add(nouveauEquivalentTD);
-            }
+
+            EquivalentTD nouveauEquivalentTD = new EquivalentTD { Categorie = enseignantSelectionne.Categorie, TypeCours = null, Ratio = 1, tCs = tCs, Nom = "" };
+            equivalentTD.create(nouveauEquivalentTD);
+            equivalentTDs.Add(nouveauEquivalentTD);
+
 
 
         }

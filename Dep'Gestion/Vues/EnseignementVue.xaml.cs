@@ -37,6 +37,7 @@ namespace AppGestion
 
         private ObjetBase nodeSelectionne;
         public ObjetBase ecSelectionne;
+        public InfosAssignation infosAssignationSelectionne;
         private Enseignement enseignementSelectionne;
 
         private ObservableCollectionExt<InfosAssignation> infosAssignations = new ObservableCollectionExt<InfosAssignation>();
@@ -109,7 +110,7 @@ namespace AppGestion
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            ecSelectionne = (EC)e.ClickedItem;
+          //  infosAssignationSelectionne = (InfosAssignation)e.ClickedItem;
         }
 
         private void AjouterEC_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
@@ -143,6 +144,40 @@ namespace AppGestion
                 infosAssignation.Enseignant = enseignant.find(Convert.ToInt32(id));
                 InfosAssignation.update(infosAssignation.Id, infosAssignation);
             }
+        }
+
+        private void Ajouter_InfosAssignation(object sender, RoutedEventArgs e)
+        {
+            var source = (FrameworkElement)e.OriginalSource;
+            ecSelectionne = (EC)source.DataContext;
+
+            InfosAssignation nouvelleInfosAssignation = new InfosAssignation { Nom = "Nouveau cours", EC = (EC)ecSelectionne, Enseignant = null, TypeCours = null, NbHeures = 0, Children = GetTypeCours(), Enseignants = GetEnseignants() };
+            InfosAssignation.create(nouvelleInfosAssignation);
+            ecSelectionne.Children.Add(nouvelleInfosAssignation);
+
+        }
+
+        private void ModifierAssignationEnseignant(object sender, SelectionChangedEventArgs e)
+        {
+            var source = (FrameworkElement)e.OriginalSource;
+            Debug.WriteLine(infosAssignationSelectionne.Enseignant);
+            Debug.WriteLine((Enseignant)e.AddedItems[0]);
+
+            Enseignant enseignantSelectionne = (Enseignant)e.AddedItems[0];
+
+            infosAssignationSelectionne.Enseignant = enseignantSelectionne;
+            InfosAssignation.update(infosAssignationSelectionne.Id, infosAssignationSelectionne);
+
+            //var source = (FrameworkElement)e.OriginalSource;
+            //var enseignantSelectionne = (Enseignant)source.DataContext;
+
+            //Debug.WriteLine(enseignantSelectionne);
+        }
+
+        private void InfosAssignationSelectionne(object sender, SelectionChangedEventArgs e)
+        {
+            infosAssignationSelectionne = (InfosAssignation)e.AddedItems[0];
+            Debug.WriteLine(infosAssignationSelectionne);
         }
     }
 }

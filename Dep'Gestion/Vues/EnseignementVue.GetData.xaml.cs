@@ -1,8 +1,6 @@
 ﻿using DAO;
 using Metier;
 using Model;
-using System.Diagnostics;
-using System.Linq;
 
 namespace AppGestion
 {
@@ -26,22 +24,34 @@ namespace AppGestion
                     {
                         if (ec.Id == ia.EC.Id)
                         {
-                            InfosAssignation nouvelleInfoAssignation = new InfosAssignation { Id = ia.Id, Nom = ia.Nom, EC = ia.EC, Enseignant = ia.Enseignant, TypeCours = ia.TypeCours, NbHeures = ia.NbHeures, Children = new ObservableCollectionExt<ObjetBase>() };
-                            nouveauEC.Children.Add(nouvelleInfoAssignation);
-                            foreach (TypeCours tC in TypeCours.findAll())
-                            {
-                                nouvelleInfoAssignation.Children.Add(new TypeCours { Id = tC.Id, Nom = tC.Nom.TrimEnd(), Groupes = tC.Groupes });
-                            }
-
-                            //foreach (Enseignant enseignant in enseignant.findAll())
-                            //{
-                            //    //  nouvelleInfoAssignation.Enseignants.Add(new Enseignant {Id = enseignant.Id, Nom = enseignant.Nom, Prenom = enseignant.Prenom, nbHeuresTravaillees = enseignant.nbHeuresTravaillees, Categorie = enseignant.Categorie });
-                            //}
+                            nouveauEC.Children.Add(new InfosAssignation { Id = ia.Id, Nom = ia.Nom, EC = ia.EC, Enseignant = ia.Enseignant, TypeCours = ia.TypeCours, NbHeures = ia.NbHeures, Children = GetTypeCours(), Enseignants = GetEnseignants() });
                         }
                     }
                 }
             }
             return ECs;
+        }
+
+
+        private ObservableCollectionExt<ObjetBase> GetTypeCours()
+        {
+            ObservableCollectionExt<ObjetBase> tCs = new ObservableCollectionExt<ObjetBase>();
+            foreach (TypeCours tC in TypeCours.findAll())
+            {
+                tCs.Add(new TypeCours { Id = tC.Id, Nom = tC.Nom.TrimEnd(), Groupes = tC.Groupes });
+            }
+            tCs.Add(new TypeCours { Nom = "Créer un type de cours...", Groupes = 1 });
+            return tCs;
+        }
+
+        private ObservableCollectionExt<ObjetBase> GetEnseignants()
+        {
+            ObservableCollectionExt<ObjetBase> Enseignants = new ObservableCollectionExt<ObjetBase>();
+            foreach (Enseignant enseignant in enseignant.findAll())
+            {
+                Enseignants.Add(new Enseignant { Id = enseignant.Id, Nom = enseignant.Nom, Prenom = enseignant.Prenom, nbHeuresTravaillees = enseignant.nbHeuresTravaillees, Categorie = enseignant.Categorie });
+            }
+            return Enseignants;
         }
     }
 }

@@ -20,11 +20,19 @@ namespace Dep_Gestion.DAO
                 obj.Id = OutilsSQL.getLastInsertedId("infos_assignation", Connexion.getInstance()) + 1;
             }
 
-            using (SqlCommand command_c = new SqlCommand("INSERT INTO dbo.infos_assignation VALUES (" + obj.Id + ", '" + obj.Nom + "', " + obj.EC.Id + ", " + obj.TypeCours.Id + ", " + obj.Enseignant.Id + ", " + obj.NbHeures.ToString().Replace(",", ".") + ");", Connexion.getInstance()))
+            string query = "INSERT INTO dbo.infos_assignation (id, nom, id_ec, id_typecours, id_enseignant, nb_heures) VALUES (@id, @nom, @id_ec, @id_typecours, @id_enseignant, @nb_heures)";
+            using (SqlCommand command = new SqlCommand(query, Connexion.getInstance()))
             {
-                command_c.ExecuteNonQuery();
-                // Connexion.getInstance().Close();
+                command.Parameters.AddWithValue("@id", obj.Id);
+                command.Parameters.AddWithValue("@nom", obj.Nom);
+                command.Parameters.AddWithValue("@id_ec", obj.EC.Id);
+                command.Parameters.AddWithValue("@id_typecours", obj.TypeCours is null ? DBNull.Value : (object)obj.TypeCours.Id);
+                command.Parameters.AddWithValue("@id_enseignant", obj.Enseignant is null ? DBNull.Value : (object)obj.Enseignant.Id);
+                command.Parameters.AddWithValue("@nb_heures", obj.NbHeures.ToString().Replace(",", "."));
+
+                command.ExecuteNonQuery();
             }
+
 
             return obj;
         }
@@ -98,7 +106,7 @@ namespace Dep_Gestion.DAO
                             Enseignant ens = TPSQLEns.find(reader_f.GetInt32(4));
 
                             IA = new InfosAssignation(reader_f.GetInt32(0), reader_f.GetString(1), ec, tp, ens, reader_f.GetDouble(5));
-                            
+
                         }
                     }
 
@@ -129,10 +137,10 @@ namespace Dep_Gestion.DAO
                             DAO<Enseignant> TPSQLEns = factoSQL.getEnseignantDAO();
 
                             EC ec = TPSQLEC.find(reader_f.GetInt32(2));
-                            TypeCours tp = TPSQLTP.find(reader_f.GetInt32(3));
-                            Enseignant ens = TPSQLEns.find(reader_f.GetInt32(4));
-                            
+                            TypeCours tp = reader_f.IsDBNull(3) ? default(TypeCours) : TPSQLTP.find(reader_f.GetInt32(3));
+                            Enseignant ens = reader_f.IsDBNull(4) ? default(Enseignant) : TPSQLEns.find(reader_f.GetInt32(4));
 
+    
                             IAs.Add(new InfosAssignation(reader_f.GetInt32(0), reader_f.GetString(1), ec, tp, ens, reader_f.GetDouble(5)));
                         }
                     }
@@ -143,15 +151,23 @@ namespace Dep_Gestion.DAO
             return IAs;
         }
 
-        public override InfosAssignation update(int idAupdate, InfosAssignation update)
+
+        public override InfosAssignation update(int idAupdate, InfosAssignation obj)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE infos_assignation SET nom='" + update.Nom + "', id_ec=" + update.EC.Id + ", id_typecours= " + update.TypeCours.Id + ", id_enseignant= " + update.Enseignant.Id + ", nb_heures=" + update.NbHeures.ToString().Replace(",", ".") + " WHERE id=" + idAupdate + ";", Connexion.getInstance()))
+            string query = "UPDATE dbo.infos_assignation SET id = @id, nom = @nom, id_ec = @id_ec, id_typecours = @id_typecours, id_enseignant = @id_enseignant, nb_heures = @nb_heures WHERE id = @id";
+            using (SqlCommand command = new SqlCommand(query, Connexion.getInstance()))
             {
-                command_u.ExecuteNonQuery();
+                command.Parameters.AddWithValue("@id", obj.Id);
+                command.Parameters.AddWithValue("@nom", obj.Nom);
+                command.Parameters.AddWithValue("@id_ec", obj.EC.Id);
+                command.Parameters.AddWithValue("@id_typecours", obj.TypeCours is null ? DBNull.Value : (object)obj.TypeCours.Id);
+                command.Parameters.AddWithValue("@id_enseignant", obj.Enseignant is null ? DBNull.Value : (object)obj.Enseignant.Id);
+                command.Parameters.AddWithValue("@nb_heures", obj.NbHeures.ToString().Replace(",", "."));
+
+                command.ExecuteNonQuery();
             }
 
-            //Connexion.getInstance().Close();
-            return update;
+            return obj;
         }
     }
 }
