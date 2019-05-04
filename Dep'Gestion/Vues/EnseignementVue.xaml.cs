@@ -1,6 +1,5 @@
 ﻿using DAO;
 using Metier;
-using Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +8,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -31,31 +29,24 @@ namespace AppGestion
     {
         private static AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
         private static DAO<Enseignement> ens = factoSQL.getEnseignementDAO();
-        
-
+        private static DAO<EC> ecs = factoSQL.getECDAO();
         private ArrayList array = new ArrayList();
 
         private ObjetBase nodeSelectionne;
         public ObjetBase ecSelectionne;
         private Enseignement enseignementSelectionne;
 
-        private ObservableCollectionExt<InfosAssignation> infosAssignations = new ObservableCollectionExt<InfosAssignation>();
-        private ObservableCollectionExt<EC> ECs = new ObservableCollectionExt<EC>();
-
         public EnseignementVue()
         {
             this.InitializeComponent();
-
         }
         
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (e.Parameter != null)
             {
                 nodeSelectionne = (ObjetBase)e.Parameter;
                 enseignementSelectionne = (Enseignement)nodeSelectionne;
-                Debug.WriteLine(enseignementSelectionne);
                 nodeSelectionne.Visibility = true;
                 if (nodeSelectionne.GetType() == typeof(Enseignement))
                 {
@@ -64,16 +55,11 @@ namespace AppGestion
 
                    // this.initialiserArray();
                 }
-              //  infosAssignations = GetInfosAssignations(enseignementSelectionne);
-                ECs = GetECs(enseignementSelectionne);
-
                 base.OnNavigatedTo(e); ;
 
             }
 
             base.OnNavigatedTo(e);
-
-
         }
 
         private void TextBoxEnseignement_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -114,34 +100,36 @@ namespace AppGestion
 
         private void AjouterEC_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-
+            EC nouvelleEc = new EC { Nom = "Nouvelle EC", Enseignement = (Enseignement)nodeSelectionne, Parent = nodeSelectionne };
+            //array.Add(nouvelleEc);
+            ecs.create(nouvelleEc);
+            //nodeSelectionne.Children.Add(nouvelleEc);
         }
 
         private void SupprimerECTapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-
-        }
-
-  
-
-        private void Enseignant_DragOver(object sender, DragEventArgs e)
-        {
-            e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
+            //ecSelectionne.Parent.Children.Remove((EC)ecSelectionne);
+            //array.RemoveAt(((int)ecSelectionne.Id) - 1);
+            ecs.delete((EC)ecSelectionne);
         }
 
 
-
-        private async void Enseignant_Drop(object sender, DragEventArgs e)
+        //Temporaire
+        public void initialiserArray()
         {
-
-            if (e.DataView.Contains(StandardDataFormats.Text))
+            using (SqlCommand command_f = new SqlCommand("SELECT * FROM ec WHERE id_enseignement=" + enseignementSelectionne.Id + ";", Connexion.getInstance()))
             {
-                var source = sender as Grid;
-                InfosAssignation infosAssignation = source.DataContext as InfosAssignation;
+                using (SqlDataReader reader_f = command_f.ExecuteReader())
+                {
+                    if (reader_f.HasRows)
+                    {
+                        while (reader_f.Read())
+                        {
+                            array.Add(new EC { Id=reader_f.GetInt32(0), Nom = reader_f.GetString(1), Enseignement = (Enseignement)nodeSelectionne, Parent = nodeSelectionne });
+                        }
+                    }
 
-                var id = await e.DataView.GetTextAsync();
-                infosAssignation.Enseignant = enseignant.find(Convert.ToInt32(id));
-                InfosAssignation.update(infosAssignation.Id, infosAssignation);
+                }
             }
         }
     }

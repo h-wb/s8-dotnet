@@ -12,7 +12,7 @@ namespace Metier
         public Categorie _categorie;
         public TypeCours _typeCours;
         public double _ratio;
-        public ObservableCollectionExt<ObjetBase> _tCs;
+        public ObservableCollectionExt<TypeCours> _tCs;
 
         public EquivalentTD()
         {
@@ -75,7 +75,7 @@ namespace Metier
         //    return base.ToString() + res;
         //}
 
-        public ObservableCollectionExt<ObjetBase> tCs
+        public ObservableCollectionExt<TypeCours> tCs
         {
             get { return _tCs; }
             set { SetProperty(ref _tCs, value); }

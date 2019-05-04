@@ -9,8 +9,6 @@ using System.Diagnostics;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Model;
-using Windows.UI.Xaml;
-using System.Linq;
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -121,9 +119,8 @@ namespace AppGestion
         {
 
             nodeSelectionne = (ObjetBase)args.InvokedItem;
-            if (nodeSelectionne.NavigationDestination != null && nodeSelectionne != null) 
+            if (nodeSelectionne.NavigationDestination != null)
             {
-                Debug.WriteLine(nodeSelectionne.NavigationDestination);
                 Navigate(nodeSelectionne.NavigationDestination, nodeSelectionne);
             }
 
@@ -220,27 +217,6 @@ namespace AppGestion
         {
             enseignant.delete((Enseignant)enseignantSelectionne);
             enseignants.Remove((Enseignant)enseignantSelectionne);
-        }
-
-        private void ListView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
-        {
-            int EnseignantId = e.Items.Cast<Enseignant>().Select(i => i.Id).FirstOrDefault();
-            e.Data.SetText(EnseignantId.ToString());
-        }
-
-        private void ListeEnseignants_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
-        {
-            Debug.WriteLine("sdfsdfsdfsdfsd");
-            var test = (FrameworkElement)e.OriginalSource;
-            var test2 = (Enseignant)test.DataContext;
-
-            Debug.WriteLine(test2.ToString());
-        }
-
-        private void ListeEnseignants_PointerPressed(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            var source = (FrameworkElement)e.OriginalSource;
-            enseignantSelectionne = (Enseignant)source.DataContext;
         }
     }
 }

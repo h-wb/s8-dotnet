@@ -130,13 +130,7 @@ namespace Dep_Gestion.DAO
 
                             EC ec = TPSQLEC.find(reader_f.GetInt32(2));
                             TypeCours tp = TPSQLTP.find(reader_f.GetInt32(3));
-
-                            Enseignant ens = new Enseignant { Nom = "test", Categorie = new Categorie { Nom ="testttt" } };
-                            if (!reader_f.IsDBNull(4))
-                            {
-                                ens = TPSQLEns.find(reader_f.GetInt32(4));
-                            }
-                                
+                            Enseignant ens = TPSQLEns.find(reader_f.GetInt32(4));
                             
 
                             IAs.Add(new InfosAssignation(reader_f.GetInt32(0), reader_f.GetString(1), ec, tp, ens, reader_f.GetDouble(5)));
@@ -148,7 +142,6 @@ namespace Dep_Gestion.DAO
 
             return IAs;
         }
-
 
         public override InfosAssignation update(int idAupdate, InfosAssignation update)
         {

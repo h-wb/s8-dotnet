@@ -39,7 +39,7 @@ namespace Metier
             this.Id = id;
             this.prenom = prenom;
             this.Nom = nom;
-            this.Categorie = categorie;
+            this.categorie = categorie;
             this.nbHeuresTravaillees = nbHeuresTravaillees;
             this.lienImage = lienImage;
         }
@@ -65,7 +65,7 @@ namespace Metier
             this.init();
             this.Nom = nom;
             this.prenom = prenom;
-            this.Categorie = categorie;
+            this.categorie = categorie;
             this.lienImage = "";
         }
 
@@ -74,7 +74,7 @@ namespace Metier
             this.init();
             this.Nom = nom;
             this.prenom = prenom;
-            this.Categorie = categorie;
+            this.categorie = categorie;
             this.lienImage = lienImage;
         }
 

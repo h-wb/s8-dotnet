@@ -1,5 +1,4 @@
-﻿using Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +9,6 @@ namespace Metier
     public class EC : ObjetBase
     {
         public Enseignement _enseignement;
-        public ObservableCollectionExt<InfosAssignation> _infosAssignations;
 
         public EC(int id, string nom, Enseignement enseignement)
         {
@@ -42,12 +40,6 @@ namespace Metier
         {
             get { return _enseignement; }
             set { SetProperty(ref _enseignement, value); }
-        }
-
-        public ObservableCollectionExt<InfosAssignation> InfosAssignations
-        {
-            get { return _infosAssignations; }
-            set { SetProperty(ref _infosAssignations, value); }
         }
     }
 }

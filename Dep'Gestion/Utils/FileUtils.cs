@@ -24,7 +24,5 @@ namespace Outils
             path += "\\" + Outils.generateRandomString() + ".txt";
             FileUtils.createFile(path);
         }
-
-
     }
 }

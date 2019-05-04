@@ -17,11 +17,6 @@ namespace Model
             this.CollectionChanged += new NotifyCollectionChangedEventHandler(ObservableCollectionExt_CollectionChanged);
         }
 
-        public ObservableCollectionExt(IEnumerable<T> enumerable) : base()
-        {
-            this.CollectionChanged += new NotifyCollectionChangedEventHandler(ObservableCollectionExt_CollectionChanged);
-        }
-
         void ObservableCollectionExt_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Remove)
@@ -57,13 +52,12 @@ namespace Model
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 
-        public ObjetBase Find(ObservableCollectionExt<ObjetBase> collection, ObjetBase objetBase)
+        public TypeCours Find(ObservableCollectionExt<TypeCours> collection, TypeCours TypeCours)
         {
-            return collection.Where(p => p.Id == objetBase.Id).FirstOrDefault();
+            return collection.Where(p => p.Id == TypeCours.Id).FirstOrDefault();
 
 
         }
-
 
         public void EntityViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {

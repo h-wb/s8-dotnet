@@ -32,7 +32,6 @@ namespace Dep_Gestion
             AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
             DAO<Categorie> categorie = factoSQL.getCategorieDAO();
             DAO<TypeCours> typeCours = factoSQL.getTypeCoursDao();
-            DAO<Enseignant> enseignant = factoSQL.getEnseignantDAO();
 
 
             Categorie categorieDefaut = new Categorie { Id = 1, Nom = "Catégorie par défaut", Heures = 0 };
@@ -50,8 +49,6 @@ namespace Dep_Gestion
             TypeCours TP = new TypeCours { Id = 3, Nom = "TP", Groupes = 2 };
             if (!(typeCours.find(TP.Nom) is TypeCours))
                 typeCours.create(TP);
-
-            //Enseignant enseignantDefaut = new Enseignant { Id = 1, Nom = "Aucun", }
 
             /*TypeCours tp = new TypeCours("TP", true);
             Categorie maitreDeConference = new Categorie("maitre de conférences", 240);
