@@ -10,6 +10,7 @@ namespace Metier
 {
     public abstract class ObjetBase : ViewModelBase
     {
+        private string prenom;
         protected int _id;
         protected string _nom;
         protected bool _visibility;
@@ -40,6 +41,12 @@ namespace Metier
         {
             get { return _nom; }
             set { SetProperty(ref _nom, value); }
+        }
+
+        public string Prenom
+        {
+            get { return prenom; }
+            set { SetProperty(ref prenom, value); }
         }
 
         public bool Visibility

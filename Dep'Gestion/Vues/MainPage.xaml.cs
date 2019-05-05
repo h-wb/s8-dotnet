@@ -11,6 +11,8 @@ using Windows.UI.Xaml.Navigation;
 using Model;
 using Windows.UI.Xaml;
 using System.Linq;
+using Windows.ApplicationModel.Core;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -62,6 +64,15 @@ namespace AppGestion
             this.InitializeComponent();
             departements = GetDepartements();
             enseignants = GetEnseignants();
+
+
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
+
+            // Set XAML element as a draggable region.
+            //Tabs.Height = coreTitleBar.Height;
+            Window.Current.SetTitleBar(AppTitleBar);
+
         }
 
         private ObservableCollectionExt<Departement> GetDepartements()
@@ -99,7 +110,7 @@ namespace AppGestion
                     {
                         if (annee.Id == partieAnnee.Annee.Id)
                         {
-                            PartieAnnee nodePartieAnnee = new PartieAnnee { Id = partieAnnee.Id, Nom = partieAnnee.Nom.TrimEnd(), Description = partieAnnee.Description, Annee = annee, Children = new ObservableCollectionExt<ObjetBase>(), Parent = nodeAnnee, NavigationDestination = typeof(PartieAnneeVueReset) };
+                            PartieAnnee nodePartieAnnee = new PartieAnnee { Id = partieAnnee.Id, Nom = partieAnnee.Nom.TrimEnd(), Description = partieAnnee.Description, Annee = annee, Children = new ObservableCollectionExt<ObjetBase>(), Parent = nodeAnnee, NavigationDestination = typeof(PartieAnneeVue) };
                             nodeAnnee.Children.Add(nodePartieAnnee);
                             foreach (Enseignement enseignement in enseignement.findAll())
                             {
@@ -167,7 +178,7 @@ namespace AppGestion
             }
             else if (nodeSelectionne.GetType() == typeof(Annee))
             {
-                PartieAnnee nouvellePartieAnnee = new PartieAnnee { Nom = "Nouveau semestre", Annee = (Annee)nodeSelectionne, NavigationDestination = typeof(PartieAnneeVueReset), Description = "", Parent = nodeSelectionne };
+                PartieAnnee nouvellePartieAnnee = new PartieAnnee { Nom = "Nouveau semestre", Annee = (Annee)nodeSelectionne, NavigationDestination = typeof(PartieAnneeVue), Description = "", Parent = nodeSelectionne };
                 partieAnnee.create(nouvellePartieAnnee);
                 nodeSelectionne.Children.Add(nouvellePartieAnnee);
             }
@@ -242,5 +253,28 @@ namespace AppGestion
             var source = (FrameworkElement)e.OriginalSource;
             enseignantSelectionne = (Enseignant)source.DataContext;
         }
+
+        private void TabDepartement_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TabView tabView = sender as TabView;
+            departementSelectionne = (Departement)tabView.SelectedItem;
+            annees.Replace(GetAnnees(departementSelectionne.Id));
+        }
+
+        private void TabDepartement_TabClosing(object sender, Microsoft.Toolkit.Uwp.UI.Controls.TabClosingEventArgs e)
+        {
+            Departement departement = (Departement)e.Item;
+            depart.delete(departement);
+        }
+
+
+        private void TabDepartement_Click(object sender, RoutedEventArgs e)
+        {
+            Departement departement = new Departement { Nom = "Nouveau département" };
+            depart.create(departement);
+            departements.Add(departement);
+        }
+
+
     }
 }

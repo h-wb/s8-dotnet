@@ -38,17 +38,17 @@ namespace Dep_Gestion
             if(!(categorie.find(categorieDefaut.Nom) is Categorie))
                 categorie.create(categorieDefaut);
 
-            TypeCours CM = new TypeCours { Id = 1, Nom = "CM", Groupes = 1};
-            if (!(typeCours.find(CM.Nom) is TypeCours))
-                typeCours.create(CM);
+            //TypeCours CM = new TypeCours { Id = 1, Nom = "CM", Groupes = 1};
+            //if (!(typeCours.find(CM.Nom) is TypeCours))
+            //    typeCours.create(CM);
 
-            TypeCours TD = new TypeCours { Id = 2, Nom = "TD", Groupes = 2 };
-            if (!(typeCours.find(TD.Nom) is TypeCours))
-                typeCours.create(TD);
+            //TypeCours TD = new TypeCours { Id = 2, Nom = "TD", Groupes = 2 };
+            //if (!(typeCours.find(TD.Nom) is TypeCours))
+            //    typeCours.create(TD);
 
-            TypeCours TP = new TypeCours { Id = 3, Nom = "TP", Groupes = 2 };
-            if (!(typeCours.find(TP.Nom) is TypeCours))
-                typeCours.create(TP);
+            //TypeCours TP = new TypeCours { Id = 3, Nom = "TP", Groupes = 2 };
+            //if (!(typeCours.find(TP.Nom) is TypeCours))
+            //    typeCours.create(TP);
 
             /*TypeCours tp = new TypeCours("TP", true);
             Categorie maitreDeConference = new Categorie("maitre de conférences", 240);

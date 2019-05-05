@@ -16,71 +16,63 @@
     </Page.Resources>
 
 
-    <Grid Margin="0,0,0,10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Grid Margin="20">
+    <Grid Margin="20" RowSpacing="30" ColumnSpacing="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="textBlockAnnee" Style="{StaticResource HeaderTextBlockStyle}"  Text="{x:Bind Path=anneeSelect.Nom, Mode=OneWay}" Visibility="{x:Bind Path=anneeSelect.Visibility, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" FontSize="80" Grid.Row="0" Grid.Column="0" DoubleTapped="TextBlockAnnee_DoubleTapped" Grid.ColumnSpan="2"/>
+        <TextBox Background="Transparent" x:Name="textBoxAnnee" Text="{x:Bind Path=anneeSelect.Nom, Mode=OneWay}" Visibility="{x:Bind Path=anneeSelect.Visibility, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" FontSize="80" Grid.Row="0" Grid.Column="0" LostFocus="TextBoxAnnee_LostFocus" KeyDown="TextBoxAnnee_KeyDown" BorderThickness="0" Grid.ColumnSpan="2"/>
+        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Description" FontSize="30" Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="textBoxDescription" Text="{x:Bind Path=anneeSelect.Description}" AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="172" Width="Auto" PlaceholderText="Saisir une description..." ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="TextBoxDescription_TextChanged" BorderThickness="0"/>
+        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Semestres" FontSize="30" Grid.Row="3"  Grid.Column="0"/>
+        <Grid VerticalAlignment="Top" Grid.Row="4" Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="100" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <TextBlock x:Name="textBlockAnnee" Style="{StaticResource HeaderTextBlockStyle}" Text="{x:Bind Path=nodeSelectionne.Nom, Mode=OneWay}" Visibility="{x:Bind Path=nodeSelectionne.Visibility, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" FontSize="40" Grid.Row="1" Grid.Column="1" DoubleTapped="TextBlock_DoubleTapped"/>
-            <TextBox Background="Transparent" x:Name="textBoxAnnee" Text="{x:Bind Path=nodeSelectionne.Nom, Mode=OneWay}" Visibility="{x:Bind Path=nodeSelectionne.Visibility, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" FontSize="40" Grid.Row="1" Grid.Column="1" TextChanged="TextBoxAnnee_TextChanged" LostFocus="TextBoxAnnee_LostFocus" KeyDown="TextBoxAnnee_KeyDown" />
-            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Informations" FontSize="30" Grid.Row="2"  Grid.Column="1"/>
-            <TextBox x:Name="textBoxDescription" Text="{x:Bind Path=anneeSelectionne.Description}" AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="172" Width="500" Header="Description" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="3" Grid.Column="1" TextChanged="TextBoxDescription_TextChanged"/>
-            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Semestres" FontSize="30" Grid.Row="4"  Grid.Column="1"/>
-            <Grid VerticalAlignment="Top" Grid.Row="5" Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <ListView IsItemClickEnabled="True" ItemsSource="{x:Bind Path=nodeSelectionne.Children, Mode=OneWay}" ItemClick="ListView_ItemClick"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding Nom}" FontFamily="Calibri"/>
-                                <!--<TextBlock Text="{Binding Id}" FontSize="16" Foreground="DarkGray" Opacity="0.8" />-->
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                <CommandBar Grid.Row="1">
-                    <AppBarButton Icon="Add" Content="Ajouter" Tapped="AjouterSemestre_Tapped"/>
-                    <AppBarButton Icon="Clear" Content="Supprimer" Tapped="SupprimerSemestre_Tapped"/>
-                </CommandBar>
-            </Grid>
-            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Professeurs attribués" FontSize="30" Grid.Row="4"  Grid.Column="3" Margin="100, 0, 0, 0"/>
-            <Grid VerticalAlignment="Top" Grid.Row="5" Grid.Column="3" Margin="100, 0, 0, 0"  Width="500">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <ListView IsItemClickEnabled="True" ItemsSource="{x:Bind Path=nodeSelectionne.Children, Mode=OneWay}" ItemClick="ListView_ItemClick"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding Nom}" FontFamily="Calibri"/>
-                                <!--<TextBlock Text="{Binding Id}" FontSize="16" Foreground="DarkGray" Opacity="0.8" />-->
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                <CommandBar Grid.Row="1">
-                    <AppBarButton Icon="Add" Content="Ajouter" Tapped="AjouterSemestre_Tapped"/>
-                    <AppBarButton Icon="Clear" Content="Supprimer" Tapped="SupprimerSemestre_Tapped"/>
-                </CommandBar>
-            </Grid>
+            <ListView IsItemClickEnabled="True" ItemsSource="{x:Bind Path=anneeSelect.Children, Mode=OneWay}" ItemClick="ListView_ItemClick"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DoubleTapped="ListView_DoubleTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Nom}" FontFamily="Calibri"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <CommandBar Grid.Row="1">
+                <AppBarButton Icon="Add" Content="Ajouter" Tapped="AjouterSemestre_Tapped"/>
+                <AppBarButton Icon="Clear" Content="Supprimer" Tapped="SupprimerSemestre_Tapped"/>
+            </CommandBar>
         </Grid>
-        <!--<TextBox x:Name="textboxNomVue" HorizontalAlignment="Left" Margin="24,172,0,0" Text="{x:Bind Path=nodeSelectionne.Nom, Mode=OneWay}" VerticalAlignment="Top" Header="Nom " PlaceholderText="Nom" Height="57" Width="447" />-->
+        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Professeurs attribués à l'année" FontSize="30" Grid.Row="3"  Grid.Column="1"/>
+        <Grid VerticalAlignment="Top" Grid.Row="4" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ListView IsItemClickEnabled="True" ItemsSource="{x:Bind Path=anneeSelect.Children, Mode=OneWay}" ItemClick="ListView_ItemClick"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Nom}" FontFamily="Calibri"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
 
+        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Statistiques" FontSize="30" Grid.Row="5"  Grid.Column="0" Grid.ColumnSpan="2"/>
     </Grid>
+
+
 </Page>
 

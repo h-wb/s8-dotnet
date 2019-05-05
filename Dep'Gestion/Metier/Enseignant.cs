@@ -9,7 +9,7 @@ namespace Metier
 {
     public class Enseignant : ObjetBase
     {
-        private string prenom;
+
         public Categorie _categorie;
         public double nbHeuresTravaillees { get; set; }
         public string lienImage { get; set; }
@@ -26,7 +26,7 @@ namespace Metier
         {
             this.init();
             this.Id = id;
-            this.prenom = prenom;
+            this.Prenom = prenom;
             this.Nom = nom;
             this._categorie = categorie;
             this.nbHeuresTravaillees = nbHeuresTravaillees;
@@ -37,7 +37,7 @@ namespace Metier
         {
             this.init();
             this.Id = id;
-            this.prenom = prenom;
+            this.Prenom = prenom;
             this.Nom = nom;
             this.Categorie = categorie;
             this.nbHeuresTravaillees = nbHeuresTravaillees;
@@ -48,7 +48,7 @@ namespace Metier
         {
             this.init();
             this.Nom = nom;
-            this.prenom = prenom;
+            this.Prenom = prenom;
             this.lienImage = "";
         }
 
@@ -56,7 +56,7 @@ namespace Metier
         {
             this.init();
             this.Nom = nom;
-            this.prenom = prenom;
+            this.Prenom = prenom;
             this.lienImage = lienImage;
         }
 
@@ -64,7 +64,7 @@ namespace Metier
         {
             this.init();
             this.Nom = nom;
-            this.prenom = prenom;
+            this.Prenom = prenom;
             this.Categorie = categorie;
             this.lienImage = "";
         }
@@ -73,7 +73,7 @@ namespace Metier
         {
             this.init();
             this.Nom = nom;
-            this.prenom = prenom;
+            this.Prenom = prenom;
             this.Categorie = categorie;
             this.lienImage = lienImage;
         }
@@ -85,11 +85,7 @@ namespace Metier
             this._categorie = categ.find(1);
         }
 
-        public string Prenom
-        {
-            get { return prenom; }
-            set { SetProperty(ref prenom, value); }
-        }
+
 
         public Categorie Categorie
         {
@@ -102,5 +98,10 @@ namespace Metier
             ense.create(new EnseignementEnseignant(enseignement, this));
         }
 
+        override public string ToString()
+        {
+   
+            return (Nom + ' ' + Prenom);
+        }
     }
 }

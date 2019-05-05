@@ -1,29 +1,27 @@
-﻿using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using DAO;
+﻿using DAO;
 using Metier;
+using System;
 using System.Diagnostics;
-using System.Text;
+using Windows.System;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
-
-// Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace AppGestion
 {
     /// <summary>
-    /// Une page vide peut être utilisée seule ou constituer une page de destination au sein d'un frame.
+    /// Vue de l'année
     /// </summary>
     public sealed partial class AnneeVue : Page
     {
 
         private static AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
         private static DAO<Annee> annee = factoSQL.getAnneeDAO();
-        private static DAO<Departement> dep = factoSQL.getDepartementDAO();
         private static DAO<PartieAnnee> partieAnnee = factoSQL.getPartieAnneeDAO();
 
-        public ObjetBase nodeSelectionne;
-        public ObjetBase semestreSelectionne;
-        public Annee anneeSelectionne;
+        private ObjetBase semestreSelect;
+        private Annee anneeSelect;
 
 
 
@@ -33,68 +31,76 @@ namespace AppGestion
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
-        {     
-            nodeSelectionne = (ObjetBase)e.Parameter;
-            anneeSelectionne = (Annee)nodeSelectionne;
-            nodeSelectionne.Visibility = true;
-            if (nodeSelectionne.GetType() == typeof(Annee))
-            {
-                this.textBoxAnnee.Text = nodeSelectionne.Nom;
-                this.textBoxDescription.Text = anneeSelectionne.Description;
-            } 
+        {
+            anneeSelect = (Annee)e.Parameter;
+            anneeSelect.Visibility = true;
             base.OnNavigatedTo(e);
         }
 
-        private void TextBoxAnnee_TextChanged(object sender, TextChangedEventArgs e)
+
+        public bool Navigate(Type sourcePageType, object parameter = null)
         {
-            nodeSelectionne.Nom = this.textBoxAnnee.Text;
-            Debug.WriteLine(nodeSelectionne.Nom);
-            annee.update(anneeSelectionne.Id, new Annee(nodeSelectionne.Nom, anneeSelectionne.Departement, anneeSelectionne.Description.Replace("\'", "\'\'")));
+            return Frame.Navigate(sourcePageType, parameter);
         }
 
-        
-        private void TextBoxDescription_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBlockAnnee_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
         {
-            anneeSelectionne.Description = this.textBoxDescription.Text;
-            annee.update(anneeSelectionne.Id, new Annee(nodeSelectionne.Nom, anneeSelectionne.Departement, anneeSelectionne.Description.Replace("\'", "\'\'")));
-        }
-
-        private void TextBlock_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
-        {
-            nodeSelectionne.Visibility = false;
-            textBoxAnnee.Focus(Windows.UI.Xaml.FocusState.Programmatic);
+            anneeSelect.Visibility = false;
+            textBoxAnnee.Focus(FocusState.Programmatic);
+            textBoxAnnee.Select(textBoxAnnee.Text.Length, 0);
         }
 
         private void TextBoxAnnee_LostFocus(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            nodeSelectionne.Visibility = true;
+            anneeSelect.Visibility = true;
         }
 
         private void TextBoxAnnee_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
-            if(e.Key == Windows.System.VirtualKey.Enter)
+            TextBox textBox = sender as TextBox;
+            if (e.Key == VirtualKey.Enter)
             {
-                nodeSelectionne.Visibility = true;
+                if (!string.IsNullOrEmpty(textBox.Text))
+                {
+                    anneeSelect.Nom = textBox.Text;
+                    annee.update(anneeSelect.Id, anneeSelect);
+                }
+                anneeSelect.Visibility = true;
             }
+
+        }
+
+        private void TextBoxDescription_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            anneeSelect.Description = textBox.Text;
+            annee.update(anneeSelect.Id, anneeSelect);
         }
 
         private void AjouterSemestre_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            PartieAnnee nouvellePartieAnnee = new PartieAnnee { Nom = "Nouveau semestre", Annee = (Annee)nodeSelectionne, Parent = nodeSelectionne };
+            PartieAnnee nouvellePartieAnnee = new PartieAnnee { Nom = "Nouveau semestre", Annee = anneeSelect, Parent = anneeSelect, NavigationDestination = typeof(PartieAnneeVue) };
             partieAnnee.create(nouvellePartieAnnee);
-            nodeSelectionne.Children.Add(nouvellePartieAnnee);
+            anneeSelect.Children.Add(nouvellePartieAnnee);
         }
 
         private void SupprimerSemestre_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            semestreSelectionne.Parent.Children.Remove((PartieAnnee)semestreSelectionne);
-            partieAnnee.delete((PartieAnnee)semestreSelectionne);
+            semestreSelect.Parent.Children.Remove((PartieAnnee)semestreSelect);
+            partieAnnee.delete((PartieAnnee)semestreSelect);
         }
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            semestreSelectionne = (PartieAnnee)e.ClickedItem;
-            Debug.WriteLine(semestreSelectionne);
+            semestreSelect = (PartieAnnee)e.ClickedItem;
+        }
+
+        private void ListView_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
+        {
+            if (semestreSelect.NavigationDestination != null)
+            {
+                Navigate(semestreSelect.NavigationDestination, semestreSelect);
+            }
         }
     }
 

@@ -263,12 +263,14 @@ namespace AppGestion
 
         private void TextBox_SelectionChanged(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            Debug.WriteLine(e.ToString());
+           
         }
 
         private void CategoriesComboxBox_DropDownOpened(object sender, object e)
         {
 
         }
+
+
     }
 }
