@@ -1,9 +1,12 @@
 ﻿using DAO;
 using Metier;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using Model;
 using System;
-using System.Diagnostics;
 using System.Linq;
+using Windows.System;
+using Windows.UI.Popups;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
@@ -17,29 +20,37 @@ namespace AppGestion
     /// </summary>
     public sealed partial class EnseignantVue : Page
     {
+        private const bool Collapsed = true;
         private static AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
         private static DAO<Enseignant> enseignant = factoSQL.getEnseignantDAO();
         private static DAO<Categorie> categorie = factoSQL.getCategorieDAO();
         private static DAO<EquivalentTD> equivalentTD = factoSQL.getEquivalentTDDao();
         private static DAO<TypeCours> typeCours = factoSQL.getTypeCoursDao();
+        private static DAO<InfosAssignation> infoAssignations = factoSQL.getInfosAssignationDAO();
 
         public Enseignant enseignantSelectionne;
         public Categorie categorieSelectionne;
         public TypeCours typeCoursSelectionne;
         public EquivalentTD equivalentTDSelectionne;
+        public Service service;
+
+
+
+
 
 
         private ObservableCollectionExt<Categorie> categories;
         public ObservableCollectionExt<EquivalentTD> equivalentTDs;
         public ObservableCollectionExt<ObjetBase> tCs;
 
+
         public EnseignantVue()
         {
             this.InitializeComponent();
             categories = GetCategories();
             tCs = GetTypeCours();
-
         }
+
 
         private ObservableCollectionExt<Categorie> GetCategories()
         {
@@ -80,11 +91,62 @@ namespace AppGestion
             return equivalentTDs;
         }
 
+        private double GetHeures()
+        {
+            double nbHeures = 0;
+            foreach (InfosAssignation infoAssignation in infoAssignations.findAll())
+            {
+                if (!(infoAssignation.Enseignant is null) & !(infoAssignation.TypeCours is null))
+                {
+                    foreach (EquivalentTD eqTD in equivalentTDs)
+                    {
+                        if (!(eqTD.TypeCours is null))
+                        {
+                            if (infoAssignation.TypeCours.Id == eqTD.TypeCours.Id)
+                            {
+                                nbHeures += infoAssignation.NbHeures * eqTD.Ratio;
+                            }
+                        }
+                    }
+
+                }
+            }
+            return nbHeures;
+        }
+
+        private string GetInformation(double heures)
+        {
+
+            string information = "Service complet";
+            if (heures > enseignantSelectionne.Categorie.Heures)
+            {
+                information = "Sur-service de " + (heures - enseignantSelectionne.Categorie.Heures) + " heures";
+            }
+            else if (heures < enseignantSelectionne.Categorie.Heures)
+            {
+                information = "Sous-service de " + (enseignantSelectionne.Categorie.Heures - heures) + " heures";
+            }
+            return information;
+        }
+
+        private Service GetService()
+        {
+            Service service = new Service();
+            service.Heures = GetHeures();
+            service.Information = GetInformation(service.Heures);
+            return service;
+        }
+
+
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             enseignantSelectionne = (Enseignant)e.Parameter;
-            enseignantSelectionne.Visibility = true;
             equivalentTDs = GetEquivalentTDs(enseignantSelectionne.Categorie);
+            service = GetService();
+
+            enseignantSelectionne.Visibility = true;
+
             categoriesComboxBox.SelectedItem = categories.Where(p => p.Id == enseignantSelectionne.Categorie.Id).FirstOrDefault();
 
 
@@ -99,67 +161,106 @@ namespace AppGestion
 
         private void TextBlockNom_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            enseignantSelectionne.Visibility = false;
+            TextBlock textBlock = sender as TextBlock;
+            textBlock.Visibility = Visibility.Collapsed;
+            textBoxNom.Visibility = Visibility.Visible;
             textBoxNom.Focus(Windows.UI.Xaml.FocusState.Programmatic);
         }
 
         private void TextBlockPrenom_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            enseignantSelectionne.Visibility = false;
+            TextBlock textBlock = sender as TextBlock;
+            textBlock.Visibility = Visibility.Collapsed;
+            textBoxPrenom.Visibility = Visibility.Visible;
             textBoxPrenom.Focus(Windows.UI.Xaml.FocusState.Programmatic);
         }
 
-        private void TextBlockCategorie_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        private void TextBoxNom_LostFocus(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            enseignantSelectionne.Visibility = false;
-            //textBoxPrenom.Focus(Windows.UI.Xaml.FocusState.Programmatic);
+            TextBox textBox = sender as TextBox;
+            textBox.Visibility = Visibility.Collapsed;
+            textBlockNom.Visibility = Visibility.Visible;
         }
 
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBoxPrenom_LostFocus(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            enseignantSelectionne.Nom = this.textBoxNom.Text;
-            enseignantSelectionne.Prenom = this.textBoxPrenom.Text;
-            enseignant.update(enseignantSelectionne.Id, new Enseignant(enseignantSelectionne.Nom, enseignantSelectionne.Prenom));
+            TextBox textBox = sender as TextBox;
+            textBox.Visibility = Visibility.Collapsed;
+            textBlockPrenom.Visibility = Visibility.Visible;
         }
 
-        private void TextBox_LostFocus(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void TextBoxNom_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
-            enseignantSelectionne.Visibility = true;
-        }
-
-        private void TextBox_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
-        {
-            if (e.Key == Windows.System.VirtualKey.Enter)
+            TextBox textBox = sender as TextBox;
+            if (e.Key == VirtualKey.Enter)
             {
-                enseignantSelectionne.Visibility = true;
+                if (!string.IsNullOrEmpty(textBox.Text))
+                {
+                    enseignantSelectionne.Nom = textBox.Text;
+                    enseignant.update(enseignantSelectionne.Id, enseignantSelectionne);
+                }
+                textBox.Visibility = Visibility.Collapsed;
+                textBlockNom.Visibility = Visibility.Visible;
             }
         }
 
-        private void CategorieSelectionne(object sender, SelectionChangedEventArgs e)
+        private void TextBoxPrenom_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
+            TextBox textBox = sender as TextBox;
+            if (e.Key == VirtualKey.Enter)
+            {
+                if (!string.IsNullOrEmpty(textBox.Text))
+                {
+                    enseignantSelectionne.Prenom = textBox.Text;
+                    enseignant.update(enseignantSelectionne.Id, enseignantSelectionne);
+                }
+                textBox.Visibility = Visibility.Collapsed;
+                textBlockPrenom.Visibility = Visibility.Visible;
+            }
+        }
 
-            categorieSelectionne = (Categorie)e.AddedItems[0];
-
-            if (categories.IndexOf(categorieSelectionne) == categories.Count - 1)
+        private void ComboBoxCategorie_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            categorieSelectionne = (Categorie)comboBox.SelectedItem;
+            if (categorieSelectionne.Id == -1)
             {
                 categorieSelectionne.Nom = "Nouvelle catégorie";
                 categorie.create(categorieSelectionne);
                 enseignantSelectionne.Categorie = categorieSelectionne;
                 enseignant.update(enseignantSelectionne.Id, enseignantSelectionne);
-                Categorie nouvelleCategorie = new Categorie { Nom = "Créer une catégorie...", Heures = 0 };
-                categories.Add(nouvelleCategorie);
+                categories.Add(new Categorie { Nom = "Créer une catégorie...", Heures = 0 });
             }
             else
             {
-
                 equivalentTDs.Replace(GetEquivalentTDs(categorieSelectionne));
                 enseignantSelectionne.Categorie = categorieSelectionne;
                 enseignant.update(enseignantSelectionne.Id, enseignantSelectionne);
-
-
             }
+        }
 
+
+        private async void ComboBoxTypeCours_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            typeCoursSelectionne = (TypeCours)comboBox.SelectedItem;
+            if (typeCoursSelectionne.Id == -1)
+            {
+                typeCoursSelectionne.Nom = "Nouveau type de cours";
+                typeCours.create(typeCoursSelectionne);
+                equivalentTDSelectionne.TypeCours = typeCoursSelectionne;
+                equivalentTD.update(equivalentTDSelectionne.Id, equivalentTDSelectionne);
+                tCs.Add(new TypeCours { Nom = "Créer un type de cours...", Groupes = 1 });
+            }
+            else if (equivalentTDs.Any(a => a.TypeCours != null & a.Categorie == enseignantSelectionne.Categorie && a.TypeCours.Nom == typeCoursSelectionne.Nom && a.TypeCours.Id != equivalentTDSelectionne.TypeCours.Id))
+            {
+                await new MessageDialog("Ce type de cours existe déjà.").ShowAsync();
+            }
+            else
+            {
+                equivalentTDSelectionne.TypeCours = typeCoursSelectionne;
+                equivalentTD.update(equivalentTDSelectionne.Id, equivalentTDSelectionne);
+            }
         }
 
         private void NomCategorie(ComboBox sender, ComboBoxTextSubmittedEventArgs args)
@@ -172,70 +273,29 @@ namespace AppGestion
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            DataGrid dataGrid = sender as DataGrid;
             equivalentTDSelectionne = (EquivalentTD)dataGrid.SelectedItem;
+            
         }
 
-        private void CategoriesComboxBox_CharacterReceived(Windows.UI.Xaml.UIElement sender, CharacterReceivedRoutedEventArgs args)
+        private async void NomTypeCours(ComboBox sender, ComboBoxTextSubmittedEventArgs args)
         {
-            //Debug.WriteLine(args.Character);
-            //categorieSelectionne.Nom = categoriesComboxBox.Text;
-            //categorie.update(categorieSelectionne.Id, categorieSelectionne);
-
-        }
-
-        private void CategoriesComboxBox_DataContextChanged(Windows.UI.Xaml.FrameworkElement sender, Windows.UI.Xaml.DataContextChangedEventArgs args)
-        {
-
-        }
-
-        private void CategoriesComboxBox_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            //Debug.WriteLine(args.Character);
-            //categorieSelectionne.Nom = categoriesComboxBox.Text;
-            //categorie.update(categorieSelectionne.Id, categorieSelectionne);
-
-        }
-
-        private void TypeCoursSelectionne(object sender, SelectionChangedEventArgs e)
-        {
-
-            typeCoursSelectionne = (TypeCours)e.AddedItems[0];
-
-            Debug.WriteLine(equivalentTDSelectionne.TypeCours);
-
-            if (tCs.IndexOf(typeCoursSelectionne) == tCs.Count - 1 && equivalentTDSelectionne.TypeCours.Nom != "Choisir un type de cours")
+            if (equivalentTDs.Any(a => a.TypeCours != null && a.Categorie == enseignantSelectionne.Categorie && a.TypeCours.Nom == typeCoursSelectionne.Nom && a.TypeCours != equivalentTDSelectionne.TypeCours))
             {
-                typeCoursSelectionne.Nom = "Nouveau type de cours";
-                typeCours.create(typeCoursSelectionne);
-                //equivalentTDs.
-                //enseignantSelectionne.Categorie = categorieSelectionne;
-                // equivalentTD.GetType
-                //equivalentTD.update()
-
-                // enseignant.update(enseignantSelectionne.Id, enseignantSelectionne);
-                TypeCours nouveauTypeCours = new TypeCours { Nom = "Créer un type de cours...", Groupes = 1 };
-                tCs.Add(nouveauTypeCours);
-            }
-            else if (equivalentTDs.Any(a => a.Categorie == categorieSelectionne && a.TypeCours.Id == typeCoursSelectionne.Id && a.TypeCours.Nom != equivalentTDSelectionne.TypeCours.Nom))
-            {
-                Debug.WriteLine("EXISTE DEJA");
-
+                await new MessageDialog("Ce type de cours existe déjà.").ShowAsync();
             }
             else
             {
-                equivalentTDSelectionne.TypeCours = typeCoursSelectionne;
-                equivalentTD.update(equivalentTDSelectionne.Id, equivalentTDSelectionne);
+                equivalentTDSelectionne.TypeCours.Nom = args.Text;
+                typeCours.update(equivalentTDSelectionne.TypeCours.Id, equivalentTDSelectionne.TypeCours);
             }
-        }
 
-        private void NomTypeCours(ComboBox sender, ComboBoxTextSubmittedEventArgs args)
-        {
-            equivalentTDSelectionne.TypeCours.Nom = args.Text;
-            typeCours.update(equivalentTDSelectionne.TypeCours.Id, equivalentTDSelectionne.TypeCours);
         }
 
         private void SupprimerEquivalentTD_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            equivalentTD.delete(equivalentTDSelectionne);
+            equivalentTDs.Remove(equivalentTDSelectionne);
 
         }
 
@@ -251,26 +311,47 @@ namespace AppGestion
         }
 
 
-        private void Ratio_TextChanged(object sender, TextChangedEventArgs e)
+
+        private void Ratio_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             TextBox textBox = sender as TextBox;
-            if (textBox.Text != "")
+            if (e.Key == Windows.System.VirtualKey.Enter)
             {
-                equivalentTDSelectionne.Ratio = Convert.ToDouble(textBox.Text);
-                equivalentTD.update(equivalentTDSelectionne.Id, equivalentTDSelectionne);
+                if (!string.IsNullOrEmpty(textBox.Text))
+                {
+                    equivalentTDSelectionne.Ratio = Convert.ToDouble(textBox.Text);
+                    equivalentTD.update(equivalentTDSelectionne.Id, equivalentTDSelectionne);
+                }
             }
+
+            service.Heures = GetHeures();
+            service.Information = GetInformation(service.Heures);
         }
 
         private void TextBox_SelectionChanged(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-           
+
         }
 
-        private void CategoriesComboxBox_DropDownOpened(object sender, object e)
+
+
+        private void TextBoxHeures_TextChanged(object sender, TextChangedEventArgs e)
         {
+            TextBox textBox = sender as TextBox;
+            if (!string.IsNullOrEmpty(textBox.Text))
+            {
+
+                enseignantSelectionne.Categorie.Heures = Convert.ToDouble(textBox.Text);
+                categorie.update(enseignantSelectionne.Categorie.Id, enseignantSelectionne.Categorie);
+            }
+            service.Heures = GetHeures();
+            service.Information = GetInformation(service.Heures);
 
         }
 
-
+        private void TextBoxHeures_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
+        {
+            args.Cancel = args.NewText.Any(c => c != ',' & !char.IsDigit(c));
+        }
     }
 }

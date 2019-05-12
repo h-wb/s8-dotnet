@@ -150,6 +150,7 @@
     <Compile Include="Metier\InfosAssignation.cs" />
     <Compile Include="Metier\ObjetBase.cs" />
     <Compile Include="Metier\PartieAnnee.cs" />
+    <Compile Include="Metier\Service.cs" />
     <Compile Include="Metier\TypeCours.cs" />
     <Compile Include="Model\ButtonModel.cs" />
     <Compile Include="Model\ComboboxAnneeModel.cs" />
