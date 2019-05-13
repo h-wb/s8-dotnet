@@ -1,0 +1,5 @@
+﻿CREATE TABLE departement
+(
+	id INT PRIMARY KEY NOT NULL,
+	nom CHAR(250) NOT NULL
+)

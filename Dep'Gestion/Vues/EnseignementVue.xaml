@@ -1,0 +1,163 @@
+﻿<Page
+    x:Class="AppGestion.EnseignementVue"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Dep_Gestion.Vues"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:local11="using:Metier"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converters:BoolToObjectConverter x:Key="InverseBoolToVisibilityConverter" TrueValue="Collapsed" FalseValue="Visible"/>
+    </Page.Resources>
+
+
+    <Grid Margin="20" RowSpacing="30" ColumnSpacing="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Style="{StaticResource HeaderTextBlockStyle}"  Text="{x:Bind Path=enseignementSelect.Parent.Parent.Nom, Mode=OneWay}" FontSize="80" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+        
+        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="{x:Bind Path=enseignementSelect.Parent.Nom, Mode=OneWay}" FontSize="60" Grid.Row="1" Grid.Column="0" Margin="0,-40,0,0" />
+        <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="{x:Bind Path=enseignementSelect.Nom, Mode=OneWay}" Visibility="{x:Bind Path=enseignementSelect.Visibility, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" FontSize="30" Grid.Row="2" Grid.Column="0" DoubleTapped="TextBlockEnseignement_DoubleTapped" Margin="0,-30,0,0" />
+        <TextBox Background="Transparent" x:Name="textBoxEnseignement" Text="{x:Bind Path=enseignementSelect.Nom, Mode=OneWay}" Visibility="{x:Bind Path=enseignementSelect.Visibility, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" FontSize="30" Grid.Row="2" Grid.Column="0" LostFocus="TextBoxEnseignement_LostFocus" KeyDown="TextBoxEnseignement_KeyDown" Margin="0,-30,0,0" BorderThickness="0"/>
+        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Description" FontSize="30" Grid.Row="4"  Grid.Column="0"/>
+        <TextBox  Text="{x:Bind Path=enseignementSelect.Description}" AcceptsReturn="True" PlaceholderText="Saisir une description..." TextWrapping="Wrap" MaxHeight="172"  ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.Row="5" Grid.Column="0" TextChanged="TextBoxDescription_TextChanged" BorderThickness="0"/>
+
+        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="EC" FontSize="30" Grid.Row="6"  Grid.Column="0"/>
+        
+        <controls:TabView x:Name="Tabs" Grid.Row="7" Grid.Column="0"  ItemsSource="{x:Bind ECs}" CanCloseTabs="True" IsCloseButtonOverlay="True" TabClosing="TabEC_TabClosing" SelectionChanged="TabEC_SelectionChanged">
+            <controls:TabView.ItemHeaderTemplate>
+                <DataTemplate x:DataType="local11:EC">
+                    <StackPanel>
+                        <TextBlock Text="{x:Bind Path=Nom, Mode=OneWay}" Visibility="{x:Bind Path=Visibility, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" DoubleTapped="TextBloxEC_DoubleTapped"/>
+                        <TextBox Background="Transparent" Text="{x:Bind Path=Nom, Mode=OneWay}" Visibility="{x:Bind Path=Visibility, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" KeyDown="TextBoxEC_KeyDown" />
+                    </StackPanel>
+                </DataTemplate>
+            </controls:TabView.ItemHeaderTemplate>
+            <controls:TabView.ItemTemplate>
+                <DataTemplate x:DataType="local11:EC">
+                    <StackPanel Orientation="Vertical">
+                        <controls:DataGrid DataContext="{x:Bind Parent}" x:Name="dataGrid" GridLinesVisibility="Horizontal" ItemsSource="{x:Bind Children}" AutoGenerateColumns="False" IsReadOnly="False" CanUserResizeColumns="False" SelectionMode="Single" SelectionChanged="DataGridIA_SelectionChanged">
+                            <controls:DataGrid.Columns>
+
+                                <controls:DataGridTemplateColumn Header="Nom" Width="200">
+                                    <controls:DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate x:DataType="local11:InfosAssignation">
+                                            <TextBlock Padding="5,0,5,0" Width="200" Text="{x:Bind Nom}" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </controls:DataGridTemplateColumn.CellTemplate>
+                                    <controls:DataGridTemplateColumn.CellEditingTemplate >
+                                        <DataTemplate x:DataType="local11:InfosAssignation">
+                                            <TextBox Text="{x:Bind Nom, Mode=OneWay}" BorderThickness="0" KeyDown="ModidiferNomCours_KeyDown" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </controls:DataGridTemplateColumn.CellEditingTemplate>
+                                </controls:DataGridTemplateColumn>
+
+                                <controls:DataGridTemplateColumn Header="Type de cours" Width="200" x:Name="ddd">
+                                    <controls:DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate x:DataType="local11:InfosAssignation">
+                                            <TextBlock Padding="5,0,5,0" x:Name="eqTDTextBlock" Width="200" Text="{x:Bind TypeCours.Nom}" FontSize="20" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </controls:DataGridTemplateColumn.CellTemplate>
+                                    <controls:DataGridTemplateColumn.CellEditingTemplate>
+                                        <DataTemplate x:DataType="local11:InfosAssignation" >
+                                            <ComboBox IsEditable="True" Width="200" SelectedItem="{x:Bind Path=Children.Find(Children, TypeCours)}" ItemsSource="{Binding Path=Children, Mode=OneWay}" DisplayMemberPath="Nom" SelectionChanged="ComboBoxTypeCours_SelectionChanged" TextSubmitted="ComboBoxTypeCours_TextSubmitted"/>
+                                        </DataTemplate>
+                                    </controls:DataGridTemplateColumn.CellEditingTemplate>
+                                </controls:DataGridTemplateColumn>
+
+                                <controls:DataGridTemplateColumn Header="Nombres d'heures" Width="200">
+                                    <controls:DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate x:DataType="local11:InfosAssignation">
+                                            <TextBlock Padding="5,0,5,0" Width="200" Text="{x:Bind NbHeures}" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </controls:DataGridTemplateColumn.CellTemplate>
+                                    <controls:DataGridTemplateColumn.CellEditingTemplate >
+                                        <DataTemplate x:DataType="local11:InfosAssignation">
+                                            <TextBox Text="{x:Bind NbHeures}" BorderThickness="0" VerticalAlignment="Center" InputScope="Number" KeyDown="ModifierNbHeures_KeyDown" BeforeTextChanging="TextBox_BeforeTextChanging"/>
+                                        </DataTemplate>
+                                    </controls:DataGridTemplateColumn.CellEditingTemplate>
+                                </controls:DataGridTemplateColumn>
+
+                                <controls:DataGridTemplateColumn Header="Enseignant assigné" Width="200">
+                                    <controls:DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate x:DataType="local11:InfosAssignation">
+                                            <Grid AllowDrop="True" DragOver="Enseignant_DragOver" Drop="Enseignant_Drop" VerticalAlignment="Center"  Padding="5,0,5,0" >
+                                                <TextBlock>
+                                                        <Run Text="{x:Bind Path=Enseignant}"/>
+
+                                                </TextBlock>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </controls:DataGridTemplateColumn.CellTemplate>
+                                    <controls:DataGridTemplateColumn.CellEditingTemplate >
+                                        <DataTemplate x:DataType="local11:InfosAssignation">
+                                            <ComboBox  Width="200" SelectedItem="{x:Bind Path=Enseignants.Find(Enseignants, Enseignant)}" ItemsSource="{Binding Path=Enseignants, Mode=OneWay}" SelectionChanged="ComboBoxEnseignant_SelectionChanged"/>
+                                        </DataTemplate>
+                                    </controls:DataGridTemplateColumn.CellEditingTemplate>
+                                </controls:DataGridTemplateColumn>
+
+                            </controls:DataGrid.Columns>
+                        </controls:DataGrid>
+                        <CommandBar Grid.Row="1">
+                            <AppBarButton Icon="Add" Content="Ajouter" Click="AjouterInfosAssignation_Button"/>
+                            <AppBarButton Icon="Clear" Content="Supprimer" Click="SupprimerInfosAssignation_Button"/>
+                        </CommandBar>
+                    </StackPanel>
+
+
+
+                </DataTemplate>
+            </controls:TabView.ItemTemplate>
+
+            <controls:TabView.TabActionHeader>
+                <Button x:Name="AddTabButtonUpper" Width="48" Height="40" Margin="-1,0,0,0" BorderThickness="1" Background="Transparent" Style="{StaticResource ButtonRevealStyle}" Click="TabEC_Click">
+                    <Viewbox MaxWidth="16" MaxHeight="16">
+                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE710;"/>
+                    </Viewbox>
+                </Button>
+
+            </controls:TabView.TabActionHeader>
+        </controls:TabView>
+
+        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Professeurs attribués à l'UE" FontSize="30" Grid.Row="6"  Grid.Column="1"/>
+        <Grid VerticalAlignment="Top" Grid.Row="7" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ListView IsItemClickEnabled="True" HorizontalAlignment="Stretch" ItemsSource="{x:Bind Path=enseignantsAttribues}" VerticalAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Nom}" FontFamily="Calibri"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Statistiques" FontSize="30" Grid.Row="8"  Grid.Column="0" Grid.ColumnSpan="2"/>
+
+    </Grid>
+
+</Page>

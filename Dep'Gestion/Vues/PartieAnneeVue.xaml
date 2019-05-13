@@ -1,0 +1,74 @@
+﻿<Page
+    x:Class="AppGestion.PartieAnneeVue"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Dep_Gestion.Vues"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:Microsoft.Toolkit.Uwp.UI.Converters"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converters:BoolToObjectConverter x:Key="InverseBoolToVisibilityConverter" TrueValue="Collapsed" FalseValue="Visible"/>
+    </Page.Resources>
+
+    <Grid Margin="20" RowSpacing="30" ColumnSpacing="50" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Style="{StaticResource HeaderTextBlockStyle}"  Text="{x:Bind Path=partieAnneeSelect.Parent.Nom, Mode=OneWay}" FontSize="80" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="textBlockPartieAnnee" Style="{StaticResource SubheaderTextBlockStyle}" Text="{x:Bind Path=partieAnneeSelect.Nom, Mode=OneWay}" Visibility="{x:Bind Path=partieAnneeSelect.Visibility, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" FontSize="60" Grid.Row="1" Grid.Column="0" DoubleTapped="TextBlockPartieAnnee_DoubleTapped" Margin="0,-40,0,0" />
+        <TextBox Background="Transparent" x:Name="textBoxPartieAnnee" Text="{x:Bind Path=partieAnneeSelect.Nom, Mode=OneWay}" Visibility="{x:Bind Path=partieAnneeSelect.Visibility, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" FontSize="60" Grid.Row="1" Grid.Column="0" LostFocus="TextBoxPartieAnnee_LostFocus" KeyDown="TextBoxPartieAnnee_KeyDown" BorderThickness="0" Margin="0,-40,0,0"/>
+        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Description" FontSize="30" Grid.Row="2"  Grid.Column="0"/>
+        <TextBox x:Name="textBoxDescription" Text="{x:Bind Path=partieAnneeSelect.Description}" AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="172" ScrollViewer.VerticalScrollBarVisibility="Auto" PlaceholderText="Saisir une description..." Grid.Row="3" Grid.Column="0" TextChanged="TextBoxDescription_TextChanged" BorderThickness="0" />
+        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Enseignements" FontSize="30" Grid.Row="4"  Grid.Column="0"/>
+        <Grid VerticalAlignment="Top" Grid.Row="5" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ListView IsItemClickEnabled="True" ItemsSource="{x:Bind Path=partieAnneeSelect.Children, Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemClick="ListView_ItemClick" DoubleTapped="ListView_DoubleTapped">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Nom}" FontFamily="Calibri"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <CommandBar Grid.Row="1">
+                <AppBarButton Icon="Add" Content="Ajouter" Tapped="AjouterEnseignement_Tapped" />
+                <AppBarButton Icon="Clear" Content="Supprimer" Tapped="SupprimerEnseignementTapped" />
+            </CommandBar>
+        </Grid>
+        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Professeurs attribués au semestre" FontSize="30" Grid.Row="4"  Grid.Column="1"/>
+        <Grid VerticalAlignment="Top" Grid.Row="5" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <ListView IsItemClickEnabled="True" ItemsSource="{x:Bind Path=partieAnneeSelect.Children, Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Nom}" FontFamily="Calibri"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Statistiques" FontSize="30" Grid.Row="6"  Grid.Column="0" Grid.ColumnSpan="2"/>
+    </Grid>
+</Page>
