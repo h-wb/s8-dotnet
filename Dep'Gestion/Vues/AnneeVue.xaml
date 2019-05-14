@@ -53,7 +53,7 @@
                 <AppBarButton Icon="Clear" Content="Supprimer" Tapped="SupprimerSemestre_Tapped"/>
             </CommandBar>
         </Grid>
-        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Professeurs attribués à l'année" FontSize="30" Grid.Row="3"  Grid.Column="1"/>
+        <!--<TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Professeurs attribués à l'année" FontSize="30" Grid.Row="3"  Grid.Column="1"/>
         <Grid VerticalAlignment="Top" Grid.Row="4" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -68,9 +68,8 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </Grid>
+        </Grid>-->
 
-        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Statistiques" FontSize="30" Grid.Row="5"  Grid.Column="0" Grid.ColumnSpan="2"/>
     </Grid>
 
 

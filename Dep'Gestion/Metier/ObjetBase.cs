@@ -13,8 +13,10 @@ namespace Metier
         private string prenom;
         protected int _id;
         protected string _nom;
-        protected bool _visibility;
+        protected bool _visibility = true;
         protected ObservableCollectionExt<ObjetBase> _children = new ObservableCollectionExt<ObjetBase>();
+        protected ObservableCollectionExt<ObjetBase> _treeView = new ObservableCollectionExt<ObjetBase>();
+        protected ObservableCollectionExt<Enseignant> _listView = new ObservableCollectionExt<Enseignant>();
         protected ObjetBase _parent;
         private Type _navigationDestination;
         private object _navigationParameter;
@@ -65,6 +67,18 @@ namespace Metier
         {
             get { return _parent; }
             set { SetProperty(ref _parent, value); }
+        }
+
+        public ObservableCollectionExt<ObjetBase> TreeView
+        {
+            get { return _treeView; }
+            set { SetProperty(ref _treeView, value); }
+        }
+
+        public ObservableCollectionExt<Enseignant> ListView
+        {
+            get { return _listView; }
+            set { SetProperty(ref _listView, value); }
         }
 
         public Type NavigationDestination

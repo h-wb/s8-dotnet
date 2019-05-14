@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 
 namespace Metier
 {
@@ -49,5 +50,6 @@ namespace Metier
             get { return _description; }
             set { SetProperty(ref _description, value); }
         }
+
     }
 }

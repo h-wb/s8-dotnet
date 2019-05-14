@@ -126,14 +126,20 @@ namespace Dep_Gestion.DAO
             return enses;
         }
 
-        public override Enseignement update(int idAupdate, Enseignement update)
+        public override Enseignement update(int idAupdate, Enseignement obj)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE enseignement SET nom='" + update.Nom + "', id_partie_annee=" + update.PartieAnnee.Id + ", description='" + update.Description + "' WHERE id=" + idAupdate + ";", Connexion.getInstance()))
+            string query = "UPDATE dbo.enseignement SET id = @id, nom = @nom, id_partie_annee = @id_partie_annee, description = @description WHERE id = @id";
+            using (SqlCommand command = new SqlCommand(query, Connexion.getInstance()))
             {
-                command_u.ExecuteNonQuery();
+                command.Parameters.AddWithValue("@id", obj.Id);
+                command.Parameters.AddWithValue("@nom", obj.Nom);
+                command.Parameters.AddWithValue("@id_partie_annee", obj.PartieAnnee.Id);
+                command.Parameters.AddWithValue("@description", obj.Description);
+
+                command.ExecuteNonQuery();
             }
 
-            return update;
+            return obj;
         }
     }
 }

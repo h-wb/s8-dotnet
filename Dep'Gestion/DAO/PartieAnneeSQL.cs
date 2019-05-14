@@ -126,14 +126,23 @@ namespace DAO
             return ans;
         }
 
-        public override PartieAnnee update(int idAupdate, PartieAnnee update)
+        public override PartieAnnee update(int idAupdate, PartieAnnee obj)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE partie_annee SET nom='" + update.Nom + "', id_annee=" + update.Annee.Id + ", description='" + update.Description + "' WHERE id=" + idAupdate + ";", Connexion.getInstance()))
+            string query = "UPDATE dbo.partie_annee SET id = @id, nom = @nom, id_annee = @id_annee, description = @description WHERE id = @id";
+            using (SqlCommand command = new SqlCommand(query, Connexion.getInstance()))
             {
-                command_u.ExecuteNonQuery();
+                command.Parameters.AddWithValue("@id", obj.Id);
+                command.Parameters.AddWithValue("@nom", obj.Nom);
+                command.Parameters.AddWithValue("@id_annee", obj.Annee.Id);
+                command.Parameters.AddWithValue("@description", obj.Description);
+
+                command.ExecuteNonQuery();
             }
-            
-            return update;
+
+            return obj;
+
+
+
         }
     }
 }

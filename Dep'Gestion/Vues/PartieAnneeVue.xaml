@@ -29,8 +29,8 @@
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <TextBlock Style="{StaticResource HeaderTextBlockStyle}"  Text="{x:Bind Path=partieAnneeSelect.Parent.Nom, Mode=OneWay}" FontSize="80" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
-        <TextBlock x:Name="textBlockPartieAnnee" Style="{StaticResource SubheaderTextBlockStyle}" Text="{x:Bind Path=partieAnneeSelect.Nom, Mode=OneWay}" Visibility="{x:Bind Path=partieAnneeSelect.Visibility, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" FontSize="60" Grid.Row="1" Grid.Column="0" DoubleTapped="TextBlockPartieAnnee_DoubleTapped" Margin="0,-40,0,0" />
-        <TextBox Background="Transparent" x:Name="textBoxPartieAnnee" Text="{x:Bind Path=partieAnneeSelect.Nom, Mode=OneWay}" Visibility="{x:Bind Path=partieAnneeSelect.Visibility, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" FontSize="60" Grid.Row="1" Grid.Column="0" LostFocus="TextBoxPartieAnnee_LostFocus" KeyDown="TextBoxPartieAnnee_KeyDown" BorderThickness="0" Margin="0,-40,0,0"/>
+        <TextBlock x:Name="textBlockPartieAnnee" Style="{StaticResource SubheaderTextBlockStyle}" Text="{x:Bind Path=partieAnneeSelect.Nom, Mode=TwoWay}" Visibility="{x:Bind Path=partieAnneeSelect.Visibility, Converter={StaticResource BoolToVisibilityConverter}, Mode=TwoWay}" FontSize="60" Grid.Row="1" Grid.Column="0" DoubleTapped="TextBlockPartieAnnee_DoubleTapped" Margin="0,-40,0,0" />
+        <TextBox Background="Transparent" x:Name="textBoxPartieAnnee" Text="{x:Bind Path=partieAnneeSelect.Nom, Mode=TwoWay}" Visibility="{x:Bind Path=partieAnneeSelect.Visibility, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=TwoWay}" FontSize="60" Grid.Row="1" Grid.Column="0" LostFocus="TextBoxPartieAnnee_LostFocus" KeyDown="TextBoxPartieAnnee_KeyDown" BorderThickness="0" Margin="0,-40,0,0"/>
         <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Description" FontSize="30" Grid.Row="2"  Grid.Column="0"/>
         <TextBox x:Name="textBoxDescription" Text="{x:Bind Path=partieAnneeSelect.Description}" AcceptsReturn="True" TextWrapping="Wrap" MaxHeight="172" ScrollViewer.VerticalScrollBarVisibility="Auto" PlaceholderText="Saisir une description..." Grid.Row="3" Grid.Column="0" TextChanged="TextBoxDescription_TextChanged" BorderThickness="0" />
         <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Enseignements" FontSize="30" Grid.Row="4"  Grid.Column="0"/>
@@ -53,7 +53,7 @@
                 <AppBarButton Icon="Clear" Content="Supprimer" Tapped="SupprimerEnseignementTapped" />
             </CommandBar>
         </Grid>
-        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Professeurs attribués au semestre" FontSize="30" Grid.Row="4"  Grid.Column="1"/>
+        <!--<TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Professeurs attribués au semestre" FontSize="30" Grid.Row="4"  Grid.Column="1"/>
         <Grid VerticalAlignment="Top" Grid.Row="5" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -68,7 +68,6 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </Grid>
-        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Statistiques" FontSize="30" Grid.Row="6"  Grid.Column="0" Grid.ColumnSpan="2"/>
+        </Grid>-->
     </Grid>
 </Page>

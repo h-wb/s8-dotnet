@@ -1,18 +1,16 @@
 using DAO;
-using Dep_Gestion.Model;
-using AppGestion;
+using Dep_Gestion.Metier;
+using Dep_Gestion.Vues;
 using Metier;
-using System;
-using System.Collections.ObjectModel;
-using System.Collections;
-using System.Diagnostics;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using Model;
-using Windows.UI.Xaml;
+using System;
+using System.Diagnostics;
 using System.Linq;
 using Windows.ApplicationModel.Core;
-using Microsoft.Toolkit.Uwp.UI.Controls;
+using Windows.System;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -44,7 +42,7 @@ namespace AppGestion
         private static DAO<InfosAssignation> IA = factoSQL.getInfosAssignationDAO();
 
         private ObservableCollectionExt<Departement> departements = new ObservableCollectionExt<Departement>();
-        private ObservableCollectionExt<Annee> annees = new ObservableCollectionExt<Annee>();
+        private ObservableCollectionExt<ObjetBase> annees = new ObservableCollectionExt<ObjetBase>();
         private ObservableCollectionExt<Enseignant> enseignants = new ObservableCollectionExt<Enseignant>();
 
 
@@ -68,82 +66,27 @@ namespace AppGestion
 
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
-
-            // Set XAML element as a draggable region.
-            //Tabs.Height = coreTitleBar.Height;
             Window.Current.SetTitleBar(AppTitleBar);
 
         }
 
-        private ObservableCollectionExt<Departement> GetDepartements()
-        {
-            ObservableCollectionExt<Departement> departements = new ObservableCollectionExt<Departement>();
-            foreach (Departement dpt in depart.findAll())
-            {
-                departements.Add(new Departement { Id = dpt.Id, Nom = dpt.Nom });
-            }
-            return departements;
-        }
 
-        private ObservableCollectionExt<Enseignant> GetEnseignants()
-        {
-            ObservableCollectionExt<Enseignant> enseignants = new ObservableCollectionExt<Enseignant>();
-            foreach (Enseignant ens in enseignant.findAll())
-            {
-                enseignants.Add(new Enseignant { Id = ens.Id, Categorie = ens.Categorie, Prenom = ens.Prenom.TrimEnd(), Nom = ens.Nom.TrimEnd(), NavigationDestination = typeof(EnseignantVue) });
-            }
-            return enseignants;
-        }
-
-        private ObservableCollectionExt<Annee> GetAnnees(int idDepartement)
-        {
-            ObservableCollectionExt<Annee> annees = new ObservableCollectionExt<Annee>();
-
-            foreach (Annee annee in annee.findAll())
-            {
-                if (idDepartement == annee._departement.Id)
-                {
-                    Annee nodeAnnee = new Annee { Id = annee.Id, Nom = annee.Nom.TrimEnd(), Description = annee._description, Children = new ObservableCollectionExt<ObjetBase>(), NavigationDestination = typeof(AnneeVue), Departement = annee.Departement };
-                    Debug.WriteLine(nodeAnnee.Description);
-                    annees.Add(nodeAnnee);
-                    foreach (PartieAnnee partieAnnee in partieAnnee.findAll())
-                    {
-                        if (annee.Id == partieAnnee.Annee.Id)
-                        {
-                            PartieAnnee nodePartieAnnee = new PartieAnnee { Id = partieAnnee.Id, Nom = partieAnnee.Nom.TrimEnd(), Description = partieAnnee.Description, Annee = annee, Children = new ObservableCollectionExt<ObjetBase>(), Parent = nodeAnnee, NavigationDestination = typeof(PartieAnneeVue) };
-                            nodeAnnee.Children.Add(nodePartieAnnee);
-                            foreach (Enseignement enseignement in enseignement.findAll())
-                            {
-                                if (partieAnnee.Id == enseignement.PartieAnnee.Id)
-                                {
-                                    Enseignement nodeEnseignement = new Enseignement { Id = enseignement.Id, Nom = enseignement.Nom.TrimEnd(), PartieAnnee = partieAnnee, Description = enseignement.Description, Children = new ObservableCollectionExt<ObjetBase>(), Parent = nodePartieAnnee, NavigationDestination = typeof(EnseignementVue) };
-                                    nodePartieAnnee.Children.Add(nodeEnseignement);
-                                }
-                            }
-                        }
-
-                    }
-                }
-            }
-            return annees;
-        }
 
         private void TreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
         {
-
             nodeSelectionne = (ObjetBase)args.InvokedItem;
             if (nodeSelectionne.NavigationDestination != null && nodeSelectionne != null)
             {
-                Debug.WriteLine(nodeSelectionne.NavigationDestination);
                 Navigate(nodeSelectionne.NavigationDestination, nodeSelectionne);
             }
 
         }
 
+
         private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
             departementSelectionne = (ObjetBase)args.InvokedItem;
-            annees.Replace(GetAnnees(departementSelectionne.Id));
+              annees.Replace(GetAnnees(departementSelectionne.Id));
 
         }
 
@@ -162,17 +105,12 @@ namespace AppGestion
             return Frame.Navigate(sourcePageType, parameter);
         }
 
-        private void Frame_OnNavigated(object sender, NavigationEventArgs e)
-        {
-            TreeView.SelectionMode = TreeViewSelectionMode.None;
-            TreeView.SelectionMode = TreeViewSelectionMode.Single;
-        }
 
         private void Add_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             if (nodeSelectionne == null)
             {
-                Annee nouvelleAnne = new Annee { Nom = "Nouvelle annee", Departement = depart.find(1), NavigationDestination = typeof(AnneeVue), Description = "" };
+                Annee nouvelleAnne = new Annee { Nom = "Nouvelle annee", Departement = depart.find(departementSelectionne.Id), NavigationDestination = typeof(AnneeVue), Description = "" };
                 annee.create(nouvelleAnne);
                 annees.Add(nouvelleAnne);
             }
@@ -189,27 +127,31 @@ namespace AppGestion
                 nodeSelectionne.Children.Add(nouvelEnseignement);
             }
 
+            // nodeSelectionne.Nom = "fffsdfds";
+
         }
 
         private void Clear_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            if (nodeSelectionne.GetType() == typeof(Annee))
+            if (nodeSelectionne != null)
             {
-                annee.delete((Annee)nodeSelectionne);
-                annees.Remove((Annee)nodeSelectionne);
-            }
-            else if (nodeSelectionne.GetType() == typeof(PartieAnnee))
-            {
-                partieAnnee.delete((PartieAnnee)nodeSelectionne);
-                nodeSelectionne.Parent.Children.Remove((PartieAnnee)nodeSelectionne);
-            }
-            else if (nodeSelectionne.GetType() == typeof(Enseignement))
-            {
-                enseignement.delete((Enseignement)nodeSelectionne);
-                nodeSelectionne.Parent.Children.Remove(nodeSelectionne);
-            }
+                if (nodeSelectionne.GetType() == typeof(Annee))
+                {
+                    annee.delete((Annee)nodeSelectionne);
+                    annees.Remove((Annee)nodeSelectionne);
+                }
+                else if (nodeSelectionne.GetType() == typeof(PartieAnnee))
+                {
+                    partieAnnee.delete((PartieAnnee)nodeSelectionne);
+                    nodeSelectionne.Parent.Children.Remove((PartieAnnee)nodeSelectionne);
+                }
+                else if (nodeSelectionne.GetType() == typeof(Enseignement))
+                {
+                    enseignement.delete((Enseignement)nodeSelectionne);
+                    nodeSelectionne.Parent.Children.Remove(nodeSelectionne);
+                }
 
-
+            }
 
         }
 
@@ -263,6 +205,14 @@ namespace AppGestion
 
         private void TabDepartement_TabClosing(object sender, Microsoft.Toolkit.Uwp.UI.Controls.TabClosingEventArgs e)
         {
+            if(departements.Count() == 1)
+            {
+                Departement nouveauDepart = new Departement { Nom = "Nouveau département" };
+                depart.create(nouveauDepart);
+                departements.Add(nouveauDepart);
+                Tabs.SelectedItem = nouveauDepart;
+                departementSelectionne = nouveauDepart;
+            }
             Departement departement = (Departement)e.Item;
             depart.delete(departement);
         }
@@ -275,6 +225,44 @@ namespace AppGestion
             departements.Add(departement);
         }
 
+        private void TreeView_LostFocus(object sender, RoutedEventArgs e)
+        {
+            nodeSelectionne = null;
+            TreeView.SelectionMode = TreeViewSelectionMode.None;
+            TreeView.SelectionMode = TreeViewSelectionMode.Single;
+        }
 
+        private void Reglages_Click(object sender, RoutedEventArgs e)
+        {
+            Navigate(typeof(ReglagesVue), new Reglages { Categorie = GetCategories(), TypeCours = GetTypeCours() });
+        }
+
+        private void TextBloxEC_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
+        {
+            departementSelectionne.Visibility = false;
+        }
+
+        private void TextBoxEC_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            var source = (FrameworkElement)e.OriginalSource;
+            departementSelectionne = (Departement)source.DataContext;
+
+            if (e.Key == VirtualKey.Enter)
+            {
+                if (!string.IsNullOrEmpty(textBox.Text))
+                {
+                    departementSelectionne.Nom = textBox.Text;
+                    depart.update(departementSelectionne.Id, (Departement)departementSelectionne);
+                }
+                departementSelectionne.Visibility = true;
+            }
+        }
+
+        private void AutoSuggetBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            enseignantSelectionne = (Enseignant)args.ChosenSuggestion;
+            Navigate(enseignantSelectionne.NavigationDestination, enseignantSelectionne);
+        }
     }
 }

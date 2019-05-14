@@ -150,6 +150,7 @@
     <Compile Include="Metier\InfosAssignation.cs" />
     <Compile Include="Metier\ObjetBase.cs" />
     <Compile Include="Metier\PartieAnnee.cs" />
+    <Compile Include="Metier\Reglages.cs" />
     <Compile Include="Metier\Service.cs" />
     <Compile Include="Metier\TypeCours.cs" />
     <Compile Include="Model\ButtonModel.cs" />
@@ -164,6 +165,9 @@
     <Compile Include="Vues\AnneeVue.xaml.cs">
       <DependentUpon>AnneeVue.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vues\EnseignantVue.GetData.xaml.cs">
+      <DependentUpon>EnseignantVue.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vues\EnseignementVue.GetData.xaml.cs">
       <DependentUpon>EnseignementVue.xaml</DependentUpon>
     </Compile>
@@ -173,11 +177,17 @@
     <Compile Include="Vues\EnseignantVue.xaml.cs">
       <DependentUpon>EnseignantVue.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vues\MainPage.GetData.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Vues\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Vues\PartieAnneeVue.xaml.cs">
       <DependentUpon>PartieAnneeVue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Vues\ReglagesVue.xaml.cs">
+      <DependentUpon>ReglagesVue.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -245,6 +255,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Vues\PartieAnneeVue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Vues\ReglagesVue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

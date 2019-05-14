@@ -40,10 +40,11 @@
 
         <controls1:TabView x:Name="Tabs" ItemsSource="{x:Bind Path=departements}" CanCloseTabs="True" IsCloseButtonOverlay="True" Height="40"  TabClosing="TabDepartement_TabClosing" SelectionChanged="TabDepartement_SelectionChanged">
             <controls1:TabView.ItemHeaderTemplate>
-                <DataTemplate x:DataType="local11:EC">
-                    <TextBlock>
-                     <Run Text="{Binding Nom}"/>
-                    </TextBlock>
+                <DataTemplate x:DataType="local11:Departement">
+                    <StackPanel>
+                        <TextBlock Text="{Binding Nom, Mode=OneWay}" Visibility="{x:Bind Path=Visibility, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" DoubleTapped="TextBloxEC_DoubleTapped"/>
+                        <TextBox Background="Transparent" Text="{Binding Nom, Mode=OneWay}" Visibility="{x:Bind Path=Visibility, Converter={StaticResource InverseBoolToVisibilityConverter}, Mode=OneWay}" KeyDown="TextBoxEC_KeyDown" />
+                    </StackPanel>
                 </DataTemplate>
             </controls1:TabView.ItemHeaderTemplate>
 
@@ -70,10 +71,10 @@
                         <AppBarButton x:Name="Add" Icon="Add" Label="Ajouter" Click="Add_Click"/>
                         <AppBarButton x:Name="Clear" Icon="Clear" Label="Supprimer" Click="Clear_Click"/>
                     </CommandBar>
-                    <TreeView x:Name="TreeView" ItemsSource="{x:Bind annees, Mode=OneWay}" ItemInvoked="TreeView_ItemInvoked" FontFamily="Segoe UI" Margin="0,40,0,0">
+                    <TreeView x:Name="TreeView" ItemsSource="{x:Bind Path=annees, Mode=OneWay}" ItemInvoked="TreeView_ItemInvoked" FontFamily="Segoe UI" Margin="0,40,0,0" CanDrag="False" CanDragItems="False" CanReorderItems="False" AllowDrop="False" SelectionMode="Single" LostFocus="TreeView_LostFocus">
                         <TreeView.ItemTemplate>
                             <DataTemplate x:DataType="local11:ObjetBase">
-                                <TreeViewItem ItemsSource="{x:Bind Children,  Mode=OneWay}" Content="{x:Bind Nom,  Mode=OneWay}"/>
+                                <TreeViewItem ItemsSource="{x:Bind Children}" Content="{x:Bind Nom, Mode=OneWay}"/>
                             </DataTemplate>
                         </TreeView.ItemTemplate>
                     </TreeView>
@@ -97,8 +98,9 @@
                                     <CommandBar  DefaultLabelPosition="Right" Grid.Row="0" Grid.Column="0" Background="Transparent" HorizontalAlignment="Left" FontFamily="Segoe UI">
                                         <AppBarButton Icon="Add" Click="AjouterEnseignant" />
                                         <AppBarButton  Icon="Clear" Click="SupprimerEnseignant"/>
+                                        <AppBarButton  Icon="Setting" Click="Reglages_Click"/>
                                     </CommandBar>
-                                    <AutoSuggestBox VerticalAlignment="Center" PlaceholderText="Chercher un enseignant"  QueryIcon="Find" Grid.Column="1" />
+                                    <AutoSuggestBox VerticalAlignment="Center" PlaceholderText="Chercher un enseignant"  QueryIcon="Find" Grid.Column="1" ItemsSource="{x:Bind enseignants}" QuerySubmitted="AutoSuggetBox_QuerySubmitted"/>
                                 </Grid>
 
                                 <ListView x:Name="ListeEnseignants" IsItemClickEnabled="True" ItemsSource="{x:Bind enseignants}" ItemClick="EnseignantSelection" Grid.Row="2" CanDragItems="True" DragItemsStarting="ListView_DragItemsStarting" IsHoldingEnabled="True" Holding="ListeEnseignants_Holding" >
@@ -126,7 +128,7 @@
                             </Grid>
                         </SplitView.Pane>
                         <SplitView.Content>
-                            <Frame x:Name="Frame" Navigated="Frame_OnNavigated" Padding="0" FontFamily="Segoe UI">
+                            <Frame x:Name="Frame" Padding="0" FontFamily="Segoe UI">
                                 <Frame.ContentTransitions>
                                     <TransitionCollection>
                                         <NavigationThemeTransition>

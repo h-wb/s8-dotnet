@@ -72,10 +72,10 @@ namespace DAO
                             reader_f.NextResult();
                         }
                     }
-                    else
-                    {
-                        throw new Exception("Aucun objet avec cet id n'a été trouvé.");
-                    }
+                    //else
+                    //{
+                    //    throw new Exception("Aucun objet avec cet id n'a été trouvé.");
+                    //}
 
                     reader_f.Close();
                 }

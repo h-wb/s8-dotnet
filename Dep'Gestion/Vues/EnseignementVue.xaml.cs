@@ -31,31 +31,38 @@ namespace AppGestion
         private EC ecSelect;
         private InfosAssignation infosAssignationSelect;
         private Enseignement enseignementSelect;
+        private Enseignant enseignantSelect;
 
         private ObservableCollectionExt<InfosAssignation> infosAssignations = new ObservableCollectionExt<InfosAssignation>();
         private ObservableCollectionExt<EC> ECs = new ObservableCollectionExt<EC>();
         private ObservableCollectionExt<ObjetBase> tCs = new ObservableCollectionExt<ObjetBase>();
-        private ObservableCollectionExt<ObjetBase> enseignants = new ObservableCollectionExt<ObjetBase>();
+        private ObservableCollectionExt<Enseignant> enseignants = new ObservableCollectionExt<Enseignant>();
         private ObservableCollectionExt<Enseignant> enseignantsAttribues = new ObservableCollectionExt<Enseignant>();
 
         public EnseignementVue()
         {
             this.InitializeComponent();
             tCs = GetTypeCours();
-            enseignants = GetEnseignants();
+
         }
 
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.Parameter != null)
-            {
-                enseignementSelect = (Enseignement)e.Parameter;
-                enseignementSelect.Visibility = true;
-                ECs = GetECs(enseignementSelect);
-                enseignantsAttribues = GetEnseignantsAttribues(enseignementSelect);
-                base.OnNavigatedTo(e); ;
-            }
+            enseignementSelect = (Enseignement)e.Parameter;
+            enseignementSelect.Visibility = true;
+            ECs = GetECs(enseignementSelect);
+            enseignantsAttribues = GetEnseignantsAttribues(enseignementSelect);
+
+
+            base.OnNavigatedTo(e); ;
+
+        }
+
+
+        public bool Navigate(Type sourcePageType, object parameter = null)
+        {
+            return Frame.Navigate(sourcePageType, parameter);
         }
 
 
@@ -117,7 +124,7 @@ namespace AppGestion
             var source = (FrameworkElement)e.OriginalSource;
             ecSelect = (EC)source.DataContext;
 
-            InfosAssignation nouvelleInfosAssignation = new InfosAssignation { Nom = "Nouveau cours", EC = ecSelect, Enseignant = null, TypeCours = null, NbHeures = 0, Children = tCs, Enseignants = enseignants };
+            InfosAssignation nouvelleInfosAssignation = new InfosAssignation { Nom = "Nouveau cours", EC = ecSelect, Enseignant = null, TypeCours = null, NbHeures = 0, Children = tCs, Enseignants = enseignementSelect.ListView };
             InfosAssignation.create(nouvelleInfosAssignation);
             ecSelect.Children.Add(nouvelleInfosAssignation);
 
@@ -249,6 +256,17 @@ namespace AppGestion
             enseignantsAttribues.Replace(GetEnseignantsAttribues(enseignementSelect));
         }
 
+        private void Enseignant_ItemClick(object sender, ItemClickEventArgs e)
+        {
+           enseignantSelect = enseignementSelect.ListView.Where(x => x.Id == ((Enseignant)e.ClickedItem).Id).FirstOrDefault();
+        }
 
+        private void Enseignant_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            if (enseignantSelect != null)
+            {
+                Navigate(enseignantSelect.NavigationDestination, enseignantSelect);
+            }
+        }
     }
 }

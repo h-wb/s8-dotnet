@@ -130,15 +130,22 @@ namespace Dep_Gestion.DAO
             return ans;
         }
 
-        public override Annee update(int idAupdate, Annee update)
+        public override Annee update(int idAupdate, Annee obj)
         {
-            using (SqlCommand command_u = new SqlCommand(@"UPDATE annee SET nom='" + update.Nom + "', id_departement=" + update._departement.Id + ", description= '" + update._description + "' WHERE id=" + idAupdate + ";", Connexion.getInstance()))
+  
+            string query = "UPDATE dbo.annee SET id = @id, nom = @nom, id_departement = @id_departement, description = @description WHERE id = @id";
+            using (SqlCommand command = new SqlCommand(query, Connexion.getInstance()))
             {
-                command_u.ExecuteNonQuery();
+                command.Parameters.AddWithValue("@id", obj.Id);
+                command.Parameters.AddWithValue("@nom", obj.Nom);
+                command.Parameters.AddWithValue("@id_departement", obj.Departement.Id);
+                command.Parameters.AddWithValue("@description", obj.Description);
+
+                command.ExecuteNonQuery();
             }
 
             //Connexion.getInstance().Close();
-            return update;
+            return obj;
         }
     }
 }

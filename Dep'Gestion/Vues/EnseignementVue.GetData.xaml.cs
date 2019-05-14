@@ -1,6 +1,7 @@
 ﻿using DAO;
 using Metier;
 using Model;
+using System.Linq;
 
 namespace AppGestion
 {
@@ -9,7 +10,6 @@ namespace AppGestion
         private DAO<EC> EC = factoSQL.getECDAO();
         private DAO<InfosAssignation> InfosAssignation = factoSQL.getInfosAssignationDAO();
         private DAO<TypeCours> TypeCours = factoSQL.getTypeCoursDao();
-        //private static DAO<Enseignant> enseignant = factoSQL.getEnseignantDAO();
 
         private ObservableCollectionExt<EC> GetECs(Enseignement enseignementSelectionne)
         {
@@ -24,7 +24,14 @@ namespace AppGestion
                     {
                         if (ec.Id == ia.EC.Id)
                         {
-                            nouveauEC.Children.Add(new InfosAssignation { Id = ia.Id, Nom = ia.Nom.TrimEnd(), EC = ia.EC, Enseignant = ia.Enseignant, TypeCours = ia.TypeCours, NbHeures = ia.NbHeures, Children = tCs, Enseignants = enseignants, Parent = nouveauEC });
+                            Enseignant enseignant = null;
+                            if (!(ia.Enseignant is null))
+                            {
+                                enseignant = enseignementSelect.ListView.Where(x => x.Id == ia.Enseignant.Id).FirstOrDefault();
+                            }
+                                
+
+                            nouveauEC.Children.Add(new InfosAssignation { Id = ia.Id, Nom = ia.Nom.TrimEnd(), EC = ia.EC, Enseignant = enseignant, TypeCours = ia.TypeCours, NbHeures = ia.NbHeures, Children = tCs, Enseignants = enseignementSelect.ListView, Parent = nouveauEC });
                         }
                     }
                 }
@@ -67,7 +74,7 @@ namespace AppGestion
                         {
                             foreach(Enseignant enseignant in enseignant.findAll())
                             {
-                                if (!(ia.Enseignant is null) && ia.Enseignant.Id == enseignant.Id)
+                                if (!(ia.Enseignant is null) && ia.Enseignant.Id == enseignant.Id && !Enseignants.Any(a => a.Id == enseignant.Id))
                                 {
                                     Enseignants.Add(new Enseignant { Id = enseignant.Id, Nom = enseignant.Nom, Prenom = enseignant.Prenom, nbHeuresTravaillees = enseignant.nbHeuresTravaillees, Categorie = enseignant.Categorie });
                                 }
@@ -80,5 +87,7 @@ namespace AppGestion
             }
             return Enseignants;
         }
+
+        
     }
 }

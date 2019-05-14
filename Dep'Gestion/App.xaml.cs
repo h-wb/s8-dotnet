@@ -31,11 +31,12 @@ namespace Dep_Gestion
 
             AbstractDAOFactory factoSQL = AbstractDAOFactory.getFactory(types.SQL_FACTORY);
             DAO<Categorie> categorie = factoSQL.getCategorieDAO();
-            DAO<TypeCours> typeCours = factoSQL.getTypeCoursDao();
+
 
 
             Categorie categorieDefaut = new Categorie { Id = 1, Nom = "Catégorie par défaut", Heures = 0 };
-            if(!(categorie.find(categorieDefaut.Nom) is Categorie))
+
+            if(!(categorie.find(categorieDefaut.Id).Id == 1))
                 categorie.create(categorieDefaut);
 
             //TypeCours CM = new TypeCours { Id = 1, Nom = "CM", Groupes = 1};

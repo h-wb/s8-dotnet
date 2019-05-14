@@ -111,7 +111,7 @@
                                     </controls:DataGridTemplateColumn.CellTemplate>
                                     <controls:DataGridTemplateColumn.CellEditingTemplate >
                                         <DataTemplate x:DataType="local11:InfosAssignation">
-                                            <ComboBox  Width="200" SelectedItem="{x:Bind Path=Enseignants.Find(Enseignants, Enseignant)}" ItemsSource="{Binding Path=Enseignants, Mode=OneWay}" SelectionChanged="ComboBoxEnseignant_SelectionChanged"/>
+                                            <ComboBox  Width="200" SelectedItem="{x:Bind Path=Enseignant}" ItemsSource="{Binding Path=Enseignants, Mode=OneWay}" SelectionChanged="ComboBoxEnseignant_SelectionChanged"/>
                                         </DataTemplate>
                                     </controls:DataGridTemplateColumn.CellEditingTemplate>
                                 </controls:DataGridTemplateColumn>
@@ -145,18 +145,17 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <ListView IsItemClickEnabled="True" HorizontalAlignment="Stretch" ItemsSource="{x:Bind Path=enseignantsAttribues}" VerticalAlignment="Stretch">
+            <ListView IsItemClickEnabled="True" HorizontalAlignment="Stretch" ItemsSource="{x:Bind Path=enseignantsAttribues}" VerticalAlignment="Stretch" ItemClick="Enseignant_ItemClick" DoubleTapped="Enseignant_DoubleTapped">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
+                        <StackPanel Orientation="Horizontal">
                             <TextBlock Text="{Binding Nom}" FontFamily="Calibri"/>
+                            <TextBlock Margin="5,0,0,0" Text="{Binding Prenom}" FontFamily="Calibri"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
-
-        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Statistiques" FontSize="30" Grid.Row="8"  Grid.Column="0" Grid.ColumnSpan="2"/>
 
     </Grid>
 

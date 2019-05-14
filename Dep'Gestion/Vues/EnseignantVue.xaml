@@ -14,14 +14,14 @@
     x:Name="_this"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    
-    
+
+
     <Page.Resources>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <converters:BoolToObjectConverter x:Key="InverseBoolToVisibilityConverter" TrueValue="Collapsed" FalseValue="Visible"/>
     </Page.Resources>
 
-    <Grid Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RowSpacing="30" DataContext="{Binding ElementName=_this}">
+    <Grid Margin="20" HorizontalAlignment="Stretch" ColumnSpacing="50" VerticalAlignment="Stretch" RowSpacing="30" DataContext="{Binding ElementName=_this}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -36,7 +36,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Orientation="Horizontal" Height="120" Grid.Row="0" >
+        <StackPanel Orientation="Horizontal" Height="120" Grid.Row="0" Grid.ColumnSpan="2">
             <Ellipse Height="96" Width="96" VerticalAlignment="Center">
                 <Ellipse.Fill>
                     <ImageBrush ImageSource="/Assets/PlaceHolder.png"/>
@@ -55,16 +55,24 @@
         <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Catégorie" FontSize="30" Grid.Row="1"/>
         <StackPanel Orientation="Horizontal" Grid.Row="2" VerticalAlignment="Top">
             <ComboBox VerticalAlignment="Center" x:Name="categoriesComboxBox" IsEditable="True" Width="296" ItemsSource="{x:Bind categories}" SelectionChanged="ComboBoxCategorie_SelectionChanged" TextSubmitted="NomCategorie" />
-            <AppBarButton VerticalAlignment="Center" Height="40"  x:Name="Clear" Icon="Clear"/>
         </StackPanel>
 
 
         <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Nombre d'heures attribué à la catégorie" FontSize="30" Grid.Row="1" Grid.Column="1"/>
-        <TextBox TextWrapping="NoWrap" VerticalAlignment="Top" Background="Transparent" MaxLength="3" Text="{x:Bind Path=enseignantSelectionne.Categorie.Heures, Mode=OneWay}" FontSize="40" TextChanged="TextBoxHeures_TextChanged" BeforeTextChanging="TextBoxHeures_BeforeTextChanging" Grid.Row="2" Grid.Column="1" BorderThickness="0"/>
+        <TextBox HorizontalAlignment="Center" TextWrapping="NoWrap" VerticalAlignment="Top" Background="Transparent" MaxLength="3" Text="{x:Bind Path=enseignantSelectionne.Categorie.Heures, Mode=OneWay}" FontSize="40" TextChanged="TextBoxHeures_TextChanged" BeforeTextChanging="TextBoxHeures_BeforeTextChanging" Grid.Row="2" Grid.Column="1" BorderThickness="0"/>
 
-        <StackPanel Orientation="Vertical" Grid.Row="3">
-            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Enseignements assignés" FontSize="30"/>
-        </StackPanel>
+
+        <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Enseignements assignés" FontSize="30" Grid.Row="3"/>
+        <ListView IsItemClickEnabled="True" HorizontalAlignment="Stretch" ItemsSource="{x:Bind Path=enseignementsAssignes}" VerticalAlignment="Stretch" Grid.Row="4" DoubleTapped="EnseignementsAssignes_DoubleTapped" ItemClick=" EnseignementsAssignes_ItemClick">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Nom}" FontFamily="Calibri"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
 
         <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="Equivalences de la catégorie" FontSize="30"  Grid.Row="1" Grid.Column="2"/>
         <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="2">
@@ -107,13 +115,13 @@
             <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" x:Name="heuresTextBlock" Text="{x:Bind Path=service.Information, Mode=OneWay}" FontSize="30"/>
 
         </StackPanel>
-        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="4">
+        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Center" >
             <controls:RadialProgressBar   x:Name="RadialProgressBarControl" Value="{x:Bind Path=service.Heures, Mode=TwoWay}" HorizontalAlignment="Left" Foreground="Firebrick" Thickness="4" Minimum="0" Maximum="{x:Bind Path=enseignantSelectionne.Categorie.Heures, Mode=OneWay}" Width="100" Height="100" Outline="LightGray" />
             <StackPanel Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Center" Text="{x:Bind Path=service.Heures,  Mode=TwoWay}" FontSize="20"/>
                 <TextBlock VerticalAlignment="Center" Text=" heures" FontSize="20"/>
             </StackPanel>
-            
+
 
         </StackPanel>
 

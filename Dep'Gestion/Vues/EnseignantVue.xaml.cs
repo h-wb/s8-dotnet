@@ -3,6 +3,7 @@ using Metier;
 using Microsoft.Toolkit.Uwp.UI.Controls;
 using Model;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using Windows.System;
 using Windows.UI.Popups;
@@ -27,11 +28,16 @@ namespace AppGestion
         private static DAO<EquivalentTD> equivalentTD = factoSQL.getEquivalentTDDao();
         private static DAO<TypeCours> typeCours = factoSQL.getTypeCoursDao();
         private static DAO<InfosAssignation> infoAssignations = factoSQL.getInfosAssignationDAO();
+        private static DAO<EC> eC = factoSQL.getECDAO();
+        private static DAO<Enseignement> enseignement = factoSQL.getEnseignementDAO();
+        private static DAO<PartieAnnee> partieAnnee = factoSQL.getPartieAnneeDAO();
+        private static DAO<Annee> annee = factoSQL.getAnneeDAO();
 
         public Enseignant enseignantSelectionne;
         public Categorie categorieSelectionne;
         public TypeCours typeCoursSelectionne;
         public EquivalentTD equivalentTDSelectionne;
+        public Enseignement enseignementSelect;
         public Service service;
 
 
@@ -42,6 +48,7 @@ namespace AppGestion
         private ObservableCollectionExt<Categorie> categories;
         public ObservableCollectionExt<EquivalentTD> equivalentTDs;
         public ObservableCollectionExt<ObjetBase> tCs;
+        public ObservableCollectionExt<Enseignement> enseignementsAssignes;
 
 
         public EnseignantVue()
@@ -52,99 +59,26 @@ namespace AppGestion
         }
 
 
-        private ObservableCollectionExt<Categorie> GetCategories()
-        {
-            ObservableCollectionExt<Categorie> categories = new ObservableCollectionExt<Categorie>();
-            foreach (Categorie categorie in categorie.findAll())
-            {
-                categories.Add(new Categorie { Id = categorie.Id, Nom = categorie.Nom.TrimEnd(), Heures = categorie.Heures });
-            }
-            categories.Add(new Categorie { Nom = "Créer une catégorie...", Heures = 0 });
-            return categories;
-        }
 
-        private ObservableCollectionExt<ObjetBase> GetTypeCours()
-        {
-            ObservableCollectionExt<ObjetBase> tCs = new ObservableCollectionExt<ObjetBase>();
-            foreach (TypeCours tC in typeCours.findAll())
-            {
-                tCs.Add(new TypeCours { Id = tC.Id, Nom = tC.Nom.TrimEnd(), Groupes = tC.Groupes });
-            }
-            tCs.Add(new TypeCours { Nom = "Créer un type de cours...", Groupes = 1 });
-            return tCs;
-        }
 
-        private ObservableCollectionExt<EquivalentTD> GetEquivalentTDs(Categorie categorieSelectionnee)
-        {
-            ObservableCollectionExt<EquivalentTD> equivalentTDs = new ObservableCollectionExt<EquivalentTD>();
 
-            foreach (EquivalentTD eqTD in equivalentTD.findAll())
 
-            {
-                if (eqTD.Categorie.Id == categorieSelectionnee.Id)
-                {
-                    EquivalentTD equivalent = new EquivalentTD { Id = eqTD.Id, Categorie = categorieSelectionnee, TypeCours = eqTD.TypeCours, tCs = tCs, Nom = "", Ratio = eqTD.Ratio };
-                    equivalentTDs.Add(equivalent);
 
-                }
-            }
-            return equivalentTDs;
-        }
 
-        private double GetHeures()
-        {
-            double nbHeures = 0;
-            foreach (InfosAssignation infoAssignation in infoAssignations.findAll())
-            {
-                if (!(infoAssignation.Enseignant is null) & !(infoAssignation.TypeCours is null))
-                {
-                    foreach (EquivalentTD eqTD in equivalentTDs)
-                    {
-                        if (!(eqTD.TypeCours is null))
-                        {
-                            if (infoAssignation.TypeCours.Id == eqTD.TypeCours.Id)
-                            {
-                                nbHeures += infoAssignation.NbHeures * eqTD.Ratio;
-                            }
-                        }
-                    }
-
-                }
-            }
-            return nbHeures;
-        }
-
-        private string GetInformation(double heures)
-        {
-
-            string information = "Service complet";
-            if (heures > enseignantSelectionne.Categorie.Heures)
-            {
-                information = "Sur-service de " + (heures - enseignantSelectionne.Categorie.Heures) + " heures";
-            }
-            else if (heures < enseignantSelectionne.Categorie.Heures)
-            {
-                information = "Sous-service de " + (enseignantSelectionne.Categorie.Heures - heures) + " heures";
-            }
-            return information;
-        }
-
-        private Service GetService()
-        {
-            Service service = new Service();
-            service.Heures = GetHeures();
-            service.Information = GetInformation(service.Heures);
-            return service;
-        }
 
 
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             enseignantSelectionne = (Enseignant)e.Parameter;
+
+            if(enseignantSelectionne.Categorie is null)
+            {
+                enseignantSelectionne.Categorie = categories[0];
+            }
             equivalentTDs = GetEquivalentTDs(enseignantSelectionne.Categorie);
             service = GetService();
-
+            enseignementsAssignes = GetEnseignementsAssignes();
             enseignantSelectionne.Visibility = true;
 
             categoriesComboxBox.SelectedItem = categories.Where(p => p.Id == enseignantSelectionne.Categorie.Id).FirstOrDefault();
@@ -157,6 +91,11 @@ namespace AppGestion
 
             }
             base.OnNavigatedTo(e);
+        }
+
+        public bool Navigate(Type sourcePageType, object parameter = null)
+        {
+            return Frame.Navigate(sourcePageType, parameter);
         }
 
         private void TextBlockNom_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
@@ -223,7 +162,7 @@ namespace AppGestion
         {
             ComboBox comboBox = sender as ComboBox;
             categorieSelectionne = (Categorie)comboBox.SelectedItem;
-            if (categorieSelectionne.Id == -1)
+            if (categorieSelectionne != null && categorieSelectionne.Id == -1)
             {
                 categorieSelectionne.Nom = "Nouvelle catégorie";
                 categorie.create(categorieSelectionne);
@@ -240,7 +179,7 @@ namespace AppGestion
         }
 
 
-        private async void ComboBoxTypeCours_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboBoxTypeCours_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox comboBox = sender as ComboBox;
             typeCoursSelectionne = (TypeCours)comboBox.SelectedItem;
@@ -252,15 +191,14 @@ namespace AppGestion
                 equivalentTD.update(equivalentTDSelectionne.Id, equivalentTDSelectionne);
                 tCs.Add(new TypeCours { Nom = "Créer un type de cours...", Groupes = 1 });
             }
-            else if (equivalentTDs.Any(a => a.TypeCours != null & a.Categorie == enseignantSelectionne.Categorie && a.TypeCours.Nom == typeCoursSelectionne.Nom && a.TypeCours.Id != equivalentTDSelectionne.TypeCours.Id))
-            {
-                await new MessageDialog("Ce type de cours existe déjà.").ShowAsync();
-            }
             else
             {
                 equivalentTDSelectionne.TypeCours = typeCoursSelectionne;
                 equivalentTD.update(equivalentTDSelectionne.Id, equivalentTDSelectionne);
             }
+
+            service.Heures = GetHeures();
+            service.Information = GetInformation(service.Heures);
         }
 
         private void NomCategorie(ComboBox sender, ComboBoxTextSubmittedEventArgs args)
@@ -275,20 +213,14 @@ namespace AppGestion
         {
             DataGrid dataGrid = sender as DataGrid;
             equivalentTDSelectionne = (EquivalentTD)dataGrid.SelectedItem;
-            
+
         }
 
-        private async void NomTypeCours(ComboBox sender, ComboBoxTextSubmittedEventArgs args)
+        private void NomTypeCours(ComboBox sender, ComboBoxTextSubmittedEventArgs args)
         {
-            if (equivalentTDs.Any(a => a.TypeCours != null && a.Categorie == enseignantSelectionne.Categorie && a.TypeCours.Nom == typeCoursSelectionne.Nom && a.TypeCours != equivalentTDSelectionne.TypeCours))
-            {
-                await new MessageDialog("Ce type de cours existe déjà.").ShowAsync();
-            }
-            else
-            {
-                equivalentTDSelectionne.TypeCours.Nom = args.Text;
-                typeCours.update(equivalentTDSelectionne.TypeCours.Id, equivalentTDSelectionne.TypeCours);
-            }
+            equivalentTDSelectionne.TypeCours.Nom = args.Text;
+            typeCours.update(equivalentTDSelectionne.TypeCours.Id, equivalentTDSelectionne.TypeCours);
+
 
         }
 
@@ -353,5 +285,19 @@ namespace AppGestion
         {
             args.Cancel = args.NewText.Any(c => c != ',' & !char.IsDigit(c));
         }
+
+        private void EnseignementsAssignes_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            if (enseignementSelect != null)
+            {
+                Navigate(enseignementSelect.NavigationDestination, enseignementSelect);
+            }
+        }
+
+        private void EnseignementsAssignes_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            enseignementSelect = (Enseignement)e.ClickedItem;
+        }
+
     }
 }

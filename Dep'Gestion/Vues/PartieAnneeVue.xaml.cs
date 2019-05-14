@@ -2,6 +2,7 @@
 using Metier;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -39,13 +40,20 @@ namespace AppGestion
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.Parameter != null)
-            {
+            //if (e.Parameter != null)
+            //{
+            
                 partieAnneeSelect = (PartieAnnee)e.Parameter;
-                partieAnneeSelect.Visibility = true;
-                base.OnNavigatedTo(e); ;
+            //  partieAnneeSelect.Test.IndexOf(partieAnneeSelect);
 
-            }
+            //  partieAnneeSelect.Test[partieAnneeSelect.Test.IndexOf(partieAnneeSelect.Parent)].Children[0].Nom = "fff";
+            // partieAnneeSelect.Nom = "sqdsd";
+         //   partieAnneeSelect.Test[partieAnneeSelect.Test.IndexOf(partieAnneeSelect.Parent)].Children[0].Visibility = true;
+          //  base.OnNavigatedTo(e); 
+
+
+
+            //}
         }
 
         public bool Navigate(Type sourcePageType, object parameter = null)
@@ -58,6 +66,9 @@ namespace AppGestion
             partieAnneeSelect.Visibility = false;
             textBoxPartieAnnee.Focus(FocusState.Programmatic);
             textBoxPartieAnnee.Select(textBoxPartieAnnee.Text.Length, 0);
+
+            //partieAnneeSelect.Children.Add(partieAnneeSelect.Children[0]);
+            //Debug.WriteLine(partieAnneeSelect.Children[0]);
         }
 
         private void TextBoxPartieAnnee_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
@@ -67,6 +78,7 @@ namespace AppGestion
             {
                 if (!string.IsNullOrEmpty(textBox.Text))
                 {
+                  //  partieAnneeSelect.Test[partieAnneeSelect.Test.IndexOf(partieAnneeSelect.Parent)].Children[0].Nom = textBox.Text;
                     partieAnneeSelect.Nom = textBox.Text;
                     partieAnnee.update(partieAnneeSelect.Id, partieAnneeSelect);
                 }
@@ -85,11 +97,12 @@ namespace AppGestion
             TextBox textBox = sender as TextBox;
             partieAnneeSelect.Description = textBox.Text;
             partieAnnee.update(partieAnneeSelect.Id, partieAnneeSelect);
+          //  TreeViewNode test = (TreeViewNode)partieAnneeSelect;
         }
 
         private void AjouterEnseignement_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            Enseignement nouvelleEnseignement = new Enseignement { Nom = "Nouvel enseignement", PartieAnnee = partieAnneeSelect, Parent = partieAnneeSelect, NavigationDestination = typeof(EnseignementVue)};
+            Enseignement nouvelleEnseignement = new Enseignement { Nom = "Nouvel enseignement", PartieAnnee = partieAnneeSelect, Parent = partieAnneeSelect, NavigationDestination = typeof(EnseignementVue), ListView = partieAnneeSelect.ListView};
             enseignement.create(nouvelleEnseignement);
             partieAnneeSelect.Children.Add(nouvelleEnseignement);
         }
